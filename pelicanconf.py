@@ -6,8 +6,8 @@ AUTHOR = 'drinkingkazu'
 SITEURL = 'https://deeplearnphysics.org/Blog'
 #SITEURL = '' # uncomment this line for local dev
 SITENAME = 'DeepLearnPhysics Blog'
-SITETITLE = 'DeepLearnPhysics Blog'
-SITESUBTITLE = 'subtitle'
+SITETITLE = 'Blog'
+SITESUBTITLE = 'DeepLearnPhysics Group'
 SITEDESCRIPTION = 'description!'
 #SITELOGO = SITEURL + '/images/profile.png'
 #FAVICON = SITEURL + '/images/favicon.ico'
@@ -52,7 +52,7 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('About Group', 'http://deeplearnphysics.org'),)
+#LINKS = (('About Group', 'http://deeplearnphysics.org'),)
 
 # Social widget
 SOCIAL = (('home','https://deeplearnphysics.org'),
