@@ -1,0 +1,7 @@
+*.dat
+*.root
+*#
+*.pyc
+output
+srv.pid
+pelican.pid
