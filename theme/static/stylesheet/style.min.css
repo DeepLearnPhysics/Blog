@@ -34,9 +34,9 @@ body {
     line-height: 1.2em
 }
 a {
-    color: #111;
-    text-decoration: none;
+    color: #0000A0;
     font-family: Georgia;
+    text-decoration: none;
     font-size: 24;
     font-weight: 600
 }
@@ -53,6 +53,57 @@ hr {
 }
 img {
     max-width: 100%
+}
+.user-image {
+  margin-bottom: 1.2em;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 3px solid #fff;
+  border-radius:100%;
+}
+.panel-cover__description {
+  margin: 0 30px; }
+
+.panel-cover__divider {
+  width: 50%;
+  margin: 20px auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.14); }
+
+.panel-cover__divider--secondary {
+  width: 15%; }
+
+.navigation {
+  display: inline-block;
+  float: left;
+  position: relative;
+  margin: 0;
+  list-style-type: none; }
+
+.navigation__item {
+  display: inline-block;
+  margin: 0 1px 0 0;
+  line-height: 1em; }
+.navigation__item a {
+  display: block;
+  position: relative;
+  border-color: #000;
+  color: #000;
+  opacity: .8; }
+.navigation__item a:hover {
+  color: #000;
+  border-color: #000;
+  opacity: 1; }
+
+.navigation--social {
+  margin-left: 1.5em; }
+.navigation--social a {
+  padding: 6px 8px 6px 9px; }
+.navigation--social a .label {
+  display: none; }
+.navigation--social a .icon {
+  display: block;
+  font-size: 1.7em; 
 }
 aside {
     background-color: #333;
@@ -316,6 +367,56 @@ ul.social a.sc-reddit {
 ul.social a.sc-soundcloud {
     background-color: #f50
 }
+
+ul.author-social a {
+    display: inline-block;
+    width: 54px;
+    height: 54px;
+    border-radius: 100%;
+    text-align: center;
+    font-size: 3.6em;
+    line-height: 54px
+}
+ul.author-social a.sc-facebook {
+    background-color: #3e5b98
+}
+ul.author-social a.sc-google {
+    background-color: #d93e2d
+}
+ul.author-social a.sc-pinterest {
+    background-color: #c92619
+}
+ul.author-social a.sc-linkedin {
+    background-color: #3371b7
+}
+ul.author-social a.sc-rss {
+    background-color: #f26109
+}
+ul.author-social a.sc-stack-overflow {
+    background-color: #f90
+}
+ul.author-social a.sc-twitter {
+    background-color: #4da7de
+}
+ul.author-social a.sc-youtube {
+    background-color: #e02a20
+}
+ul.author-social a.sc-github, ul.author-social a.sc-github-alt {
+    background-color: #ffffff
+}
+ul.author-social a.sc-home, ul.author-social a.sc-social-alt {
+    background-color: #111010
+}
+ul.author-social a.sc-envelope-o {
+    background-color: #578ad6
+}
+ul.author-social a.sc-reddit {
+    background-color: #ff4500
+}
+ul.author-social a.sc-soundcloud {
+    background-color: #f50
+}
+
 .ads-aside {
     display: inline-block;
     height: 90px;

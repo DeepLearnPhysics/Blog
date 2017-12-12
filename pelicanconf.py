@@ -26,7 +26,8 @@ MAIN_MENU = True
 MENUITEMS = (('Home','index.html'),
 	('Category','categories.html'),
 	('Archives','archives.html'),
-	('Tags','tags.html'))
+	('Tags','tags.html'),
+	('Authors','authors.html'))
 
 PATH = 'content'
 

@@ -12,7 +12,7 @@
 {% block content %}
 <article class="single">
   <header>
-    <h1 id="{{ article.slug }}">{{ article.title }}</h1>
+    <h2 id="{{ article.slug }}">{{ article.title }}</h2>
     <p>
       {{ _('Posted on %(when)s in %(category)s',
            when=article.locale_date,
