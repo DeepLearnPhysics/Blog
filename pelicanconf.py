@@ -9,7 +9,7 @@ SITENAME = 'DeepLearnPhysics Blog'
 SITETITLE = 'Blog'
 SITESUBTITLE = 'DeepLearnPhysics Group'
 SITEDESCRIPTION = 'description!'
-SITELOGO = SITEURL + 'profile.png'
+SITELOGO = 'profile.png'
 #FAVICON = SITEURL + '/images/favicon.ico'
 
 BROWSER_COLOR='#333'
