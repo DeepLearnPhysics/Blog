@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = 'drinkingkazu'
-SITEURL = 'https://deeplearnphysics.org/Blog'
+AUTHOR = 'DeepLearnPhysics'
+SITEURL = 'http://deeplearnphysics.org/Blog'
 #SITEURL = '' # uncomment this line for local dev
 SITENAME = 'DeepLearnPhysics Blog'
 SITETITLE = 'Blog'
 SITESUBTITLE = 'DeepLearnPhysics Group'
 SITEDESCRIPTION = 'description!'
-#SITELOGO = SITEURL + '/images/profile.png'
+SITELOGO = SITEURL + 'profile.png'
 #FAVICON = SITEURL + '/images/favicon.ico'
 
 BROWSER_COLOR='#333'
@@ -37,6 +37,9 @@ DEFAULT_LANG = u'en'
 # Theme
 THEME = 'theme'
 
+# Custom CSS
+CUSTOM_CSS = ['kazunotebook.css']
+
 # Plugins
 PLUGIN_PATHS = ['./plugins']
 PLUGINS = ['keyboard.kb','render_math','ipynb.markup']
@@ -62,3 +65,6 @@ DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+
+# Disable default ipython notebook css
+#IPYNB_IGNORE_CSS = True

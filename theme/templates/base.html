@@ -8,20 +8,26 @@
 <html lang="{{ DEFAULT_LANG }}">
 <head>
   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
-
-  {% if USE_LESS %}
-    <link rel="stylesheet/less" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/stylesheet/style.less">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js" type="text/javascript"></script>
-  {% else %}
-    <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/stylesheet/style.min.css">
-  {% endif %}
+  <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/stylesheet/style.min.css">
 
   <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/pygments/{{ PYGMENTS_STYLE|default('github') }}.min.css">
   <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/font-awesome/css/font-awesome.min.css">
 
-  {% if CUSTOM_CSS %}
-    <link href="{{ SITEURL }}/{{ CUSTOM_CSS }}" rel="stylesheet">
+  {% for cssfile in CUSTOM_CSS %}
+  {% if cssfile|first == 'h' or cssfile|first == '/' %}
+  <!-- script is a url -->
+  <link href="{{cssfile}}" rel="stylesheet">
+  {% else %}
+  <!-- script is a local library -->
+  <link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/stylesheet/{{cssfile}}" rel="stylesheet">
   {% endif %}
+  {% endfor %}
+
+  <!--  
+  {% if CUSTOM_CSS %}
+    <link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/stylesheet/{{ CUSTOM_CSS }}" rel="stylesheet">
+  {% endif %}
+  -->
 
   {% if FEED_ALL_ATOM %}
     <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom">
@@ -59,16 +65,6 @@
   {% endblock %}
 
   <title>{{ SITENAME }}{% block title %}{% endblock %}</title>
-
-  {% if GOOGLE_ADSENSE and GOOGLE_ADSENSE.page_level_ads %}
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({
-      google_ad_client: "{{ GOOGLE_ADSENSE.ca_id }}",
-      enable_page_level_ads: true
-    });
-  </script>
-  {% endif %}
 </head>
 <body>
   {% if GOOGLE_TAG_MANAGER %}
@@ -78,7 +74,7 @@
     <div>
       <a href="{{ SITEURL }}">
         {% if SITELOGO %}
-        <img src="{{ SITELOGO }}" alt="{{ SITETITLE }}" title="{{ SITETITLE }}">
+        <img src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/{{ SITELOGO }}" alt="{{ SITETITLE }}" title="{{ SITETITLE }}">
         {% else %}
         <img src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/profile.png" alt="{{ SITETITLE }}" title="{{ SITETITLE }}">
         {% endif %}
@@ -108,28 +104,8 @@
       </ul>
     </div>
 
-    {% if GOOGLE_ADSENSE and GOOGLE_ADSENSE.ads.aside %}
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <ins class="adsbygoogle ads-aside"
-           data-ad-client="{{ GOOGLE_ADSENSE.ca_id }}"
-           data-ad-slot="{{ GOOGLE_ADSENSE.ads.aside }}"></ins>
-      <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-    {% endif %}
-
   </aside>
   <main>
-    {% if GOOGLE_ADSENSE and GOOGLE_ADSENSE.ads.main_menu %}
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <ins class="adsbygoogle ads-responsive"
-           data-ad-client="{{ GOOGLE_ADSENSE.ca_id }}"
-           data-ad-slot="{{ GOOGLE_ADSENSE.ads.main_menu }}"></ins>
-      <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-    {% endif %}
-
     {% if MAIN_MENU %}
     <nav>
 
@@ -152,11 +128,7 @@
     {% endblock %}
 
     <footer>
-      {% if CC_LICENSE %}
-        {% include "partial/cc_license.html" %}
-      {% else %}
-        {% include "partial/copyright.html" %}
-      {% endif %}
+      {% include "partial/mit_license.html" %}
     </footer>
   </main>
 

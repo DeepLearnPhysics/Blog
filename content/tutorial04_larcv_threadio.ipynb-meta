@@ -1,8 +1,8 @@
-Title: Tutorial 00: jupyter basics
-Slug: larcv-tutorial-01
+Title: Tutorial 04: larcv_threadio for training
+Slug: tutorial-04
 Lang: en
 Date: 2017-12-06
-Category: larcv training
-Tags: larcv-tutorial
+Category: larcv-tutorial
+Tags: tutorial
 Author: KazuhiroTerao
 Summary: From larcv-tutorial/notebooks/larcv_dataloader.ipynb

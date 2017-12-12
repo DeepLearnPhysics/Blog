@@ -2,20 +2,10 @@
 
 {% block content %}
 
-{% if GOOGLE_ADSENSE and GOOGLE_ADSENSE.ads.index_top %}
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle ads-responsive"
-       data-ad-client="{{ GOOGLE_ADSENSE.ca_id }}"
-       data-ad-slot="{{ GOOGLE_ADSENSE.ads.index_top }}"></ins>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-{% endif %}
-
 {% for article in articles_page.object_list %}
 <article>
   <header>
-    <h2><a href="{{ SITEURL }}/{{ article.url }}#{{ article.slug }}">{{ article.title }}</a></h2>
+    <h1><a href="{{ SITEURL }}/{{ article.url }}#{{ article.slug }}">{{ article.title }}</a></h1>
     <p>
       {{ _('Posted on %(when)s in %(category)s',
            when=article.locale_date,
@@ -49,16 +39,5 @@
 {% endfor %}
 
 {% include "partial/pagination.html" %}
-
-{% if GOOGLE_ADSENSE and GOOGLE_ADSENSE.ads.index_bottom %}
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle ads-responsive"
-       data-ad-client="{{ GOOGLE_ADSENSE.ca_id }}"
-       data-ad-slot="{{ GOOGLE_ADSENSE.ads.index_bottom }}"></ins>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-{% endif %}
-
 
 {% endblock %}
