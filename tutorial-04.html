@@ -1,0 +1,1953 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/font-awesome/css/font-awesome.min.css">
+
+  <!-- script is a local library -->
+  <link href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css" rel="stylesheet">
+
+  <!--  
+    <link href="http://deeplearnphysics.org/Blog/theme/stylesheet/[u'kazunotebook.css']" rel="stylesheet">
+  -->
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<meta name="author" content="KazuhiroTerao" />
+<meta name="description" content="This notebook demonstrates how one can use a dedicated tool to fast read data from larcv file and load into a numpy array for network training. We will use a python interface class called dataloader2.larcv_threadio (let's not ask what happened to dataloader1). Some details (feel free to ignore)¶larcv_threadio is a mere python API to use ThreadProcessor" />
+<meta name="keywords" content="tutorial">
+<meta property="og:site_name" content="DeepLearnPhysics Blog"/>
+<meta property="og:title" content="Tutorial 04: larcv_threadio for training"/>
+<meta property="og:description" content="This notebook demonstrates how one can use a dedicated tool to fast read data from larcv file and load into a numpy array for network training. We will use a python interface class called dataloader2.larcv_threadio (let's not ask what happened to dataloader1). Some details (feel free to ignore)¶larcv_threadio is a mere python API to use ThreadProcessor"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://deeplearnphysics.org/Blog/tutorial-04.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-12-06 00:00:00-06:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://deeplearnphysics.org/Blog/author/kazuhiroterao.html">
+<meta property="article:section" content="larcv-tutorial"/>
+<meta property="article:tag" content="tutorial"/>
+<meta property="og:image" content="http://deeplearnphysics.org/Blogprofile.png">
+
+  <title>DeepLearnPhysics Blog &ndash; Tutorial 04: larcv_threadio for training</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="http://deeplearnphysics.org/Blog">
+        <img src="http://deeplearnphysics.org/Blog/theme/img/http://deeplearnphysics.org/Blogprofile.png" alt="Blog" title="Blog">
+      </a>
+      <h1><a href="http://deeplearnphysics.org/Blog">Blog</a></h1>
+
+<p>DeepLearnPhysics Group</p>
+
+      <ul class="social">
+        <li><a class="sc-home" href="https://deeplearnphysics.org" target="_blank"><i class="fa fa-home"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/DeepLearnPhysics" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+    <nav>
+
+
+      <a href="http://deeplearnphysics.org/Blog/index.html">Home</a>
+      <a href="http://deeplearnphysics.org/Blog/categories.html">Category</a>
+      <a href="http://deeplearnphysics.org/Blog/archives.html">Archives</a>
+      <a href="http://deeplearnphysics.org/Blog/tags.html">Tags</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+    <h1 id="tutorial-04">Tutorial 04: larcv_threadio for training</h1>
+    <p>
+          Posted on Wed 06 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/larcv-tutorial.html">larcv-tutorial</a>
+
+
+    </p>
+  </header>
+
+  <div>
+    <style type="text/css">/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI colors. */
+.ansibold {
+  font-weight: bold;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected {
+  border-color: #ababab;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  div.cell.selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell > div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  padding: 0.4em;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+.rendered_html pre,
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+.rendered_html td,
+
+
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell > div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+</style>
+<style type="text/css">.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This notebook demonstrates how one can use a dedicated tool to <em>fast</em> read data from larcv file and load into a numpy array for network training.
+We will use a python interface class called <code>dataloader2.larcv_threadio</code> (let's not ask what happened to <code>dataloader1</code>).</p>
+<h3 id="Some-details-(feel-free-to-ignore)">Some details (feel free to ignore)<a class="anchor-link" href="#Some-details-(feel-free-to-ignore)">&#182;</a></h3><p><code>larcv_threadio</code> is a mere python API to use <code>ThreadProcessor</code>, a multi-threaded <code>larcv</code> file reader written in C++.
+If you would like to write your own C++ API, you can still use <code>ThreadProcessor</code> to write a wrapper API.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">ROOT</span>
+<span class="kn">from</span> <span class="nn">larcv</span> <span class="kn">import</span> <span class="n">larcv</span>
+<span class="kn">from</span> <span class="nn">larcv.dataloader2</span> <span class="kn">import</span> <span class="n">larcv_threadio</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="c1"># instantiate dataloader2</span>
+<span class="n">proc</span> <span class="o">=</span> <span class="n">larcv_threadio</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Configuring-larcv_threadio">Configuring larcv_threadio<a class="anchor-link" href="#Configuring-larcv_threadio">&#182;</a></h2><p><code>larcv_threadio</code> accepts a simple dictionary with configuration parameters.
+There are only 3 parameters:</p>
+<ul>
+<li><code>verbosity</code> ... recommended value=0. When &gt; 0, some status information is printed out into <code>sys.stdout</code> stream.</li>
+<li><code>filler_cfg</code> ... necessary! This is acutal meat that configures an internal <code>larcv</code> C++ object (<code>ThreadProcessor</code>).</li>
+<li><code>filler_name</code> ... necessary! This has to match to the string key of a configuration block inside the <code>filler_cfg</code> file. You'll see it in the following. </li>
+</ul>
+<h3 id="Some-details-(feel-free-to-ignore)">Some details (feel free to ignore)<a class="anchor-link" href="#Some-details-(feel-free-to-ignore)">&#182;</a></h3><p>In case you wonder why you need <code>filler_name</code> ... this is because <code>larcv</code> configuration file can contain more than one configuration parameter set in one file. This parameter is used to identify which configuration parameter set should be used.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># construct configuration dictionary</span>
+<span class="n">filler_cfg</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">filler_cfg</span><span class="p">[</span><span class="s2">&quot;filler_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ThreadProcessor&#39;</span>
+<span class="n">filler_cfg</span><span class="p">[</span><span class="s2">&quot;verbosity&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="n">filler_cfg</span><span class="p">[</span><span class="s1">&#39;filler_cfg&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="s1">&#39;configs/example_dataloader.cfg&#39;</span>
+
+<span class="n">proc</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">filler_cfg</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-yellow-intense-fg"> setting verbosity </span>3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next, let's take a look at the actual configuration file we fed to <code>filler_cfg</code>.</p>
+<h3 id="If-above-cell-does-not-return-in-a-few-seconds...">If above cell does not return in a few seconds...<a class="anchor-link" href="#If-above-cell-does-not-return-in-a-few-seconds...">&#182;</a></h3><p>then it is even more important to look at the configuration. One possible issue is crogged text to be printed on the notebook. We have to make sure the <code>Verbosity</code> value is set to 3 or larger everywhere.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;configs/example_dataloader.cfg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>ThreadProcessor: {
+  Verbosity:    3
+  NumThreads: 2
+  NumBatchStorage: 2
+  RandomAccess: true
+  InputFiles:   [&#34;../proton.root&#34;,&#34;../electron.root&#34;]
+  ProcessType:  [&#34;BatchFillerImage2D&#34;,&#34;BatchFillerPIDLabel&#34;]
+  ProcessName:  [&#34;image&#34;,&#34;label&#34;]
+  ProcessList: {
+    image: {
+      Verbosity: 3
+      ImageProducer: &#34;data&#34;
+      Channels: [2]
+      EnableMirror: false
+    }
+    label: {
+      Verbosity: 3
+      ParticleProducer: &#34;mctruth&#34;
+      PdgClassList: [2212,11]
+    }
+  }
+}
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Whoa...">Whoa...<a class="anchor-link" href="#Whoa...">&#182;</a></h3><p>Yep, there's a lot going on here. I don't recommend you try to understand all of them right now.
+In fact, it is a lot easier once you nail <code>larcv</code> usage first. I cover minimal portions here since my focus is to get you familiarized with <code>larcv_threadio</code> and not "<code>larcv</code> in general".</p>
+<h2 id="Minimum-details">Minimum details<a class="anchor-link" href="#Minimum-details">&#182;</a></h2><p>Remember this is a configuration to enable multi-threaded reading of data. So keep a big picture in mind: the purpose of this file is to tell C++ program how/what to read from <code>larcv</code> data file.</p>
+<h3 id="ThreadProcessor-block"><code>ThreadProcessor</code> block<a class="anchor-link" href="#ThreadProcessor-block">&#182;</a></h3><p>There are 3 levels of configuration parameters. The biggest clause is around <code>ThreadProcessor</code>. Note this name is what needed to match to <code>filler_name</code> for <code>larcv_threadio</code> configuration dictionary. Inside this block, there is a list of parameters covered below.</p>
+<ul>
+<li><code>NumThreads</code> ... positive <code>int</code> ... number of threads to instantiate for reading a file</li>
+<li><code>NumBatchStorage</code> ... positive <code>int</code> ... number of a <code>batch</code> data buffer storage. Each storage is filled by a dedicated thread. So it makes sense to set this equal or larger than <code>NumThreads</code>.</li>
+<li><code>RandomAccess</code> ... <code>true/false</code> ... randomizes an order of data (event) to be accessed in the file(s)</li>
+<li><code>InputFiles</code> ... <code>string</code> array ... a list of input <code>larcv</code> files you want the reader to use. The order does not matter if <code>RandomAccess</code> is <code>true</code>.</li>
+<li><code>ProcessType</code> ... <code>string</code> array ... a list of <code>larcv</code> C++ modules (C++ class names) to be run in respective order. <code>BatchFillerImage2D</code> takes input 2D image data. <code>BatchFillerPIDLabel</code> takes input simulation information and generate a particle label based on <a href="http://pdg.lbl.gov/2007/reviews/montecarlorpp.pdf">PDG code</a>.</li>
+<li><code>ProcessName</code> ... <code>string</code> array ... a list of unique string names for declared <code>larcv</code> modules in <code>ProcessType</code> argument. This is used to look up a module-specific configuration parameters (see below).</li>
+<li><code>ProcessList</code> ... configuration block ... see next section :)</li>
+</ul>
+<h3 id="ProcessList-block"><code>ProcessList</code> block<a class="anchor-link" href="#ProcessList-block">&#182;</a></h3><p>This block contains a list of <code>larcv</code> module configuration parameter sets with a module's unique name as a key. Here, we see <code>image</code> for <code>BatchFillerImage2D</code> module and <code>label</code> for <code>BatchFillerPIDLabel</code>.</p>
+<h3 id="image-block"><code>image</code> block<a class="anchor-link" href="#image-block">&#182;</a></h3><p>This block configures <code>BatchFillerImage2D</code> which reads in input image data.</p>
+<ul>
+<li><code>ImageProducer</code> ... <code>string</code> ... this is a label to identify which 2D image data product from the input file to read. </li>
+<li><code>Channels</code> ... positive <code>int</code> array ... 2D image data has multiple channels, and this parameter specifies which channel(s) to read. Here, we will use only channel 2.</li>
+<li><code>EnableMirror</code> ... <code>true/false</code> ... when set to <code>true</code>, input data is randomly flipped with respect to the center vertical axis (left/right mirroring). This is one of the most simple data augmentation technique.</li>
+</ul>
+<h3 id="label-block"><code>label</code> block<a class="anchor-link" href="#label-block">&#182;</a></h3><p>This block configures <code>BatchFillerPIDLabel</code> which defines a single classification label 2d image read by <code>BatchFillerImage2D</code> using simulation information.</p>
+<ul>
+<li><code>ParticleProducer</code> ... <code>string</code> ... this is a label to identify which "simulation information" should be used.</li>
+<li><code>PdgClassList</code> ... signed <code>int</code> array ... this lists <a href="http://pdg.lbl.gov/2007/reviews/montecarlorpp.pdf">PDG code</a>, a unique identifier of a particle type to define a set of classification target. Here, <code>2212</code> and <code>11</code> correspond to proton and electron respectively. The index of PDG code is typically used as a classification label. In this example, proton has label 0 as its index is 0.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Let's-run!">Let's run!<a class="anchor-link" href="#Let's-run!">&#182;</a></h2><p>Too much text! Let's run <code>larcv_threadio</code> to read in some data!
+First, we issue the command to start the multi-threaded data read.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">proc</span><span class="o">.</span><span class="n">start_manager</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>where the argument is number of data segments (events, or images) to read and store into 1 buffer = 1 <code>batch</code>. Once <code>start_manager</code> command is issued, all active threads go find an available storage buffer to fill them. Remember you specified number of threads and storage buffers by <code>NumThreads</code> and <code>NumBatchStorage</code> configuration parameters.</p>
+<p>The next command moves the data stored in the buffer into a <code>numpy</code> array so that we can access in python.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">proc</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id='How-to-"fetch"-a-batch-data'>How to "fetch" a <code>batch</code> data<a class="anchor-link" href='#How-to-"fetch"-a-batch-data'>&#182;</a></h2><p>In order to access the stored batch data, simply call <code>larcv_threadio.fetch_data</code> function (below). Here, you should give an argument <code>string</code> that is the name of <code>larcv</code> module responsible for reading data for you. Let's fetch an image data.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class &#39;larcv.dataloader2.batch_pydata&#39;&gt;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>as you can see, the return of <code>fetch_data</code> is <code>batch_pydata</code> which holds two information about data: the <code>numpy</code> array of data itself and its dimension. You can access them like:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">image_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+<span class="n">dim_data</span>   <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;numpy data shape&#39;</span><span class="p">,</span><span class="n">image_data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="s1">&#39;... full shape info:&#39;</span><span class="p">,</span> <span class="n">dim_data</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>numpy data shape (10, 65536) ... full shape info: [ 10 256 256   1]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Data is stored in <code>image_data</code> in the form of <code>(10,65536)</code>, which is 10 batch of data. <code>dim_data</code> is the full data dimension: <code>[10,256,256,1]</code> means this is "10 batch data of 256x256x1 image". You can see it is 2D image with 1 channel. Note <code>256*256*1 = 65536</code>. We can visualize an image using a simple imshow.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">image_reshaped</span> <span class="o">=</span> <span class="n">image_data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dim_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_reshaped</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Labels?">Labels?<a class="anchor-link" href="#Labels?">&#182;</a></h2><p>Yep, we should also have data filled by <code>BatchFillerPIDLabel</code>. Remember how to fetch?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">label</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
+<span class="n">label_data</span> <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+<span class="n">dim_label</span>  <span class="o">=</span> <span class="n">label</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;numpy data shape&#39;</span><span class="p">,</span><span class="n">label_data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="s1">&#39;... full shape info:&#39;</span><span class="p">,</span> <span class="n">dim_label</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>numpy data shape (10, 2) ... full shape info: [10  2]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Since we defined labels with only 2 particles, the dimension is quite simple: <code>(10,2)</code>. With this size, you can simply print them out to check the content, right?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">label_data</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[ 0.  1.]
+ [ 1.  0.]
+ [ 1.  0.]
+ [ 0.  1.]
+ [ 0.  1.]
+ [ 1.  0.]
+ [ 1.  0.]
+ [ 1.  0.]
+ [ 0.  1.]
+ [ 0.  1.]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So we know the 1st image is an electron because we defined <code>PdgClassList: [2212,11]</code> in the configuration and the label for the entry 0 is <code>[0,1]</code>. Looks like we can find a proton in the next image :)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_reshaped</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span><span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+RU5ErkJggg==
+">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Next-batch!">Next batch!<a class="anchor-link" href="#Next-batch!">&#182;</a></h2><p>How to get the next buffer storage? Quite simple:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">proc</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">data</span><span class="p">())</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[ 0.  1.]
+ [ 0.  1.]
+ [ 1.  0.]
+ [ 0.  1.]
+ [ 1.  0.]
+ [ 0.  1.]
+ [ 0.  1.]
+ [ 1.  0.]
+ [ 0.  1.]
+ [ 1.  0.]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="What-happened-to-the-last-batch?">What happened to the last batch?<a class="anchor-link" href="#What-happened-to-the-last-batch?">&#182;</a></h2><p>It is gone :( So how did this happen?</p>
+<p>To answer this, it's important to emphasize the term "available" storage buffer. Earlier we learned that threads read from file and fill data into an available storage buffer. What does "available" mean? That means storage buffer that is either empty (initial state) OR ready to be refilled. This is sometimes called consumer-producer model. A user (you) is a consumer here, and <code>next</code> function flags previously accessed data is <code>already consumed</code>, and make that buffer as the next "available" storage buffer.</p>
+<h1 id="Questions?">Questions?<a class="anchor-link" href="#Questions?">&#182;</a></h1><p>This completes the <em>quick-start</em> tutorial of <code>larcv_threadio</code>. Hope this helped for you to understand how this is working when used in our training example notebook.</p>
+
+</div>
+</div>
+</div>
+ 
+
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://deeplearnphysics.org/Blog/tag/tutorial.html">tutorial</a>
+    </p>
+  </div>
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy; DeepLearnPhysics 2017 - This work is licensed under a <a rel="license" href="https://opensource.org/licenses/MIT">MIT License</a>
+</p>
+<p>
+</p>    </footer>
+  </main>
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " DeepLearnPhysics Blog ",
+  "url" : "http://deeplearnphysics.org/Blog",
+  "image": "http://deeplearnphysics.org/Blogprofile.png",
+  "description": "description!"
+}
+</script>
+</body>
+</html>
