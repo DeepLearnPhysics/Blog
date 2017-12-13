@@ -59,8 +59,8 @@ AUTHOR_FEED_RSS = None
 #LINKS = (('About Group', 'http://deeplearnphysics.org'),)
 
 # Social widget
-SOCIAL = (('home','https://deeplearnphysics.org'),
-          ('github','https://github.com/DeepLearnPhysics'))
+SOCIAL = (('home','http://deeplearnphysics.org'),
+          ('github','http://github.com/DeepLearnPhysics'))
 
 DEFAULT_PAGINATION = 10
 
