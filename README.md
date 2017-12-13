@@ -12,6 +12,7 @@ Also for `pelican-ipynb` plug-ins you need:
 * `jupyter >= 1.0`
 * `ipython >= 4.0`
 * `nbconvert >= 4.0`
+
 If you find the above requirement for [pelican-upynb](https://github.com/danielfrg/pelican-ipynb#Requirements) changed, please let us know or update it above!
 
 ## How to contribute (develop)
