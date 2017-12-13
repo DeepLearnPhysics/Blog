@@ -20,10 +20,9 @@ For aweome you to help development, follow the following steps. I split into thr
 
 ### Installation
 1. Join [web-blog](https://github.com/orgs/DeepLearnPhysics/teams/web-blog) github team
-2. Install [Pelican](http://docs.getpelican.com/en/stable/) ... here's [quick start](http://docs.getpelican.com/en/stable/quickstart.html#).
-3. Clone the repo: `git clone git@github.com:DeepLearnPhysics/Blog`.
-4. Make sure you are on the `develop` branch by `git branch`
-5. Enable plican-ipynb plugin:
+2. Clone the repo: `git clone git@github.com:DeepLearnPhysics/Blog`.
+3. Make sure you are on the `develop` branch by `git branch`
+4. Enable plican-ipynb plugin:
 ```
 cd plugins/ipynb
 git submodule init
