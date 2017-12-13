@@ -6,6 +6,8 @@ The `develop` branch holds source code to generate the website.
 ### Requirement
 Besides [Pelican](http://docs.getpelican.com/en/stable/), there are additional [requirements for ipynb plugin](https://github.com/danielfrg/pelican-ipynb). Follow the link and install them if you want to use this plugin.
 
+You also need markdown (pip install markdown) (maybe sudo required).
+
 ### How to contribute
 For aweome you to help development, follow the following steps
 1. Join [web-blog](https://github.com/orgs/DeepLearnPhysics/teams/web-blog) github team
