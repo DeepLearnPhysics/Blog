@@ -31,7 +31,7 @@ div.input_area {
 
 div.text_cell {
     /* max-width: 105ex;*/ /* instead of 100%, */
-    max-width: 80%;
+    max-width: 100%;
 }
 
 div.text_cell_render {
