@@ -5,7 +5,7 @@ Category: tutorial
 Tags: python, larcv
 Slug: tutorial_summary
 Authors: Kazuhiro Terao
-Summary: Summary of tutorial contents
+Summary: List of tutorials covering software installations, training a network using (public) larcv data files, and developing your own code in larcv.
 
 If you are looking for "how to get started" with hands-on experience, you are in the right place.
 Below is a summary of tutorials made available voluntarily by our group members.
