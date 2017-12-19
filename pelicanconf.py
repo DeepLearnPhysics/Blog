@@ -3,13 +3,18 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'DeepLearnPhysics'
-SITEURL = 'http://deeplearnphysics.org/Blog'
-#SITEURL = '' # uncomment this line for local dev
+GITHUBURL = 'http://github.com/DeepLearnPhysics'
+CONTACT = 'mailto:contact@deeplearnphysics.org'
+GROUPURL = 'http://deeplearnphysics.org'
+DATAURL = GROUPURL + '/DataChallenge'
+
 SITENAME = 'DeepLearnPhysics Blog'
 SITETITLE = 'Blog'
 SITESUBTITLE = 'DeepLearnPhysics Group'
 SITEDESCRIPTION = 'description!'
 SITELOGO = 'profile.png'
+SITEURL = GROUPURL + '/Blog'
+#SITEURL = '' # uncomment this line for local dev
 #FAVICON = SITEURL + '/images/favicon.ico'
 
 BROWSER_COLOR='#333'
