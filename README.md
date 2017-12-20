@@ -22,13 +22,7 @@ For aweome you to help development, follow the following steps. I split into thr
 1. Join [web-blog](https://github.com/orgs/DeepLearnPhysics/teams/web-blog) github team
 2. Clone the repo: `git clone git@github.com:DeepLearnPhysics/Blog`.
 3. Make sure you are on the `develop` branch by `git branch`
-4. Enable plican-ipynb plugin:
-```
-cd plugins/ipynb
-git submodule init
-git submodule update
-cd -
-```
+
 ### Compilation
 By compilation we mean to generate static HTMLs. This is fairly simple:
 1.  `make html`
