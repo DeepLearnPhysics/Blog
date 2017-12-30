@@ -351,7 +351,8 @@ ul.social a.sc-stack-overflow {
     background-color: #f90
 }
 ul.social a.sc-twitter {
-    background-color: #4da7de
+    /*background-color: #4da7de*/
+    background-color: #ffffff;
 }
 ul.social a.sc-youtube {
     background-color: #e02a20
@@ -400,7 +401,8 @@ ul.author-social a.sc-stack-overflow {
     background-color: #f90
 }
 ul.author-social a.sc-twitter {
-    background-color: #4da7de
+    /*background-color: #4da7de*/
+    background-color: #ffffff;
 }
 ul.author-social a.sc-youtube {
     background-color: #e02a20
@@ -472,3 +474,5 @@ ul.author-social a.sc-soundcloud {
         height: 90px
     }
 }
+
+

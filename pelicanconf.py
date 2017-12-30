@@ -6,6 +6,7 @@ AUTHOR = 'DeepLearnPhysics'
 GITHUBURL = 'http://github.com/DeepLearnPhysics'
 CONTACT = 'mailto:contact@deeplearnphysics.org'
 GROUPURL = 'http://deeplearnphysics.org'
+TWITTERURL = 'https://twitter.com/dlphysics'
 DATAURL = GROUPURL + '/DataChallenge'
 
 SITENAME = 'DeepLearnPhysics Blog'
@@ -67,7 +68,8 @@ AUTHOR_FEED_RSS = None
 
 # Social widget
 SOCIAL = (('home','http://deeplearnphysics.org'),
-          ('github','http://github.com/DeepLearnPhysics'))
+		  ('twitter',TWITTERURL),
+          ('github',GITHUBURL))
 
 DEFAULT_PAGINATION = 10
 

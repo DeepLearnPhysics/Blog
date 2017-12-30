@@ -5,7 +5,7 @@ Modified: 2017-12-19 00:00
 Category: tutorial
 Tags: paper
 Authors: Kazuhiro Terao
-Summary: List of useful papers for beginners' reading
+Summary: Useful readings for (new) group members.
 
 This is a message I compiled once for myself but also share with my students etc..
 You can easily find a similar compilation of papers on people's github: just google it :) 
