@@ -2,7 +2,7 @@ Title: Tutorials
 Date: 2017-12-19 00:00
 Modified: 2017-12-19 00:00
 Category: tutorial
-Tags: python, larcv
+Tags: python tutorial, larcv tutorial, public data
 Slug: tutorial_summary
 Authors: Kazuhiro Terao
 Summary: List of tutorials covering software installations, training a network using (public) larcv data files, and developing your own code in larcv.

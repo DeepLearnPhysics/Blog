@@ -1,0 +1,10 @@
+Title: Browsing Classification Data Set (v0.1.0)
+Slug: 2017-12-29-BrowsingClassificationData_v0.1.0
+Lang: en
+Date: 2017-12-29
+Category: public data
+Tags: public data, analysis example
+Authors: Kazuhiro Terao
+Summary: Browse through the file contents of the first classification data release (v0.1.0). I go over sample generation configurations, dump some images, and analyze particles' kinematic distributions. I cover an important aspect of image filtering that was a part of sample generation.
+
+

@@ -2,8 +2,8 @@ Title: Getting started: paper readings
 Slug: reading101
 Date: 2017-12-19 00:00
 Modified: 2017-12-19 00:00
-Category: reading
-Tags: papers
+Category: tutorial
+Tags: paper
 Authors: Kazuhiro Terao
 Summary: List of useful papers for beginners' reading
 
