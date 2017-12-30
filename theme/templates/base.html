@@ -13,22 +13,6 @@
   <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/pygments/{{ PYGMENTS_STYLE|default('github') }}.min.css">
   <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/font-awesome/css/font-awesome.min.css">
 
-  {% for cssfile in CUSTOM_CSS %}
-  {% if cssfile|first == 'h' or cssfile|first == '/' %}
-  <!-- script is a url -->
-  <link href="{{cssfile}}" rel="stylesheet">
-  {% else %}
-  <!-- script is a local library -->
-  <link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/stylesheet/{{cssfile}}" rel="stylesheet">
-  {% endif %}
-  {% endfor %}
-
-  <!--  
-  {% if CUSTOM_CSS %}
-    <link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/stylesheet/{{ CUSTOM_CSS }}" rel="stylesheet">
-  {% endif %}
-  -->
-
   {% if FEED_ALL_ATOM %}
     <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom">
   {% endif %}

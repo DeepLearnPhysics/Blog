@@ -17,16 +17,31 @@
       {{ _('Posted on %(when)s in %(category)s',
            when=article.locale_date,
            category='<a href="%s/%s">%s</a>'|format(SITEURL, article.category.url, article.category)|safe) }}
-
-      {% if 'post_stats' in PLUGINS %}
-        &#8226; {{ article.stats['read_mins'] }} min read
+      {% if article.authors %}
+        {{ _('by') }}
+        {% for author in article.authors %}
+              <a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>{% if not loop.last %},{% endif %}
+          {% endfor %}
+      {% elif article.author %}
+        {{ _('by %(author)s', author='<a href="%s/%s">%s</a>'|format(SITEURL, article.author.url, article.author)|safe) }}
       {% endif %}
     </p>
   </header>
 
+  {% for cssfile in CUSTOM_CSS %}
+  {% if cssfile|first == 'h' or cssfile|first == '/' %}
+  <!-- script is a url -->
+  <link rel="stylesheet" type="text/css" href="{{cssfile}}">
+  {% else %}
+  <!-- script is a local library -->
+  <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/stylesheet/{{cssfile}}">
+  {% endif %}
+  {% endfor %}
+
   <div>
     {{ article.content }}
   </div>
+
   <div class="tag-cloud">
     <p>
       {% if article.tags %}

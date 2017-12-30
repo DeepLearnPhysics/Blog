@@ -14,11 +14,13 @@ SITESUBTITLE = 'DeepLearnPhysics Group'
 SITEDESCRIPTION = 'description!'
 SITELOGO = 'profile.png'
 SITEURL = GROUPURL + '/Blog'
-#SITEURL = '' # uncomment this line for local dev
+SITEURL = '' # uncomment this line for local dev
 #FAVICON = SITEURL + '/images/favicon.ico'
 
 BROWSER_COLOR='#333'
 ROBOTS = 'index, follow'
+
+STATIC_PATHS=['img','tutorials']
 
 CC_LICENSE = {
         'name': 'Creative Commons Attribution-ShareAlike',
@@ -74,3 +76,4 @@ DEFAULT_PAGINATION = 10
 
 # Disable default ipython notebook css
 #IPYNB_IGNORE_CSS = True
+IPYNB_USE_META_SUMMARY=True
