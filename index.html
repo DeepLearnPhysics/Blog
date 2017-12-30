@@ -8,13 +8,6 @@
   <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/pygments/github.min.css">
   <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/font-awesome/css/font-awesome.min.css">
 
-  <!-- script is a local library -->
-  <link href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css" rel="stylesheet">
-
-  <!--  
-    <link href="http://deeplearnphysics.org/Blog/theme/stylesheet/[u'kazunotebook.css']" rel="stylesheet">
-  -->
-
 
 
 
@@ -77,24 +70,44 @@
 
 <article>
   <header>
-    <h1><a href="http://deeplearnphysics.org/Blog/minibatch.html#minibatch">How to Implement Minibatching in Tensorflow</a></h1>
+    <h1><a href="http://deeplearnphysics.org/Blog/2017-12-29-BrowsingClassificationData_v0.1.0.html#2017-12-29-BrowsingClassificationData_v0.1.0">Browsing Classification Data Set (v0.1.0)</a></h1>
     <p>
-          Posted on Fri 22 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/misc.html">misc</a>
+          Posted on Fri 29 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/public-data.html">public data</a>
 
 
-          &#8226;     Tagged with
+            by
 
-              <a href="http://deeplearnphysics.org/Blog/tag/mnist.html">MNIST</a>,              <a href="http://deeplearnphysics.org/Blog/tag/minibatch.html">minibatch</a>
+              <a href="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">Kazuhiro Terao</a>      <br>
+              Tagged with
+
+              <a href="http://deeplearnphysics.org/Blog/tag/public-data.html">public data</a>,              <a href="http://deeplearnphysics.org/Blog/tag/analysis-example.html">analysis example</a>
     </p>
   </header>
   <div>
-      
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In this notebook, I show how to implement "minibatches", a method which stores gradients over several chunks of data ("mini" batch) and apply them altogether. To keep this exercise concise, I use the MNIST image set and a very simple neural network as an example. I will compare how the results differ when the network is trained with and without minibatches, for several popular optimizers.</p>
+      <p>Browse through the file contents of the first classification data release (v0.1.0). I go over sample generation configurations, dump some images, and analyze particles' kinematic distributions. I cover an important aspect of image filtering that was a part of sample generation.</p>
+      <br>
+      <a class="btn" href="http://deeplearnphysics.org/Blog/2017-12-29-BrowsingClassificationData_v0.1.0.html#2017-12-29-BrowsingClassificationData_v0.1.0">    Continue reading
+</a>
+  </div>
+  <hr />
+</article>
+<article>
+  <header>
+    <h1><a href="http://deeplearnphysics.org/Blog/minibatch.html#minibatch">How to Implement Minibatching in Tensorflow</a></h1>
+    <p>
+          Posted on Fri 22 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/minibatch.html">Minibatch</a>
+
+
+            by
+
+              <a href="http://deeplearnphysics.org/Blog/author/ji-won-park.html">Ji Won Park</a>      <br>
+              Tagged with
+
+              <a href="http://deeplearnphysics.org/Blog/tag/mnist.html">MNIST</a>,              <a href="http://deeplearnphysics.org/Blog/tag/minibatch.html">minibatch</a>,              <a href="http://deeplearnphysics.org/Blog/tag/tensorflow.html">tensorflow</a>
+    </p>
+  </header>
+  <div>
+      <p>A demonstration of minibatch implementation in Tensorflow, comparing training with and without minibatches with the MNIST dataset as an example</p>
       <br>
       <a class="btn" href="http://deeplearnphysics.org/Blog/minibatch.html#minibatch">    Continue reading
 </a>
@@ -105,31 +118,19 @@
   <header>
     <h1><a href="http://deeplearnphysics.org/Blog/gan-00.html#gan-00">Generative Adversarial Networks: The Basics</a></h1>
     <p>
-          Posted on Tue 19 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/misc.html">misc</a>
+          Posted on Tue 19 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/generative-adversarial-network.html">Generative Adversarial Network</a>
 
 
-          &#8226;     Tagged with
+            by
+
+              <a href="http://deeplearnphysics.org/Blog/author/corey-adams.html">Corey Adams</a>      <br>
+              Tagged with
 
               <a href="http://deeplearnphysics.org/Blog/tag/mnist.html">MNIST</a>,              <a href="http://deeplearnphysics.org/Blog/tag/gan.html">GAN</a>,              <a href="http://deeplearnphysics.org/Blog/tag/generative.html">generative</a>,              <a href="http://deeplearnphysics.org/Blog/tag/adversarial.html">adversarial</a>
     </p>
   </header>
   <div>
-      
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Generative-Adversarial-Network-Tutorial-00">Generative Adversarial Network Tutorial 00<a class="anchor-link" href="#Generative-Adversarial-Network-Tutorial-00">¶</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In particle physics, we think adversarial networks are particularly interesting tools to explore discrepancies between our simulation and real detector data.  In principle, the physics tools used for simulation of particle interaction data are quite good, but they are never perfect.  Additionally, they are always imperfect in difficult to model ways.  Many experiments spend a lot of time studying the differences between the output of their simulation and their real detector data, and a deep network that can learn these differences is really useful for making progress.</p>
+      <p>An introduction to generative adversarial networks, covering the bare basics of how to build and train a GAN on mnist data.</p>
       <br>
       <a class="btn" href="http://deeplearnphysics.org/Blog/gan-00.html#gan-00">    Continue reading
 </a>
@@ -140,12 +141,15 @@
   <header>
     <h1><a href="http://deeplearnphysics.org/Blog/reading101.html#reading101">Getting started: paper readings</a></h1>
     <p>
-          Posted on Tue 19 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/reading.html">reading</a>
+          Posted on Tue 19 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/tutorial.html">tutorial</a>
 
 
-          &#8226;     Tagged with
+            by
 
-              <a href="http://deeplearnphysics.org/Blog/tag/papers.html">papers</a>
+              <a href="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">Kazuhiro Terao</a>      <br>
+              Tagged with
+
+              <a href="http://deeplearnphysics.org/Blog/tag/paper.html">paper</a>
     </p>
   </header>
   <div>
@@ -163,9 +167,12 @@
           Posted on Tue 19 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/tutorial.html">tutorial</a>
 
 
-          &#8226;     Tagged with
+            by
 
-              <a href="http://deeplearnphysics.org/Blog/tag/python.html">python</a>,              <a href="http://deeplearnphysics.org/Blog/tag/larcv.html">larcv</a>
+              <a href="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">Kazuhiro Terao</a>      <br>
+              Tagged with
+
+              <a href="http://deeplearnphysics.org/Blog/tag/python-tutorial.html">python tutorial</a>,              <a href="http://deeplearnphysics.org/Blog/tag/larcv-tutorial.html">larcv tutorial</a>,              <a href="http://deeplearnphysics.org/Blog/tag/public-data.html">public data</a>
     </p>
   </header>
   <div>

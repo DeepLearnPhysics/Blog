@@ -8,13 +8,6 @@
   <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/pygments/github.min.css">
   <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/font-awesome/css/font-awesome.min.css">
 
-  <!-- script is a local library -->
-  <link href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css" rel="stylesheet">
-
-  <!--  
-    <link href="http://deeplearnphysics.org/Blog/theme/stylesheet/[u'kazunotebook.css']" rel="stylesheet">
-  -->
-
 
 
 
@@ -80,22 +73,19 @@
   <header>
     <h1><a href="http://deeplearnphysics.org/Blog/minibatch.html#minibatch">How to Implement Minibatching in Tensorflow</a></h1>
     <p>
-          Posted on Fri 22 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/misc.html">misc</a>
+          Posted on Fri 22 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/minibatch.html">Minibatch</a>
 
 
-          &#8226;     Tagged with
+            by
 
-              <a href="http://deeplearnphysics.org/Blog/tag/mnist.html">MNIST</a>,              <a href="http://deeplearnphysics.org/Blog/tag/minibatch.html">minibatch</a>
+              <a href="http://deeplearnphysics.org/Blog/author/ji-won-park.html">Ji Won Park</a>      <br>
+              Tagged with
+
+              <a href="http://deeplearnphysics.org/Blog/tag/mnist.html">MNIST</a>,              <a href="http://deeplearnphysics.org/Blog/tag/minibatch.html">minibatch</a>,              <a href="http://deeplearnphysics.org/Blog/tag/tensorflow.html">tensorflow</a>
     </p>
   </header>
   <div>
-      
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In this notebook, I show how to implement "minibatches", a method which stores gradients over several chunks of data ("mini" batch) and apply them altogether. To keep this exercise concise, I use the MNIST image set and a very simple neural network as an example. I will compare how the results differ when the network is trained with and without minibatches, for several popular optimizers.</p>
+      <p>A demonstration of minibatch implementation in Tensorflow, comparing training with and without minibatches with the MNIST dataset as an example</p>
       <br>
       <a class="btn" href="http://deeplearnphysics.org/Blog/minibatch.html#minibatch">    Continue reading
 </a>
