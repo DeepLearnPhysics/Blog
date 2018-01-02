@@ -1,0 +1,8 @@
+Title: PyTorch/LArCV Classification Example
+Slug: pytorch-five-particle-example
+Lang: en
+Date: 2018-01-01
+Category: tutorial
+Tags: resnet, pytorch
+Authors: Taritree
+Summary: A walk-through of training a classification network for the 5-particle LArCV training data using pytorch.
