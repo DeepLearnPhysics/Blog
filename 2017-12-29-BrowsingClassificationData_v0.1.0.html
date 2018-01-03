@@ -1073,47 +1073,9 @@ h6:hover .anchor-link {
 <li><a href="#image_dump">Example image dump</a> (data analysis)</li>
 <li><a href="#event_fraction">Particle-wise event fraction</a> (data analysis)</li>
 <li><a href="#kinematics">Energy and momentum distribution</a> (data analysis)</li>
-<li><a href="#filter_efect">Image filtering effect</a> (data analysis)</li>
+<li><a href="#filter_effect">Image filtering effect</a> (data analysis)</li>
 </ol>
-<p><a name="overview"></a></p>
-<h2 id="Conditions-to-make-the-samples">Conditions to make the samples<a class="anchor-link" href="#Conditions-to-make-the-samples">&#182;</a></h2><p>Here's the big picture:</p>
-<ul>
-<li>All files (train, test, and tutorial files) contain single-particle events. <ul>
-<li>This means each 2D image contain only 1 particle. </li>
-</ul>
-</li>
-<li>There are five particle types including electron, gamma ray, muon, pion, and proton. </li>
-<li>An event fraction per particle type is equal for all samples. </li>
-<li>A particle's generation point is uniformly distributed within 5.12 m cubic volume.</li>
-<li>A particle's (momentum) direction is isotropic.</li>
-<li>A particle's momentum is uniformly distributed in the range specified per type.<ul>
-<li>electrons ... 35.5 to 800 MeV/c</li>
-<li>gamma rays ... 35 to 800 MeV/c</li>
-<li>muons ... 90 to 800 MeV/c</li>
-<li>pions ... 105 to 800 MeV/c</li>
-<li>protons ... 275 to 800 MeV/c</li>
-</ul>
-</li>
-<li>2.56 m cubic 3D volume is chosen to maximize the particle's trajectory within the volume and recorded in the file.</li>
-<li>2D images are created as 2D projections (xy, yz, zx) of the 3D data<ul>
-<li>These are 3 channels of 2D images in each file.</li>
-</ul>
-</li>
-<li>Events that contain any 2D projection <strong>image with less than 10 non-zero pixels are filtered out</strong>.<ul>
-<li>This is to remove <em>empty</em> and <em>almost empty</em> images from the set.</li>
-</ul>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a name="file_contents"></a></p>
-<h2 id="Exploring-the-contents">Exploring the contents<a class="anchor-link" href="#Exploring-the-contents">&#182;</a></h2><p>I think the file description is best done with the data. So let's explore them in this notebook. This also serves as an example of how to browse through <code>larcv</code> data products! We use this <a href="http://deeplearnphysics.org/DataChallenge/#ChallengeClassification">test file</a> which I already downloaded in this directory.</p>
+<p>Before anything, make sure you have necessary software stacks (<code>larcv</code>, python packages) and can execute these imports.</p>
 
 </div>
 </div>
@@ -1121,46 +1083,6 @@ h6:hover .anchor-link {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">!</span> ls *.root
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>test_40k.root
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Basic imports first</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
@@ -1181,14 +1103,50 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's check what data products are in the file. But <strong>before going further</strong>, please go over  <a href="http://deeplearnphysics.org/Blog/tutorials/tutorial-02.html">this tutorial</a> if you have not done so!</p>
+<p><a name="overview"></a></p>
+<h2 id="Conditions-to-make-the-samples">Conditions to make the samples<a class="anchor-link" href="#Conditions-to-make-the-samples">&#182;</a></h2><p>Here's the big picture:</p>
+<ul>
+<li>All files (train, test, and tutorial files) contain single-particle events.<ul>
+<li>This means each 2D image contain only 1 particle.</li>
+</ul>
+</li>
+<li>There are five particle types including electron, gamma ray, muon, pion, and proton.</li>
+<li>An event fraction per particle type is equal for all samples.</li>
+<li>A particle's generation point is uniformly distributed within 5.12 m cubic volume.</li>
+<li>A particle's (momentum) direction is isotropic.</li>
+<li>A particle's momentum is uniformly distributed in the range specified per type.<ul>
+<li>electrons ... 35.5 to 800 MeV/c</li>
+<li>gamma rays ... 35 to 800 MeV/c</li>
+<li>muons ... 90 to 800 MeV/c</li>
+<li>pions ... 105 to 800 MeV/c</li>
+<li>protons ... 275 to 800 MeV/c</li>
+</ul>
+</li>
+<li>2.56 m cubic 3D volume is chosen to maximize the particle's trajectory within the volume and recorded in the file.</li>
+<li>2D images are created as 2D projections (xy, yz, zx) of the 3D data<ul>
+<li>These are 3 channels of 2D images in each file.</li>
+</ul>
+</li>
+<li>Events that contain any 2D projection <strong>image with less than 10 non-zero pixels are filtered out.</strong>
+  *This is to remove empty and almost empty images from the set.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a name="file_contents"></a></p>
+<h2 id="Exploring-the-contents">Exploring the contents<a class="anchor-link" href="#Exploring-the-contents">&#182;</a></h2><p>I think the file description is best done with the data. So let's explore them in this notebook. This also serves as an example of how to browse through <code>larcv</code> data products! We use this <a href="http://deeplearnphysics.org/DataChallenge/#ChallengeClassification">test file</a> which I already downloaded in this directory. Let's check what data products are in the file. But <strong>before going further</strong>, please go over <a href="http://deeplearnphysics.org/Blog/tutorials/tutorial-02.html">this tutorial</a> if you have not done so!</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">ROOT</span><span class="o">.</span><span class="n">TFile</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">&#39;test_40k.root&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
@@ -1241,7 +1199,7 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">larcv</span> <span class="kn">import</span> <span class="n">larcv</span>
@@ -1291,7 +1249,7 @@ h6:hover .anchor-link {
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>40000 entries found!
-Object type: &lt;ROOT.larcv::EventImage2D object at 0x7fcbfa560df0&gt;
+Object type: &lt;ROOT.larcv::EventImage2D object at 0x7fbb38918600&gt;
 </pre>
 </div>
 </div>
@@ -1553,6 +1511,7 @@ gBURERGRuKICVkRERETiyv8BwhOVfvGmkGUAAAAASUVORK5CYII=
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Looks like this is an electron EM-shower. Why electron and not gamma ray? That's because, to my eyes, this looks like low dE/dX at the beginning of the shower trunk. But to check if I am right or not, we have to access simulation information (coming up next)!</p>
+<p><a name="event_fraction"></a></p>
 <h2 id="Closer-look:-particle-(label)">Closer look: particle (label)<a class="anchor-link" href="#Closer-look:-particle-(label)">&#182;</a></h2><p>We can look at <code>particle</code> information in the file, which you will use to generate a <em>label</em> for image classification training, to check if the image we saw was electron or not.</p>
 
 </div>
@@ -1560,7 +1519,7 @@ gBURERGRuKICVkRERETiyv8BwhOVfvGmkGUAAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Create TChain, count # of entries</span>
@@ -1595,7 +1554,7 @@ gBURERGRuKICVkRERETiyv8BwhOVfvGmkGUAAAAASUVORK5CYII=
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>40000 entries found!
-Object type: &lt;ROOT.larcv::EventParticle object at 0x7fcbfa8de7d0&gt;
+Object type: &lt;ROOT.larcv::EventParticle object at 0x7fbb379dc180&gt;
 
 Checking particle information for 1st entry...
 PDG Code: 11
@@ -1629,7 +1588,7 @@ Initial energy: 0.138 GeV
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">pdg_array</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">chain_particle</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">()],</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
@@ -1671,7 +1630,7 @@ Initial energy: 0.138 GeV
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">pdg_list</span><span class="p">,</span> <span class="n">pdg_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">pdg</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">return_counts</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -1715,7 +1674,7 @@ PDG counts: [8000 8000 8000 8000 8000]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">PDG2NAME</span> <span class="o">=</span> <span class="p">{</span><span class="mi">11</span>   <span class="p">:</span> <span class="s1">&#39;electron&#39;</span><span class="p">,</span>
@@ -1768,7 +1727,7 @@ proton     momentum range: 276 =&gt; 800 MeV/c
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
@@ -2406,7 +2365,7 @@ T3A6EGEUAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
@@ -3002,7 +2961,7 @@ FcdFP2OMMcYYY1Xc/wNo+IBo/jHPzgAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
@@ -3672,7 +3631,7 @@ iIiIyMKx6CciIiIisnAs+omIiIiILByLfiIiIiIiC/f/qQWvCKoKDu4AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a name="filter_efect"></a></p>
+<p><a name="filter_effect"></a></p>
 <h2 id="Closer-look:-image-filtering-effect">Closer look: image filtering effect<a class="anchor-link" href="#Closer-look:-image-filtering-effect">&#182;</a></h2><p>Recall one of the sample preparation procedures: "<em>filtering of events for which any 2D image contains less than 10 non-zero pixels</em>". This was intended to remove (almost) empty images. But it's important to note this condition <strong>filters out a short particle trajectory</strong> which typically means a low energy particle. So this filter biases a particle's energy!</p>
 <p>How significant is this effect? How far a particle travels depends on its type because of <a href="http://pdg.lbl.gov/2014/reviews/rpp2014-rev-passage-particles-matter.pdf">different stopping power</a>. In our energy range, the most severly (and actually only) affected is proton. Let's compare proton and gamma ray momentum distribution.</p>
 
@@ -3681,7 +3640,7 @@ iIiIyMKx6CciIiIisnAs+omIiIiILByLfiIiIiIiC/f/qQWvCKoKDu4AAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
@@ -4377,7 +4336,7 @@ cEB9loGiKNi7d2+hzwQo77788kvcvXu3wAt4TbV8+XKsWLECwD/PehBClOqBfERkOrb3EBERkapv
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">image2d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">image2d_array</span><span class="p">):</span>
@@ -4447,7 +4406,7 @@ $$ z^2+x^2 \geq 25 \text{cm.}$$</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pdg==2212 and energy &lt; 50&#39;</span><span class="p">)</span>
@@ -4521,7 +4480,7 @@ $$ z^2+x^2 \geq 25 \text{cm.}$$</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Create TChain, count # of entries</span>
@@ -4567,7 +4526,7 @@ $$ z^2+x^2 \geq 25 \text{cm.}$$</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>40000 entries found!
-Object type: &lt;ROOT.larcv::EventImage2D object at 0x7fcbfae60e80&gt;
+Object type: &lt;ROOT.larcv::EventImage2D object at 0x7fbb36c3a720&gt;
 </pre>
 </div>
 </div>
