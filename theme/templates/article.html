@@ -5,6 +5,16 @@
 <meta name="description" content="{{ article.summary|striptags }}" />
 <meta name="keywords" content="{{ article.tags|join(', ') }}">
 {% include "partial/og_article.html" %}
+
+
+<!-- Default meta cards for twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@dlphysics">
+<meta name="twitter:creator" content="@dlphysics">
+<meta name="twitter:title" content="{{ article.title }}">
+<meta name="twitter:description" content="{{ article.summary }}">
+<meta name="twitter:image" content="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/img/profile.png" />
+
 {% endblock %}
 
 {% block title %} &ndash; {{ article.title|striptags }}{% endblock %}
