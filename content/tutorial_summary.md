@@ -37,8 +37,16 @@ Before starting, `git clone` our [tutorial repository](https://github.com/DeepLe
 * [Reading larcv Data File _Fast_](tutorials/tutorial-04.html)
 	* Covers the basics of the tool you will be using for training a network.
 
-## **Training on Open Data**<a name="opendata"></a>
-Like [Quick Start](#quickstart), you can find notebooks used for tutorials below in our [tutorial repository](https://github.com/DeepLearnPhysics/larcv-tutorial). But these examples use simulated liquid argon time projection chamber in our [public data](http://deeplearnphysics.org/DataChallenge).
+## <a name="intro_opendata"></a> **Introduction to Open Data**
+These links are the blog posts that covered the contents of data files made available in our [public data](http://deeplearnphysics.org/DataChallenge).
+
+* [Image classification sample](http://deeplearnphysics.org/Blog/2017-12-29-BrowsingClassificationData_v0.1.0.html)
+	* Images of 5 different particle types, prepared for an image classification challenge.
+* [Semantic-segmentation sample](http://deeplearnphysics.org/Blog/2018-01-01-BrowsingSegmentationData_v0.1.0.html)
+	* Images of many particles prepared for semantic-segmentation challenge. Can be also used for object detection and instance-aware semantic segmentation algorithm training!
+
+## <a name="opendata"></a> **Training on Open Data**
+These are tutorial notebooks that actually train a toy algorithm for available open data. Like [Quick Start](#quickstart), you can find these notebooks in our [tutorial repository](https://github.com/DeepLearnPhysics/larcv-tutorial). But these examples use our [public data](http://deeplearnphysics.org/DataChallenge) which you have to download before executing the notebooks. 
 
 * [Image classification training](tutorials/tutorial-05.html)
 	* Train a network to classify an image containing one of 5 particles (e-, gamma, mu-, pi+, proton).

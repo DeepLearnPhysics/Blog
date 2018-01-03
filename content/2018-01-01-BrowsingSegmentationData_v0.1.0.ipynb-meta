@@ -1,0 +1,10 @@
+Title: Browsing Semantic-Segmentation Data Set (v0.1.0)
+Slug: 2018-01-01-BrowsingSegmentationData_v0.1.0
+Lang: en
+Date: 2018-01-01
+Category: public data
+Tags: public data, analysis example
+Authors: Kazuhiro Terao
+Summary: Browse through the file contents of the first semantic-segmentation data release (v0.1.0). I go over an introduction to _semantic-segmentation_ image analysis task, sample generation configurations, and further cover information that can be used for training algorithms for object detection and even instance-wise semantic segmentation. I also show some physics of the included physics events.
+
+
