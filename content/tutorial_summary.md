@@ -52,8 +52,8 @@ These are tutorial notebooks that actually train a toy algorithm for available o
 	* Train a network to classify an image containing one of 5 particles (e-, gamma, mu-, pi+, proton).
 * [Image classification inference](tutorials/tutorial-06.html)
 	* Example of how to run an _analysis_ (inference) using the trained network's weights.
-* Semantic segmentation training
-	* coming soon
+* [Semantic segmentation training](http://deeplearnphysics.org/Blog/2018-01-05-TrainingSegmentationData_v0.1.0.html)
+	* Train [U-ResNet](https://github.com/DeepLearnPhysics/u-resnet) for track/shower separation.
 * Semantic segmentation inference
 	* coming soon
 
