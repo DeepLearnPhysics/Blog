@@ -1137,10 +1137,10 @@ h6:hover .anchor-link {
 
 
 
-<div id="b2867aca-fea4-492b-94c6-6be7f681fa0e"></div>
+<div id="8ae91df1-360e-4f2c-affb-0afe8d110917"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#b2867aca-fea4-492b-94c6-6be7f681fa0e');
+var element = $('#8ae91df1-360e-4f2c-affb-0afe8d110917');
 require(['codemirror/mode/clike/clike'], function(Clike) { console.log('ROOTaaS - C++ CodeMirror module loaded'); });
 </script>
 </div>
@@ -1155,10 +1155,10 @@ require(['codemirror/mode/clike/clike'], function(Clike) { console.log('ROOTaaS 
 
 
 
-<div id="cd23135e-f499-48b4-b891-663eb17c0f48"></div>
+<div id="10900ed4-f0bd-4f15-8d5f-499d6170aa89"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#cd23135e-f499-48b4-b891-663eb17c0f48');
+var element = $('#10900ed4-f0bd-4f15-8d5f-499d6170aa89');
 IPython.CodeCell.config_defaults.highlight_modes['magic_text/x-c++src'] = {'reg':[/^%%cpp/]};
 </script>
 </div>
@@ -21573,15 +21573,15 @@ saved @ ssnet_checkpoint/uresnet-7700
 <h2 id="Training-Results">Training Results<a class="anchor-link" href="#Training-Results">&#182;</a></h2><p><strong>Phew that was long!</strong> Lots of dumped image/text. It took nearly 2 hours using an old generation (maxwell) <a href="https://www.inet.se/files/pdf/5411391_0.pdf">Titan X</a> GPU on my box. If you jumped here from much earlier part of this note book, I made a gif animation of the dumped "test images" for us to see the network's learning progress visually.</p>
 <p><img src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/animated.gif" alt="Animated"></p>
 <h3 id="A-few-clarifications">A few clarifications<a class="anchor-link" href="#A-few-clarifications">&#182;</a></h3><ul>
-<li><font color="red">**How is "loss" defined?**</font><ul>
+<li><strong><font color="red">How is "loss" defined?</font></strong><ul>
 <li>In one image, u-resnet calculates the softmax (multinominal regression) loss for 3 category classification. Then the loss is added for all pixels in the image, and averaged over all images in one batch. So it is essentially an average of all-pixel-softmax-sum. If you expected loss value to be smaller (like <em>o</em>(1)), the reason why is because this is a linear sum of <em>many</em> softmax loss (i.e. all pixels in an image).</li>
 </ul>
 </li>
-<li><font color="red">**What is "acc. all"?**</font><ul>
+<li><strong><font color="red">What is "acc. all"?</font></strong><ul>
 <li>It is a fraction of pixels that the network classified correctly. The network's prediction is a simple <em>argmax</em> of the softmax score per pixel. Then the accuracy is computed per image by counting number of correctly classified pixels divided by total pixel count in an image. Finally we average the accuracy over the images in the batch. We expect this to be <em>very high</em> because the majority of pixels are backgrounds in LArTPC images. By simply guessing all pixels are backgrounds, you can actually get &gt;99% accuracy!</li>
 </ul>
 </li>
-<li><font color="red">**What is "acc. nonzero"?**</font><ul>
+<li><strong><font color="red">What is "acc. nonzero"?</font></strong><ul>
 <li>This is same as "acc. all" except it is only computed for pixels for which the label is not background (hence the name, nonzero accuracy). This is actually what we care the most.</li>
 </ul>
 </li>
@@ -21591,13 +21591,13 @@ saved @ ssnet_checkpoint/uresnet-7700
 <img src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/tb_accuracy_nonzero.png" alt="TensorBoard Nonzero Pixel Accuracy">
 <img src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/tb_loss.png" alt="TensorBoard All Pixel Loss"></p>
 <h3 id="A-few-observations:">A few observations:<a class="anchor-link" href="#A-few-observations:">&#182;</a></h3><ul>
-<li><font color="blue">**Learning the backgrounds**</font><ul>
+<li><strong><font color="blue">Learning the backgrounds</font></strong><ul>
 <li>U-ResNet quickly learned about the most abandoned category, the <em>background</em> pixels.</li>
 <li>The network first learned 0-pixels being background. We can see the "background score" of the sample image is becoming dark-red quickly. This means the network has become very confident on those 0-pixels being backgrounds.</li>
 <li>Going over 1000 iterations, the network learned to draw more and more accurate boundary. An initially fuzzy cyan color "island" of non-zero pixels (i.e. non-background pixels) has finally became non-fuzzy dark blue pixels toward the end.</li>
 </ul>
 </li>
-<li><font color="blue">**Learning particle features**</font><ul>
+<li><strong><font color="blue">Learning particle features</font></strong><ul>
 <li>We can see, clearly, the network is learning more than background vs. non-background. The track (yellow) vs. shower (cyan) classification has become quite accurate toward the final iteration.</li>
 <li>The beginning of gamma ray shower, a short track-like straight trajectory segment with high dE/dX, appears to be particularly a hard thing to classify. We can see both struggle and improvement in the training.</li>
 </ul>
