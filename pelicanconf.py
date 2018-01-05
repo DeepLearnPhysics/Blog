@@ -15,7 +15,7 @@ SITESUBTITLE = 'DeepLearnPhysics Group'
 SITEDESCRIPTION = 'description!'
 SITELOGO = 'profile.png'
 SITEURL = GROUPURL + '/Blog'
-SITEURL = '' # uncomment this line for local dev
+#SITEURL = '' # uncomment this line for local dev
 #FAVICON = SITEURL + '/images/favicon.ico'
 
 BROWSER_COLOR='#333'
