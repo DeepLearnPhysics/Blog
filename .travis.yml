@@ -1,0 +1,22 @@
+language: python
+branches:
+  only:
+    - develop
+install:
+- pip install pelican
+- pip install ghp-import
+- pip install markdown
+- pip install jupyter notebook
+- pip install ipython
+- pip install nbconvert
+script:
+- make html
+notifications:
+# Emails are sent to the committer's git-configured email address by default,
+# but only if they have access to the repository.  To enable Travis on your
+# public fork of Caffe, just go to travis-ci.org and flip the switch on for
+# your Caffe fork.  To configure your git email address, use:
+#     git config --global user.email me@example.com
+  email:
+    on_success: always
+    on_failure: always
