@@ -1076,9 +1076,9 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><meta name="twitter:card" content="summary_large_image"></p>
-<meta name="twitter:image" content="http://deeplearnphysics.org/Blog/imgs/2018-01-01-BrowsingSegmentationData_v0.1.0.thumbnail.png" />
-</div>
+<p><meta content="summary_large_image" name="twitter:card" /></p>
+<meta content="http://deeplearnphysics.org/Blog/imgs/2018-01-01-BrowsingSegmentationData_v0.1.0.thumbnail.png" name="twitter:image">
+</meta></div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
@@ -1087,7 +1087,7 @@ h6:hover .anchor-link {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Recently we added a new sample to our <a href="http://deeplearnphysics.org/DataChallenge">public data</a> for <strong><em>semantic segmentation</em></strong> challenge. In this notebook I describe what this challenge is about and go over the sample contents. The goal is to make this sample Here's the outline.</p>
 <ol>
-<li><a href="#semantic_segmentation">Semantic segmentation: what &amp; how</a></li>
+<li><a href="#semantic_segmentation">Semantic segmentation: what & how</a></li>
 <li><a href="#overview">Overall summary of sample generation configuration</a></li>
 <li><a href="#file_contents">Exploring file contents</a></li>
 <li><a href="#particle">Particle data product</a></li>
@@ -1096,15 +1096,14 @@ h6:hover .anchor-link {
 </ol>
 <p>If you want to learn about this data set just in general, you may want to read all sections in this order. That should get you familiarized to start the main proposed challenge, <strong>semantic segmentation</strong> algorithm training. If you are looking into labels for <font color="red">_object detection algorithm training_</font>, you should check out section 3! If you are looking into labels for <font color="red">_instance-aware segmentation algorithm training_</font>, you should checkout section 5!</p>
 <p>... but before anything, let's start with basic package imports.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In [2]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">ROOT</span>
 <span class="kn">from</span> <span class="nn">ROOT</span> <span class="kn">import</span> <span class="n">TChain</span>
@@ -1113,18 +1112,15 @@ h6:hover .anchor-link {
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
-
 </div>
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We will use <a href="http://deeplearnphysics.org/DataChallenge/ChallengeSegmentation">test sample file</a> to study the sample in this notebook.</p>
-
 </div>
 </div>
 </div>
@@ -1133,23 +1129,22 @@ h6:hover .anchor-link {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="semantic_segmentation"></a></p>
-<h2 id="Semantic-Segmentation:-what-&amp;-how">Semantic Segmentation: what &amp; how<a class="anchor-link" href="#Semantic-Segmentation:-what-&amp;-how">&#182;</a></h2><p>In this challenge we train a machine learning algorithm to perform pixel-level image analysis. The task is to <strong>classify every pixel in an image (i.e. <font color="blue">segmentation</font>) into one of pre-defined set of object classes (i.e. <font color="blue">semantics</font>) that the pixel represents.</strong>. Unlike image classification, in which you only need to give one object label for the whole image, semantic segmentation algorithm can be used to identify multiple object types and locations at pixel level.  An output of an algorithm should look exactly like an input image (same size, same spatial resolution) except for the point that pixel values indicate an object category at each pixel. In this sample, there are only 3 pre-defined object categories: <strong>shower</strong> (<em>electromagnetic shower</em> to be precise, electron or gamma ray), <strong>track</strong> (all other particles), and <strong>background</strong> (pixels without energy deposition from a particle).</p>
+<h2 id="Semantic-Segmentation:-what-&amp;-how">Semantic Segmentation: what & how<a class="anchor-link" href="#Semantic-Segmentation:-what-&amp;-how">¶</a></h2><p>In this challenge we train a machine learning algorithm to perform pixel-level image analysis. The task is to <strong>classify every pixel in an image (i.e. <font color="blue">segmentation</font>) into one of pre-defined set of object classes (i.e. <font color="blue">semantics</font>) that the pixel represents.</strong>. Unlike image classification, in which you only need to give one object label for the whole image, semantic segmentation algorithm can be used to identify multiple object types and locations at pixel level.  An output of an algorithm should look exactly like an input image (same size, same spatial resolution) except for the point that pixel values indicate an object category at each pixel. In this sample, there are only 3 pre-defined object categories: <strong>shower</strong> (<em>electromagnetic shower</em> to be precise, electron or gamma ray), <strong>track</strong> (all other particles), and <strong>background</strong> (pixels without energy deposition from a particle).</p>
 <p>So how can we train our algorithm? We can use <em>supervised training</em> with labels provided in the sample. How to define <em>loss</em> is up to us. One method is to use softmax (multinominal logistic loss) calculated per-pixel categorization and compute an average over all pixels.</p>
 <p><strong>Enough texts!</strong> If the above texts are confusing, I deeply apologize. Let's just visualize one example image of particles and the label (which is also an image). This might be a better way to explain actually :)</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In [3]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">larcv</span> <span class="kn">import</span> <span class="n">larcv</span>
 
 <span class="c1"># A utility function to compute the 2D (X,Y) range to zoom-in so that it avoids showing zero region of an image.</span>
 <span class="k">def</span> <span class="nf">get_view_range</span><span class="p">(</span><span class="n">image2d</span><span class="p">):</span>
-    <span class="n">nz_pixels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">image2d</span><span class="o">&gt;</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">nz_pixels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">image2d</span><span class="o">></span><span class="mf">0.0</span><span class="p">)</span>
     <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
     <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
     <span class="c1"># Adjust for allowed image range</span>
@@ -1159,19 +1154,19 @@ h6:hover .anchor-link {
 
 <span class="k">def</span> <span class="nf">show_event</span><span class="p">(</span><span class="n">entry</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
     <span class="c1"># Create TChain for data image</span>
-    <span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">&#39;image2d_data_tree&#39;</span><span class="p">)</span>
-    <span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">&#39;test_10k.root&#39;</span><span class="p">)</span>
+    <span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">'image2d_data_tree'</span><span class="p">)</span>
+    <span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">'test_10k.root'</span><span class="p">)</span>
     <span class="c1"># Create TChain for label image</span>
-    <span class="n">chain_label2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">&#39;image2d_segment_tree&#39;</span><span class="p">)</span>
-    <span class="n">chain_label2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">&#39;test_10k.root&#39;</span><span class="p">)</span>
+    <span class="n">chain_label2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">'image2d_segment_tree'</span><span class="p">)</span>
+    <span class="n">chain_label2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">'test_10k.root'</span><span class="p">)</span>
     
-    <span class="k">if</span> <span class="n">entry</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">entry</span> <span class="o"><</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">entry</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">chain_label2d</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">())</span>
 
     <span class="n">chain_label2d</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
     <span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
 
-    <span class="c1"># Let&#39;s grab a specific projection (1st one)</span>
+    <span class="c1"># Let's grab a specific projection (1st one)</span>
     <span class="n">image2d</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">chain_image2d</span><span class="o">.</span><span class="n">image2d_data_branch</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">front</span><span class="p">())</span>
     <span class="n">label2d</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">chain_label2d</span><span class="o">.</span><span class="n">image2d_segment_branch</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">front</span><span class="p">())</span>
 
@@ -1179,39 +1174,30 @@ h6:hover .anchor-link {
     <span class="n">xlim</span><span class="p">,</span> <span class="n">ylim</span> <span class="o">=</span> <span class="n">get_view_range</span><span class="p">(</span><span class="n">image2d</span><span class="p">)</span>
     
     <span class="c1"># Dump images</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-    <span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">label2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">3.1</span><span class="p">)</span>
-    <span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
+    <span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">label2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">3.1</span><span class="p">)</span>
+    <span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Data'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
     <span class="n">ax0</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
     <span class="n">ax0</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Label&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Label'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
     <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
     <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     
     <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image2d</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">label2d</span><span class="p">))</span>
 
-<span class="c1"># Let&#39;s look at one specific event entry</span>
+<span class="c1"># Let's look at one specific event entry</span>
 <span class="n">ENTRY</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">image2d</span><span class="p">,</span> <span class="n">label2d</span> <span class="o">=</span> <span class="n">show_event</span><span class="p">(</span><span class="n">ENTRY</span><span class="p">)</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABBkAAAFoCAYAAAASOSMxAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzt3XuYFNWd//FPDcwaCcwKiQxmBm3lIiLXRHGRGCUEYlZl
@@ -1488,14 +1474,11 @@ J/tc33fffe7UqVPdoUOHusOGDXP/4R/+wd2zZ096e851+Z566inXcRx3+PDh7ogRI9wRI0a4jz76
 KO/tKsl1vn/5y1/y/g4Y7ZHqoS1SfbRHgkN7JDi0R4ITRFvEcd0cKSQBAAAAAABKFNh0CQAAAAAA
 UNvoZAAAAAAAAFbQyQAAAAAAAKygkwEAAAAAAFhBJwMAAAAAALCCTgYAAAAAAGAFnQwAAAAAAMAK
 OhkAAAAAAIAV/x/TgapfcB2LsgAAAABJRU5ErkJggg==
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -1503,43 +1486,33 @@ OhkAAAAAAIAV/x/TgapfcB2LsgAAAABJRU5ErkJggg==
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>On the left, you find an image that contains multiple particles. The label image is shown on the right. To be pedantic, our task is to train an algorithm to output the right image from the left :) If you could not follow how I accessed image data from the file, you may want to read about "<a href="http://deeplearnphysics.org/Blog/2017-12-29-BrowsingClassificationData_v0.1.0">Browsing Classification Data</a>" and/or follow more explicit list of <a href="http://deeplearnphysics.org/Blog/tutorial_summary.html">tutorials</a>.</p>
 <p>The label image contains only 3 unique pixel values (0, 1, and 2) that indicate background (deep blue), shower (cyan), and track (yellow). I used an arbitrary color scale to make it easy to visualize. Let's just confirm there are really 3 unique pixel values in this image:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In [4]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">unique_values</span><span class="p">,</span> <span class="n">unique_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">label2d</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Label values:&#39;</span><span class="p">,</span><span class="n">unique_values</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Label counts:&#39;</span><span class="p">,</span><span class="n">unique_counts</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Label values:'</span><span class="p">,</span><span class="n">unique_values</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Label counts:'</span><span class="p">,</span><span class="n">unique_counts</span><span class="p">)</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Label values: [ 0.  1.  2.]
 Label counts: [64886   520   130]
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -1547,44 +1520,34 @@ Label counts: [64886   520   130]
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Which means 64886 background, 520 shower, and 130 track pixels.</p>
 <p>OK, one more question before moving onto the next topic: <font color="red">**Is this label image good at pixel-level?**</font> If we are to use the right image as a label, it is better be correct at pixel-level. We can check the precision of object labels by using it as a mask to visualize three category of pixels in the input image.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In [5]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Background&#39;</span><span class="p">,</span><span class="s1">&#39;Shower&#39;</span><span class="p">,</span><span class="s1">&#39;Track&#39;</span><span class="p">]</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Background'</span><span class="p">,</span><span class="s1">'Shower'</span><span class="p">,</span><span class="s1">'Track'</span><span class="p">]</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_values</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_values</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 <span class="n">xlim</span><span class="p">,</span><span class="n">ylim</span> <span class="o">=</span> <span class="n">get_view_range</span><span class="p">(</span><span class="n">image2d</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unique_values</span><span class="p">):</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">label2d</span> <span class="o">==</span> <span class="n">value</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span> <span class="o">*</span> <span class="n">mask</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">categories</span><span class="p">[</span><span class="n">index</span><span class="p">],</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span> <span class="o">*</span> <span class="n">mask</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">categories</span><span class="p">[</span><span class="n">index</span><span class="p">],</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABBkAAAD6CAYAAADk4J/NAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzt3Xl4FFW6x/FfhURZwhYgARKcBhIMYQlhFRlGFlHQEWEY
@@ -1840,22 +1803,18 @@ e/fa24fzua5YscJYlmUyMzNNp06dTKdOncyCBQsi8r0t7lznz58fse9tacjF5OJwQC4mF3uF67mW
 hjxMHg4H5GHysFdFz9UyppghJAEAAAAAACooaLdLAAAAAACAyEaRAQAAAAAABARFBgAAAAAAEBAU
 GQAAAAAAQEBQZAAAAAAAAAFBkQEAAAAAAAQERQYAAAAAABAQFBkAAAAAAEBA/D+tjgCMUdpAXQAA
 AABJRU5ErkJggg==
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>... which looks pretty good!</p>
-<h3 id="Pixels-that-are-track-and-shower?">Pixels that are track <em>and</em> shower?<a class="anchor-link" href="#Pixels-that-are-track-and-shower?">&#182;</a></h3><p>By now you might have wondered "what about pixels where both track <strong>and</strong> shower particle deposit energy?" Very good point! Indeed that happens although the fraction to all none-background pixels is quite small. In this sample, we followed a convention that <strong>such pixels are labeled as track.</strong> In future, we plan to make a sample in which a pixel is allowed to have a <em>fractional</em> categorization (i.e. X% track and Y% shower). One way to define such fraction could be the ratio of particle energy deposition from all contributing object categories. If you are interested in this sample and/or have a different suggestion, by all means <a href="mailto:contact@deeplearnphysics.org">contact us</a>!</p>
-
+<h3 id="Pixels-that-are-track-and-shower?">Pixels that are track <em>and</em> shower?<a class="anchor-link" href="#Pixels-that-are-track-and-shower?">¶</a></h3><p>By now you might have wondered "what about pixels where both track <strong>and</strong> shower particle deposit energy?" Very good point! Indeed that happens although the fraction to all none-background pixels is quite small. In this sample, we followed a convention that <strong>such pixels are labeled as track.</strong> In future, we plan to make a sample in which a pixel is allowed to have a <em>fractional</em> categorization (i.e. X% track and Y% shower). One way to define such fraction could be the ratio of particle energy deposition from all contributing object categories. If you are interested in this sample and/or have a different suggestion, by all means <a href="mailto:contact@deeplearnphysics.org">contact us</a>!</p>
 </div>
 </div>
 </div>
@@ -1864,7 +1823,7 @@ AABJRU5ErkJggg==
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="overview"></a></p>
-<h2 id="Conditions-to-make-the-samples">Conditions to make the samples<a class="anchor-link" href="#Conditions-to-make-the-samples">&#182;</a></h2><p>Below you find a list of conditions used to generate this sample. The goal was to make a good mixture of shower and track particles with a "reasonable" (not too boring) particle multiplicity per event, so that it suits training an algorithm for separating track and shower particle trajectories.</p>
+<h2 id="Conditions-to-make-the-samples">Conditions to make the samples<a class="anchor-link" href="#Conditions-to-make-the-samples">¶</a></h2><p>Below you find a list of conditions used to generate this sample. The goal was to make a good mixture of shower and track particles with a "reasonable" (not too boring) particle multiplicity per event, so that it suits training an algorithm for separating track and shower particle trajectories.</p>
 <ul>
 <li>The total particle multiplicity per event is set to be uniform between 2 to 5.</li>
 <li>A particle to be simulated is chosen from 4 categories with equal likelihood (25% chance per category). Isotropic momentum. Each category comes with a uniform kinetic energy (K.E.) distribution and allowed per-event multiplicity range shown below.<ul>
@@ -1877,37 +1836,27 @@ AABJRU5ErkJggg==
 <li>All particles are generatd from a unique 3D point (i.e. <em>event vertex</em>). This position is uniformly distributed within the simulated volume over the events.</li>
 <li>A 3D sub-volume of 128 cm$^3$ is cropped and stored per event. The volume is defined to contain the event vertex and maximize the containment of particles' energy deposition in space. With these constraints, the cropping algorithm is free to randomize the 3D sub-volume position (to randomize event vertex position within the cropped sub-volume).</li>
 <li>Energy deposition for individual particle is stored in a 3D voxel of 0.5 cm$^3$ in MeV unit. This is projected onto three 2D planes: along x-y, y-z, and z-x axes. When stored in an image format, a scaling factor of 100 is applied for all pixel values.</li>
-<li>Events are filtered out if any of three 2D projection images have less than 5 pixels with pixel value &gt;= 10 (which corresponds to 0.1 MeV prior to scaling). The minimum threshold of 10. is applied to all pixel values (i.e. a pixel with value below 10 is set to 0).</li>
+<li>Events are filtered out if any of three 2D projection images have less than 5 pixels with pixel value >= 10 (which corresponds to 0.1 MeV prior to scaling). The minimum threshold of 10. is applied to all pixel values (i.e. a pixel with value below 10 is set to 0).</li>
 </ul>
 <p>Note that, per event, shower (electron or gamma ray) vs. track particle multiplicity ratio is not quite the same. The category 0 has 50%-50% chance. But only 1 out of 3 other categories can generate a shower. So, multiplicity-wise, the sample slightly favors to generate more track particles. However, in terms of pixel counts per event, we may find more shower type pixels because shower particle trajectory tends to be more complicated and spread out in space. We will look at kinematics and multiplicity distributions in <a href="#kinematics">later part</a> of this notebook.</p>
 <p>Visualizing some random contents of the files might help feeling more comfortable about types of events included in this sample. Here's 10 random event dump!</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span> <span class="n">show_event</span><span class="p">()</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABBAAAAJBCAYAAAD/Z0aYAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XmYXFWdP/5PZRlcAgP8lMRJ1EYThMiuoiE6gCwuLF8V
@@ -2354,18 +2303,11 @@ vPFGYVZkzk+yfN+XpUuXyvXXXy/Lly8vbOfzA7iP9kg68H3qLtoi7qA9kkI2Z3BMmy+++MJvb2/3
 uXOn73me397e7k+dOtWfOnWqv23bNj4/QArQHnEP7RF30RZxG+2R9PF8v58pSAEAAAAAAIpwCQMA
 AAAAADCiAwEAAAAAABjRgQAAAAAAAIzoQAAAAAAAAEZ0IAAAAAAAACM6EAAAAAAAgBEdCAAAAAAA
 wIgOBAAAAAAAYPT/qaRNqqNwzyIAAAAASUVORK5CYII=
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABBAAAAGuCAYAAAApnfVSAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzt3X2YXGV9MP7vCdkiChTwgQ3NgoskIYaEgEUQ8qMEMRGr
@@ -2612,18 +2554,11 @@ Hnts6eMf/3ipVCqVHnvssdKZZ55Zmjp1amnevHml3/zmNwX3tD386Z/+aenwww8vdXV1lXp6ekr/
 lf1d//r6wQ9+UEqSpDR79uzS8ccfXzr++ONLt956q9+BJhns+v/7v/+73wEKZyzSfMYjxTIeKZbx
 SLGaMR5JSqVByjECAAAA9OMWBgAAACCXAAIAAACQSwABAAAAyCWAAAAAAOQSQAAAAAByCSAAAAAA
 uQQQAAAAgFwCCAAAAECu/x+809IFlygVnwAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABBAAAAHiCAYAAABRBz9FAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3X2UXFWZKPynmjTeRNKaKIa5HaTVJJKY8DFevuUKI4k6
@@ -2938,18 +2873,11 @@ j/h8Pjk7O7P2q5Tt6OhIDMMQj8djPV+pVEqLPvkqWzKZ1KJPymWzU7lPSB2cR9TrDxHOI5xHagtn
 ETW7RIdZxBD5wz9YEBERERERERGBdyAQERERERER0V/gAQIRERERERERVcQDBCIiIiIiIiKqiAcI
 RERERERERFQRDxCIiIiIiIiIqCIeIBARERERERFRRTxAICIiIiIiIqKKvgNijzYnhZtv0AAAAABJ
 RU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABBAAAAJsCAYAAABEVVBwAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XuU3WV5KP5nDxmEmESh2tDOIINNMBkTLlUS0HKAYlAq
@@ -3277,18 +3205,11 @@ d2ptbU1z5sxJS5YsSUuWLEkvv/xybf+i9SelP3o0ffr02jF0o7lz59aefJxS8XpUrz8jIyPphRde
 SO3t7enRRx9NX375ZW3/ovUnpfrnoaNHj6bOzs7U0dGRli9fno4dO1bbv2g9+uqrr1KpVEodHR21
 884XX3zhXM2UYh5pzDzSmFkkm3mkMbNINvPINaWUGtwQBQAAABBuYQAAAABugQABAAAAyCRAAAAA
 ADIJEAAAAIBMAgQAAAAgkwABAAAAyCRAAAAAADL9LxN6IyhB6I+sAAAAAElFTkSuQmCC
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABBAAAAGvCAYAAADiwSb3AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3X2cVWW9///3GmeOgUDKNx1sRhtzQEQQ8A6RY2GC6TH8
@@ -3637,46 +3558,35 @@ sH/Hg/17t8gj0Ysli+zw0MdQvu9boVAwx3Gs0+nE+eij9vz8bK7rmuu6ViqVgtouFgur1Wp2cnJi
 VSoVu7i4sPl8HnyfOn/f4+OjJRIJc13XqtWqVatVu7+/p5937LM6+75PPx8g8kg0yCPRII/EgzwS
 PfJI9OLIIgmzT45jBAAAAAAA+ENsf2EAAAAAAAA/FwMEAAAAAAAQigECAAAAAAAIxQABAAAAAACE
 YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="file_contents"></a></p>
-<h2 id="Exploring-the-contents">Exploring the contents<a class="anchor-link" href="#Exploring-the-contents">&#182;</a></h2><p>Yeah, let's start by listing what data products we have in this file.</p>
-
+<h2 id="Exploring-the-contents">Exploring the contents<a class="anchor-link" href="#Exploring-the-contents">¶</a></h2><p>Yeah, let's start by listing what data products we have in this file.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In [7]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ROOT</span><span class="o">.</span><span class="n">TFile</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">&#39;test_10k.root&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ROOT</span><span class="o">.</span><span class="n">TFile</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">'test_10k.root'</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>TFile**		test_10k.root	
  TFile*		test_10k.root	
@@ -3691,10 +3601,8 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -3711,11 +3619,10 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 </ul>
 </li>
 <li><font color="blue">**cluster2d_mcst_tree**</font><ul>
-<li>This is <em>2D cluster</em> data product (i.e. C++ <code>larcv::EventClusterVoxel2D</code>) that stores a cluster of pixels per particle instance. This data product is <strong>not necessary to train semantic segmentation algorithm</strong> (though can be useful), and is included for your algorithm R&amp;D purpose beyond the challenge. <strong>We will cover this data product at the <a href="#cluster">end of this notebook</a></strong>.</li>
+<li>This is <em>2D cluster</em> data product (i.e. C++ <code>larcv::EventClusterVoxel2D</code>) that stores a cluster of pixels per particle instance. This data product is <strong>not necessary to train semantic segmentation algorithm</strong> (though can be useful), and is included for your algorithm R&D; purpose beyond the challenge. <strong>We will cover this data product at the <a href="#cluster">end of this notebook</a></strong>.</li>
 </ul>
 </li>
 </ul>
-
 </div>
 </div>
 </div>
@@ -3724,42 +3631,34 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="particle"></a></p>
-<h2 id="Particle-data-product">Particle data product<a class="anchor-link" href="#Particle-data-product">&#182;</a></h2><p>Let's take a closer look at the difference between <strong>particle_mctruth_tree</strong> and <strong>particle_mcst_tree</strong>. We start with particle_mctruth_tree and will simply dump summary information about particles using a handy larcv::Particle::dump() function.</p>
-
+<h2 id="Particle-data-product">Particle data product<a class="anchor-link" href="#Particle-data-product">¶</a></h2><p>Let's take a closer look at the difference between <strong>particle_mctruth_tree</strong> and <strong>particle_mcst_tree</strong>. We start with particle_mctruth_tree and will simply dump summary information about particles using a handy larcv::Particle::dump() function.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In [8]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Let&#39;s look at the same event we saw in the previous section</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Let's look at the same event we saw in the previous section</span>
 <span class="n">ENTRY</span><span class="o">=</span><span class="mi">2</span>
 
-<span class="n">particle_mctruth_chain</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">&quot;particle_mctruth_tree&quot;</span><span class="p">)</span>
-<span class="n">particle_mctruth_chain</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s2">&quot;test_10k.root&quot;</span><span class="p">)</span>
+<span class="n">particle_mctruth_chain</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">"particle_mctruth_tree"</span><span class="p">)</span>
+<span class="n">particle_mctruth_chain</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s2">"test_10k.root"</span><span class="p">)</span>
 <span class="n">particle_mctruth_chain</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">ENTRY</span><span class="p">)</span>
 <span class="n">cpp_object</span> <span class="o">=</span> <span class="n">particle_mctruth_chain</span><span class="o">.</span><span class="n">particle_mctruth_branch</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;particle_mctruth_tree contents:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'particle_mctruth_tree contents:'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">particle</span> <span class="ow">in</span> <span class="n">cpp_object</span><span class="o">.</span><span class="n">as_vector</span><span class="p">():</span>
     <span class="k">print</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">dump</span><span class="p">())</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>particle_mctruth_tree contents:
       <span class="ansi-magenta-intense-fg">Particle  (PdgCode,TrackID) = (2212,0)</span> ... with Parent (2212,0)
@@ -3768,7 +3667,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
       Inittial Energy  = 1.2257
       Deposit  Energy  = 0
       Creation Process = primary
-      BBox3D:     (0,0,0) =&gt; (0,0,0)
+      BBox3D:     (0,0,0) => (0,0,0)
 
       <span class="ansi-magenta-intense-fg">Particle  (PdgCode,TrackID) = (2212,0)</span> ... with Parent (2212,0)
       Vertex   (x, y, z, t) = (93.2396,78.1886,4.708,4105.05)
@@ -3776,7 +3675,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
       Inittial Energy  = 1.08896
       Deposit  Energy  = 0
       Creation Process = primary
-      BBox3D:     (0,0,0) =&gt; (0,0,0)
+      BBox3D:     (0,0,0) => (0,0,0)
 
       <span class="ansi-magenta-intense-fg">Particle  (PdgCode,TrackID) = (22,0)</span> ... with Parent (22,0)
       Vertex   (x, y, z, t) = (93.2396,78.1886,4.708,4105.05)
@@ -3784,7 +3683,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
       Inittial Energy  = 0.091433
       Deposit  Energy  = 0
       Creation Process = primary
-      BBox3D:     (0,0,0) =&gt; (0,0,0)
+      BBox3D:     (0,0,0) => (0,0,0)
 
       <span class="ansi-magenta-intense-fg">Particle  (PdgCode,TrackID) = (22,0)</span> ... with Parent (22,0)
       Vertex   (x, y, z, t) = (93.2396,78.1886,4.708,4105.05)
@@ -3792,15 +3691,13 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
       Inittial Energy  = 0.973524
       Deposit  Energy  = 0
       Creation Process = primary
-      BBox3D:     (0,0,0) =&gt; (0,0,0)
+      BBox3D:     (0,0,0) => (0,0,0)
 
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -3809,38 +3706,30 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 <p><em>Vertex</em> (i.e. 3D position), <em>Momentum</em>, and <em>Initial Energy</em> are the parameters of a particle at its creation. These are information that must be available when injecting a primary particle into the detector simulation. On the other hand, <em>Deposit Energy</em>, <em>TrackID</em>, and <em>BBox3D</em> (3D axis-aligned bounding box defined by 2 diagonal points) are not filled. This is because particle_mctruth_tree holds information of primary particles after the generation but before the detector simulation.</p>
 <p>... <font color="red">**Note a bug:**</font> the <em>Initial Energy</em> is in the unit of GeV while it should be in MeV!</p>
 <p>Next, let's look at the same contents from particle_mcst_tree.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In [9]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">particle_mcst_chain</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">&quot;particle_mcst_tree&quot;</span><span class="p">)</span>
-<span class="n">particle_mcst_chain</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s2">&quot;test_10k.root&quot;</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">particle_mcst_chain</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">"particle_mcst_tree"</span><span class="p">)</span>
+<span class="n">particle_mcst_chain</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s2">"test_10k.root"</span><span class="p">)</span>
 <span class="n">particle_mcst_chain</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">ENTRY</span><span class="p">)</span>
 <span class="n">cpp_object</span> <span class="o">=</span> <span class="n">particle_mcst_chain</span><span class="o">.</span><span class="n">particle_mcst_branch</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;particle_mcst_tree contents:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'particle_mcst_tree contents:'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">particle</span> <span class="ow">in</span> <span class="n">cpp_object</span><span class="o">.</span><span class="n">as_vector</span><span class="p">():</span>
     <span class="k">print</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">dump</span><span class="p">())</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>particle_mcst_tree contents:
       <span class="ansi-magenta-intense-fg">Particle  (PdgCode,TrackID) = (2212,1)</span> ... with Parent (2212,1)
@@ -3849,10 +3738,10 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
       Inittial Energy  = 1225.7
       Deposit  Energy  = 285.023
       Creation Process = primary
-      BBox3D:     (85.75,41.75,4.75) =&gt; (93.25,78.25,35.25)
-          Plane 0 BBox2D:     (85.75,41.75) =&gt; (93.25,78.25)
-          Plane 1 BBox2D:     (41.75,4.75) =&gt; (78.25,35.25)
-          Plane 2 BBox2D:     (4.75,85.75) =&gt; (35.25,93.25)
+      BBox3D:     (85.75,41.75,4.75) => (93.25,78.25,35.25)
+          Plane 0 BBox2D:     (85.75,41.75) => (93.25,78.25)
+          Plane 1 BBox2D:     (41.75,4.75) => (78.25,35.25)
+          Plane 2 BBox2D:     (4.75,85.75) => (35.25,93.25)
 
       <span class="ansi-magenta-intense-fg">Particle  (PdgCode,TrackID) = (2212,2)</span> ... with Parent (2212,2)
       Vertex   (x, y, z, t) = (95.998,76.3177,4.65729,4105.05)
@@ -3860,10 +3749,10 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
       Inittial Energy  = 1088.96
       Deposit  Energy  = 128.727
       Creation Process = primary
-      BBox3D:     (82.75,78.25,0.25) =&gt; (93.25,88.75,4.75)
-          Plane 0 BBox2D:     (82.75,78.25) =&gt; (93.25,88.75)
-          Plane 1 BBox2D:     (78.25,0.25) =&gt; (88.75,4.75)
-          Plane 2 BBox2D:     (0.25,82.75) =&gt; (4.75,93.25)
+      BBox3D:     (82.75,78.25,0.25) => (93.25,88.75,4.75)
+          Plane 0 BBox2D:     (82.75,78.25) => (93.25,88.75)
+          Plane 1 BBox2D:     (78.25,0.25) => (88.75,4.75)
+          Plane 2 BBox2D:     (0.25,82.75) => (4.75,93.25)
 
       <span class="ansi-magenta-intense-fg">Particle  (PdgCode,TrackID) = (22,3)</span> ... with Parent (22,3)
       Vertex   (x, y, z, t) = (95.998,76.3177,4.65729,4105.05)
@@ -3871,10 +3760,10 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
       Inittial Energy  = 91.433
       Deposit  Energy  = 91.3266
       Creation Process = primary
-      BBox3D:     (69.75,71.75,24.75) =&gt; (122.75,98.75,124.25)
-          Plane 0 BBox2D:     (69.75,71.75) =&gt; (122.75,98.75)
-          Plane 1 BBox2D:     (71.75,24.75) =&gt; (98.75,124.25)
-          Plane 2 BBox2D:     (24.75,69.75) =&gt; (124.25,122.75)
+      BBox3D:     (69.75,71.75,24.75) => (122.75,98.75,124.25)
+          Plane 0 BBox2D:     (69.75,71.75) => (122.75,98.75)
+          Plane 1 BBox2D:     (71.75,24.75) => (98.75,124.25)
+          Plane 2 BBox2D:     (24.75,69.75) => (124.25,122.75)
 
       <span class="ansi-magenta-intense-fg">Particle  (PdgCode,TrackID) = (22,4)</span> ... with Parent (22,4)
       Vertex   (x, y, z, t) = (95.998,76.3177,4.65729,4105.05)
@@ -3882,18 +3771,16 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
       Inittial Energy  = 973.524
       Deposit  Energy  = 791.717
       Creation Process = primary
-      BBox3D:     (13.75,40.25,49.25) =&gt; (94.75,120.75,127.75)
-          Plane 0 BBox2D:     (13.75,40.25) =&gt; (94.75,120.75)
-          Plane 1 BBox2D:     (40.25,49.25) =&gt; (120.75,127.75)
-          Plane 2 BBox2D:     (49.25,13.75) =&gt; (127.75,94.75)
+      BBox3D:     (13.75,40.25,49.25) => (94.75,120.75,127.75)
+          Plane 0 BBox2D:     (13.75,40.25) => (94.75,120.75)
+          Plane 1 BBox2D:     (40.25,49.25) => (120.75,127.75)
+          Plane 2 BBox2D:     (49.25,13.75) => (127.75,94.75)
 
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -3901,8 +3788,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Here, you see <em>Deposit Energy</em> and <em>BBox3D</em> are filled. Both information are only available after simulation of a particle's trajectory in the detector is finished. <em>BBox2D</em> is a projection of <em>BBox3D</em> onto 3 created 2D projection images. We also see <em>TrackID</em> is now filled. This is a unique, positive integer per particle that can be used to identify a unique particle instance.</p>
 <p>We used larcv::Particle::dump() function to be lazy and only see a part of information stored in this data product. There is a lot more to explore, and you can find all list by either looking at <a href="https://github.com/DeepLearnPhysics/larcv2/blob/develop/larcv/core/DataFormat/Particle.h">C++ header file</a> or simply running python <code>help</code> function. It is worth mentioning that this data product also contains the parent particle information for the secondaries (and also the root primary particle, called <em>ancestor</em>) that created them. In the above text summary, you can see all particles' <em>TrackID</em> is matching with its <em>Parent TrackID</em>. This is a unique feature of the primaries (i.e. they are registered as their own parents).</p>
-<h3 id="What-is-Deposit-Energy?">What is <em>Deposit Energy</em>?<a class="anchor-link" href="#What-is-Deposit-Energy?">&#182;</a></h3><p>Note that <em>Initial Energy</em> is a sum of a particle's mass and kinetic energy while <em>Deposit Energy</em> is computed by collecting all granular energy depositions simulated per particle. So <em>Deposit Energy</em> should be always smaller than <em>Initial Energy</em>, and the difference can not be smaller than the particle mass. Looking at TrackID 3 gamma ray, <em>Deposit Energy</em> and <em>Initial Energy</em> are quite close. This means this gamma ray, which has 0 mass, deposited almost all its energy in the image. On the other hand, TrackID 4 gamma ray has $\approx180$ MeV gap. It means this gamma ray has escaped the image region and some of its energy is not included in the image. <em>Deposit Energy</em> can be useful to know how much energy of a particle actually contributed to make image features.</p>
-
+<h3 id="What-is-Deposit-Energy?">What is <em>Deposit Energy</em>?<a class="anchor-link" href="#What-is-Deposit-Energy?">¶</a></h3><p>Note that <em>Initial Energy</em> is a sum of a particle's mass and kinetic energy while <em>Deposit Energy</em> is computed by collecting all granular energy depositions simulated per particle. So <em>Deposit Energy</em> should be always smaller than <em>Initial Energy</em>, and the difference can not be smaller than the particle mass. Looking at TrackID 3 gamma ray, <em>Deposit Energy</em> and <em>Initial Energy</em> are quite close. This means this gamma ray, which has 0 mass, deposited almost all its energy in the image. On the other hand, TrackID 4 gamma ray has $\approx180$ MeV gap. It means this gamma ray has escaped the image region and some of its energy is not included in the image. <em>Deposit Energy</em> can be useful to know how much energy of a particle actually contributed to make image features.</p>
 </div>
 </div>
 </div>
@@ -3910,16 +3796,15 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Particle-bounding-box">Particle bounding-box<a class="anchor-link" href="#Particle-bounding-box">&#182;</a></h3><p>Finally let me demonstrate bounding-box variable. Let's use the same event and draw the stored bounding box on the same image we already visualized in the <a href="#semantic_segmentation">previous section</a>. This can tell us which <em>particle</em> data product corresponds to which <em>particle</em> we visually observe!</p>
-
+<h3 id="Particle-bounding-box">Particle bounding-box<a class="anchor-link" href="#Particle-bounding-box">¶</a></h3><p>Finally let me demonstrate bounding-box variable. Let's use the same event and draw the stored bounding box on the same image we already visualized in the <a href="#semantic_segmentation">previous section</a>. This can tell us which <em>particle</em> data product corresponds to which <em>particle</em> we visually observe!</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In [10]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="kn">as</span> <span class="nn">patches</span>
 <span class="n">ENTRY</span><span class="o">=</span><span class="mi">2</span>
 
@@ -3927,29 +3812,29 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 <span class="c1"># Draw an image first</span>
 <span class="c1">#</span>
 <span class="c1"># Create TChain for data image</span>
-<span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">&#39;image2d_data_tree&#39;</span><span class="p">)</span>
-<span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">&#39;test_10k.root&#39;</span><span class="p">)</span>
+<span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">'image2d_data_tree'</span><span class="p">)</span>
+<span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">'test_10k.root'</span><span class="p">)</span>
 <span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">ENTRY</span><span class="p">)</span>
 
-<span class="c1"># Let&#39;s grab a specific projection (1st one)</span>
+<span class="c1"># Let's grab a specific projection (1st one)</span>
 <span class="n">cpp_image2d</span> <span class="o">=</span> <span class="n">chain_image2d</span><span class="o">.</span><span class="n">image2d_data_branch</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">front</span><span class="p">()</span>
 <span class="n">image2d</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">cpp_image2d</span><span class="p">)</span>
     
 <span class="c1"># Draw image</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Data'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
 
 <span class="c1">#</span>
 <span class="c1"># Draw bounding boxes</span>
 <span class="c1">#</span>
-<span class="n">particle_mcst_chain</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">&quot;particle_mcst_tree&quot;</span><span class="p">)</span>
-<span class="n">particle_mcst_chain</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s2">&quot;test_10k.root&quot;</span><span class="p">)</span>
+<span class="n">particle_mcst_chain</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">"particle_mcst_tree"</span><span class="p">)</span>
+<span class="n">particle_mcst_chain</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s2">"test_10k.root"</span><span class="p">)</span>
 <span class="n">particle_mcst_chain</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">ENTRY</span><span class="p">)</span>
 <span class="n">cpp_object</span> <span class="o">=</span> <span class="n">particle_mcst_chain</span><span class="o">.</span><span class="n">particle_mcst_branch</span>
 
 <span class="k">for</span> <span class="n">particle</span> <span class="ow">in</span> <span class="n">cpp_object</span><span class="o">.</span><span class="n">as_vector</span><span class="p">():</span>
-    <span class="c1"># obtain bounding-box: it&#39;s in [cm] scale </span>
+    <span class="c1"># obtain bounding-box: it's in [cm] scale </span>
     <span class="n">box</span> <span class="o">=</span> <span class="n">particle</span><span class="o">.</span><span class="n">boundingbox_2d</span><span class="p">()</span><span class="o">.</span><span class="n">front</span><span class="p">()</span>
     <span class="n">x_pixel_pos</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">min_x</span><span class="p">()</span>  <span class="o">/</span> <span class="n">cpp_image2d</span><span class="o">.</span><span class="n">meta</span><span class="p">()</span><span class="o">.</span><span class="n">pixel_width</span><span class="p">()</span>
     <span class="n">y_pixel_pos</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">min_y</span><span class="p">()</span>  <span class="o">/</span> <span class="n">cpp_image2d</span><span class="o">.</span><span class="n">meta</span><span class="p">()</span><span class="o">.</span><span class="n">pixel_height</span><span class="p">()</span>
@@ -3958,12 +3843,12 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 
     <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span> <span class="p">(</span><span class="n">x_pixel_pos</span><span class="p">,</span> <span class="n">y_pixel_pos</span><span class="p">),</span> <span class="n">box_width</span><span class="p">,</span> <span class="n">box_height</span><span class="p">,</span>
                                 <span class="n">fill</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                                <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">3.5</span> <span class="p">)</span>
+                                <span class="n">edgecolor</span><span class="o">=</span><span class="s1">'red'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">3.5</span> <span class="p">)</span>
                 <span class="p">)</span>
     
     <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_pixel_pos</span><span class="p">,</span> <span class="n">y_pixel_pos</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span> 
-            <span class="s1">&#39;PDG {:d} E={:.4g} MeV&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">(),</span><span class="n">particle</span><span class="o">.</span><span class="n">energy_init</span><span class="p">()),</span>
-            <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span>
+            <span class="s1">'PDG {:d} E={:.4g} MeV'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">(),</span><span class="n">particle</span><span class="o">.</span><span class="n">energy_init</span><span class="p">()),</span>
+            <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">'yellow'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'black'</span>
            <span class="p">)</span>
     
 <span class="c1"># Get image range to focus</span>
@@ -3973,22 +3858,13 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArkAAAHuCAYAAACbPRRmAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xt8VPW97//3JJncyJVLEkwIAQIGCDdFvCIgilIqFbFa
@@ -4397,14 +4273,11 @@ enpmuadkuu3Zs4fFxcUxsVjMEhIS2OHDhyc977/97W+ZSqViy5YtY0VFRbPYczLdxo+FP/3pT2z/
 /v0sKyuLZWdnsx07djCj0ci1p7Hgn65evcoEAgHTaDQsJyeH5eTksMLCQrouLECexsKFCxem7bpA
 N4MghBBCCCF+Z0ZvBkEIIYQQQshMoCCXEEIIIYT4HQpyCSGEEEKI36EglxBCCCGE+B0KcgkhhBBC
 iN+hIJcQQgghhPgdCnIJIYQQQojf+X/G8G8n4f8m3gAAAABJRU5ErkJggg==
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -4412,7 +4285,6 @@ iN+hIJcQQgghhPgdCnIJIYQQQojf+X/G8G8n4f8m3gAAAABJRU5ErkJggg==
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I hope you are now thinking "I can totally use this to train an object detection network" :) You are correct! <a href="https://arxiv.org/abs/1611.05531">This paper</a> used a similar sample to train a convolutional neural network to find an interaction region in an event.</p>
 <p>One last comment: can we do better than just bounding box? Can we know exactly which pixel corresponds to a particle instead of just a rectangular box? Can we know how much energy deposition in every pixel is made by each particle? <font color="blue">**The answer is yes**</font>, and that is what stored in <strong>cluster2d_mcst_tree</strong> and we will cover in the <a href="#cluster2">later section</a>.</p>
-
 </div>
 </div>
 </div>
@@ -4421,24 +4293,23 @@ iN+hIJcQQgghhPgdCnIJIYQQQojf+X/G8G8n4f8m3gAAAABJRU5ErkJggg==
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="kinematics"></a></p>
-<h2 id="Physics-distributions">Physics distributions<a class="anchor-link" href="#Physics-distributions">&#182;</a></h2><p>We saw lots of pictures so far, so it's time to look at "plots" and exercise some quantification of physics parameters in the sample :) Let's take a look at several physics parameter distributions. We create <code>pandas</code> <em>DataFrame</em> in this example analysis.</p>
-
+<h2 id="Physics-distributions">Physics distributions<a class="anchor-link" href="#Physics-distributions">¶</a></h2><p>We saw lots of pictures so far, so it's time to look at "plots" and exercise some quantification of physics parameters in the sample :) Let's take a look at several physics parameter distributions. We create <code>pandas</code> <em>DataFrame</em> in this example analysis.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In [11]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Create TChain</span>
-<span class="n">particle_mcst_chain</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">&quot;particle_mcst_tree&quot;</span><span class="p">)</span>
-<span class="n">particle_mcst_chain</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s2">&quot;test_10k.root&quot;</span><span class="p">)</span>
+<span class="n">particle_mcst_chain</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">"particle_mcst_tree"</span><span class="p">)</span>
+<span class="n">particle_mcst_chain</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s2">"test_10k.root"</span><span class="p">)</span>
 <span class="n">num_entries</span> <span class="o">=</span> <span class="n">particle_mcst_chain</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">()</span>
 
 <span class="c1"># These are handy constants</span>
 <span class="n">PDG_LIST</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">211</span><span class="p">,</span><span class="o">-</span><span class="mi">211</span><span class="p">,</span><span class="mi">2212</span><span class="p">])</span>
-<span class="n">PDG_NAME</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;electron&#39;</span><span class="p">,</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span><span class="s1">&#39;muon&#39;</span><span class="p">,</span><span class="s1">&#39;piplus&#39;</span><span class="p">,</span><span class="s1">&#39;piminus&#39;</span><span class="p">,</span><span class="s1">&#39;proton&#39;</span><span class="p">]</span>
+<span class="n">PDG_NAME</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'electron'</span><span class="p">,</span><span class="s1">'gamma'</span><span class="p">,</span><span class="s1">'muon'</span><span class="p">,</span><span class="s1">'piplus'</span><span class="p">,</span><span class="s1">'piminus'</span><span class="p">,</span><span class="s1">'proton'</span><span class="p">]</span>
 
 <span class="c1"># These are analysis variable containers</span>
 <span class="n">total_deposit_energy</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">num_entries</span><span class="p">],</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -4466,56 +4337,46 @@ iN+hIJcQQgghhPgdCnIJIYQQQojf+X/G8G8n4f8m3gAAAABJRU5ErkJggg==
     <span class="n">total_kinetic_energy</span><span class="p">[</span><span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial_energy</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;initial_energy&#39;</span> <span class="p">:</span> <span class="n">total_kinetic_energy</span><span class="p">,</span>
-                        <span class="s1">&#39;deposit_energy&#39;</span> <span class="p">:</span> <span class="n">total_deposit_energy</span><span class="p">,</span>
-                        <span class="s1">&#39;multi_total&#39;</span>    <span class="p">:</span> <span class="n">total_multiplicity</span><span class="p">,</span>
-                        <span class="s1">&#39;multi_electron&#39;</span> <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                        <span class="s1">&#39;multi_gamma&#39;</span>    <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                        <span class="s1">&#39;multi_muon&#39;</span>     <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                        <span class="s1">&#39;multi_piplus&#39;</span>   <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
-                        <span class="s1">&#39;multi_piminus&#39;</span>  <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
-                        <span class="s1">&#39;multi_proton&#39;</span>   <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">5</span><span class="p">]})</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">'initial_energy'</span> <span class="p">:</span> <span class="n">total_kinetic_energy</span><span class="p">,</span>
+                        <span class="s1">'deposit_energy'</span> <span class="p">:</span> <span class="n">total_deposit_energy</span><span class="p">,</span>
+                        <span class="s1">'multi_total'</span>    <span class="p">:</span> <span class="n">total_multiplicity</span><span class="p">,</span>
+                        <span class="s1">'multi_electron'</span> <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="s1">'multi_gamma'</span>    <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                        <span class="s1">'multi_muon'</span>     <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                        <span class="s1">'multi_piplus'</span>   <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                        <span class="s1">'multi_piminus'</span>  <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+                        <span class="s1">'multi_proton'</span>   <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">5</span><span class="p">]})</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Particle-multiplicity">Particle multiplicity<a class="anchor-link" href="#Particle-multiplicity">&#182;</a></h3><p>Let's check out multiplicity distributions and see if they look like what we expect (see the <a href="#overview">previous section</a> for the sample generation configuration). First, the total multiplicity per event should be flat from 2 to 5.</p>
-
+<h3 id="Particle-multiplicity">Particle multiplicity<a class="anchor-link" href="#Particle-multiplicity">¶</a></h3><p>Let's check out multiplicity distributions and see if they look like what we expect (see the <a href="#overview">previous section</a> for the sample generation configuration). First, the total multiplicity per event should be flat from 2 to 5.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In [12]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Let&#39;s checkout multiplicity unique values &amp; counts</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Let's checkout multiplicity unique values & counts</span>
 <span class="n">unique_values</span><span class="p">,</span> <span class="n">unique_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">multi_total</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="k">print</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Multiplicity values:&#39;</span><span class="p">,</span><span class="n">unique_values</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Multiplicity counts:&#39;</span><span class="p">,</span><span class="n">unique_counts</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Multiplicity values:'</span><span class="p">,</span><span class="n">unique_values</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Multiplicity counts:'</span><span class="p">,</span><span class="n">unique_counts</span><span class="p">)</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
 Multiplicity values: [1 2 3 4 5]
@@ -4523,61 +4384,49 @@ Multiplicity counts: [  17 2545 2422 2552 2464]
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>... which confirms our expectation. How about particle-wise distribution? Let's compare electron, muon, and gamma ray. We expect electron and muon (from category 0 in <a href="#overview">configuration</a>) to have the same multiplicity distribution within statistical fluctuation. Those two particles can have multiplicity between 0 to 3 while gamma ray is expected to be between 0 and 2. Further, likelihood of having at least one electron <strong>or</strong> muon (category 0) should be similar to that of gamma ray (category 1). Let's find out!</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In [13]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">FormatStrFormatter</span>
 <span class="c1"># Compare electron vs. muon vs. gamma ray multiplicity distributions</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;electron&#39;</span><span class="p">,</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span><span class="s1">&#39;muon&#39;</span><span class="p">]):</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">'electron'</span><span class="p">,</span><span class="s1">'gamma'</span><span class="p">,</span><span class="s1">'muon'</span><span class="p">]):</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-    <span class="k">exec</span><span class="p">(</span><span class="s1">&#39;ax.hist(df.multi_{}, bins=5, range=(-0.5,4.5))&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">exec</span><span class="p">(</span><span class="s1">'ax.hist(df.multi_{}, bins=5, range=(-0.5,4.5))'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">4.5</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">'</span><span class="si">%d</span><span class="s1">'</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Multiplicity&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Multiplicity'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="s1">'x'</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="s1">'y'</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Event counts with at least 1 electron or muon:&#39;</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;multi_electron &gt;0 or multi_muon &gt;0&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Event counts with at least 1 gamma ray:&#39;</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;multi_gamma&gt;0&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Event counts with at least 1 electron or muon:'</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'multi_electron >0 or multi_muon >0'</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Event counts with at least 1 gamma ray:'</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'multi_gamma>0'</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA7UAAAEwCAYAAABou1Z3AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XtcFPX+P/DXgMsupMiCKCQIoiZeUDjmjUxBJbQOdDsF
@@ -5155,80 +5004,63 @@ PvssIiMjsXLlSm1uMyKqn1jriKg+YK0jT/CXWrK0ZcuWoX379rhy5QoURYGiKEhKSkJUVBTWrVtn
 dHgeefDBB/HYY4+hYcOGuOuuu/Dee+9h8ODBRodFRAZirSOi+oC1jjzFMbVERERERERkWfylloiI
 iIiIiCyLnVoiIiIiIiKyLHZqiYiIiIiIyLLYqSUiIiIiIiLLYqeWiIiIiIiILIudWiIiIiIiIrKs
 /wdRubjdShDMMAAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Event counts with at least 1 electron or muon: 6371
 Event counts with at least 1 gamma ray: 6208
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Again, this seems to confirm our expectation. Finally, when we went over the <a href="#overview">sample generation configuration</a>, we predicted the mean number of track particles to be slightly higher than shower particles.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In [14]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 
 <span class="n">track_counts</span>  <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">multi_muon</span><span class="o">.</span><span class="n">values</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">multi_piplus</span><span class="o">.</span><span class="n">values</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">multi_piminus</span><span class="o">.</span><span class="n">values</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">multi_proton</span><span class="o">.</span><span class="n">values</span>
 <span class="n">shower_counts</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">multi_electron</span><span class="o">.</span><span class="n">values</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">multi_gamma</span><span class="o">.</span><span class="n">values</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">track_counts</span><span class="p">,</span>  <span class="n">bins</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">5.5</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;track multiplicity&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">shower_counts</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">5.5</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;shower multiplicity&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">track_counts</span><span class="p">,</span>  <span class="n">bins</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">5.5</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'track multiplicity'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">shower_counts</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">5.5</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'shower multiplicity'</span><span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">5.5</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">'</span><span class="si">%d</span><span class="s1">'</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mf">1.</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Track vs. Shower Multiplicity&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Multiplicity&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Track vs. Shower Multiplicity"</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Multiplicity'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="s1">'x'</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="s1">'y'</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 
 <span class="n">leg</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">leg_frame</span><span class="o">=</span><span class="n">leg</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span>
-<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">'white'</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfcAAAGgCAYAAAC3/i5oAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XlcFPX/B/DXLHIjNyIicnkgSK6aGl6AYYQmngl9Q8H7
@@ -5748,57 +5580,44 @@ e15L3n33Xfz666+YM2eO2qUQ3RGeliei+5rZbMbjjz8OX19fpKam4syZM1i2bBm//ka6Zr/vkRDR
 feHSpUsoLi5Wtm/MrPVm3759yh3vxo4di2bNmmHZsmXKd96J9IhH7kQkbOnSpWjRogXKysogSRIk
 SUJ8fDxatWqFjz/+WO3y7sgzzzyDIUOG4MEHH8Rjjz2GDz74wOrP9BLpETN3IiIiJ8MjdyIiIifD
 4U5ERORkONyJiIicDIc7ERGRk+FwJyIicjIc7kRERE7m/wFaA4/J4ojcIAAAAABJRU5ErkJggg==
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>... which confirms our hypothesis. Next, let's check on particle energy distributions for fun. We stored "initial kinetic energy" and "deposit energy" sums. If generated particles give up all available energy in the image, then these two quantities should match. If a particle deposit energy outside, then deposit energy would be lower.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In [15]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">initial_energy</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mi">4000</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Initial Kinetic Energy&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">deposit_energy</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mi">4000</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Deposited Energy&quot;</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">initial_energy</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mi">4000</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">"Initial Kinetic Energy"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">deposit_energy</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mi">4000</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">"Deposited Energy"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy [MeV]&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of entries&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Energy [MeV]'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Number of entries'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
 <span class="n">leg</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">leg_frame</span><span class="o">=</span><span class="n">leg</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span>
-<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">'white'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAIFCAYAAAAN7U+YAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XdYVGf6PvB7BlGKFFsgBgTFljU2bGsBATWWxIrGiiAa
@@ -6455,14 +6274,11 @@ goo9gAUoaRmBMWjoaBAdSocSpYqEHCX6vwUsd/dk693Ln9Zt266WpDzP5b1X27ba913DMMhaqyiK
 VJblR2fGcSxjjNI0lTHm2snpnNM4jvdc7Eued4w657Qsy7VjlMYk4HfxBA8AN5umSV3XaZ5nreuq
 LMuUJImO45C1VlVVqSgKSVLf96rrWud5ynuvpmneGpcA4N8QQAEAABAUYzYAAACCIoACAAAgKAIo
 AAAAgiKAAgAAICgCKAAAAIIigAIAACCoB3QbMnHDXJ9NAAAAAElFTkSuQmCC
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -6476,61 +6292,51 @@ AAAAgiKAAgAAICgCKAAAAIIigAIAACCoB3QbMnHDXJ9NAAAAAElFTkSuQmCC
 <li>Events with only muon + pion tracks</li>
 </ol>
 <p>We expect 3 to have the largest discrepancy between initial kinetic and deposit energy because both muon and pion can travel very far without stopping. We expect the best agreement in 2 because protons has very high stopping power (i.e. MeV/cm) and thus travel very short distance to deposit large amount of energy. We expect 1 to be somewhere in between: electromagnetic shower loses energy in a <a href="https://en.wikipedia.org/wiki/Particle_shower#Electromagnetic_showers">different process</a> which also requires a large field of view. So some energy may not be recorded, but probably better than 3.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In [16]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 
-<span class="n">queries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;multi_total == (multi_electron + multi_gamma)&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;multi_total == (multi_proton)&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;multi_total == (multi_muon + multi_piplus + multi_piminus + multi_proton)&#39;</span><span class="p">]</span>
-<span class="n">titles</span>  <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Electron + Gamma&#39;</span><span class="p">,</span><span class="s1">&#39;Proton&#39;</span><span class="p">,</span><span class="s1">&#39;Muon + Pion&#39;</span><span class="p">]</span>
+<span class="n">queries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'multi_total == (multi_electron + multi_gamma)'</span><span class="p">,</span>
+           <span class="s1">'multi_total == (multi_proton)'</span><span class="p">,</span>
+           <span class="s1">'multi_total == (multi_muon + multi_piplus + multi_piminus + multi_proton)'</span><span class="p">]</span>
+<span class="n">titles</span>  <span class="o">=</span> <span class="p">[</span><span class="s1">'Electron + Gamma'</span><span class="p">,</span><span class="s1">'Proton'</span><span class="p">,</span><span class="s1">'Muon + Pion'</span><span class="p">]</span>
 
 <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">query</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">queries</span><span class="p">):</span>
 
     <span class="n">sub_df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sub_df</span><span class="o">.</span><span class="n">initial_energy</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mi">4000</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Initial&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sub_df</span><span class="o">.</span><span class="n">deposit_energy</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mi">4000</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Deposited&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">index</span><span class="p">],</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sub_df</span><span class="o">.</span><span class="n">initial_energy</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mi">4000</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'Initial'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sub_df</span><span class="o">.</span><span class="n">deposit_energy</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mi">4000</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">'Deposited'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">index</span><span class="p">],</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Energy [MeV]&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Number of entries&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'Energy [MeV]'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'Number of entries'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s1">'</span><span class="si">%d</span><span class="s1">'</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">))</span>
     
     <span class="n">leg</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">leg_frame</span><span class="o">=</span><span class="n">leg</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span>
-    <span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+    <span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">'white'</span><span class="p">)</span>
 
     
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA7oAAAEiCAYAAADXrq5qAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XlYVGX/BvD7DEsIIig5oKDiLpKiYi7Yj1zA19LcQ0VN
@@ -7068,21 +6874,17 @@ kJKS4rqNUOj111/HV199haqqKvTv3x/33HOPp7tERG7CrCMif8CsI1fTCNHG/bSJvFBZWRmWLFmC
 o0eP4oknnkBUVBQuXryIxMRELFq0CEeOHMGMGTPQp08fbN++Xb4FPhGRL2HWEZE/YNaRq3GgS0RE
 RERERKrCuy4TERERERGRqnCgS0RERERERKrCgS4RERERERGpCge6REREREREpCoc6BIREREREZGq
 cKBLREREREREqvJ/olMYUBBoz/YAAAAASUVORK5CYII=
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>These are roughly what we would expect. So protons are <em>largely</em> contained, and muon and pions have a fair chance of escaping.</p>
-
 </div>
 </div>
 </div>
@@ -7091,59 +6893,49 @@ cKBLREREREREqvJ/olMYUBBoz/YAAAAASUVORK5CYII=
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="cluster"></a></p>
-<h2 id="Particle-Instance-wise-2D-Pixel-Cluster">Particle Instance-wise 2D Pixel Cluster<a class="anchor-link" href="#Particle-Instance-wise-2D-Pixel-Cluster">&#182;</a></h2><p>Here we come back to discuss about <strong>cluster2d_mcst_tree</strong> mentioned in the <a href="#file_contents">"file contents"</a> section. This is a data product that stores a list of 2D pixels that belong to a particular particle stored in particle_mcst_tree. The stored 2D pixels also records the fraction of charge in the corresponding pixel of an image stored in image2d_data_tree. So you really get the <em>full</em> information about individual particle instance. In this notebook I cover the basics of cluster2d data product and some useful example applications.</p>
-<h3 id="Basics:-cluster-2D-and-particle-info">Basics: cluster 2D and particle info<a class="anchor-link" href="#Basics:-cluster-2D-and-particle-info">&#182;</a></h3><p>Let's start with the basics. How many particles do we have stored in particle_mcst_tree, and how many clusters stored in cluster2d_mcst_tree?</p>
-
+<h2 id="Particle-Instance-wise-2D-Pixel-Cluster">Particle Instance-wise 2D Pixel Cluster<a class="anchor-link" href="#Particle-Instance-wise-2D-Pixel-Cluster">¶</a></h2><p>Here we come back to discuss about <strong>cluster2d_mcst_tree</strong> mentioned in the <a href="#file_contents">"file contents"</a> section. This is a data product that stores a list of 2D pixels that belong to a particular particle stored in particle_mcst_tree. The stored 2D pixels also records the fraction of charge in the corresponding pixel of an image stored in image2d_data_tree. So you really get the <em>full</em> information about individual particle instance. In this notebook I cover the basics of cluster2d data product and some useful example applications.</p>
+<h3 id="Basics:-cluster-2D-and-particle-info">Basics: cluster 2D and particle info<a class="anchor-link" href="#Basics:-cluster-2D-and-particle-info">¶</a></h3><p>Let's start with the basics. How many particles do we have stored in particle_mcst_tree, and how many clusters stored in cluster2d_mcst_tree?</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In [17]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">ENTRY</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="c1"># Create TChain</span>
-<span class="n">chain_particle</span>  <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">&quot;particle_mcst_tree&quot;</span><span class="p">)</span>
-<span class="n">chain_cluster2d</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">&quot;cluster2d_mcst_tree&quot;</span><span class="p">)</span>
+<span class="n">chain_particle</span>  <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">"particle_mcst_tree"</span><span class="p">)</span>
+<span class="n">chain_cluster2d</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">"cluster2d_mcst_tree"</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">chain</span> <span class="ow">in</span> <span class="p">[</span><span class="n">chain_particle</span><span class="p">,</span> <span class="n">chain_cluster2d</span><span class="p">]:</span>
-    <span class="n">chain</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">&#39;test_10k.root&#39;</span><span class="p">)</span>
+    <span class="n">chain</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">'test_10k.root'</span><span class="p">)</span>
     <span class="n">chain</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">ENTRY</span><span class="p">)</span>
     
 <span class="n">cpp_particle</span>  <span class="o">=</span> <span class="n">chain_particle</span><span class="o">.</span><span class="n">particle_mcst_branch</span>
 <span class="n">cpp_cluster2d</span> <span class="o">=</span> <span class="n">chain_cluster2d</span><span class="o">.</span><span class="n">cluster2d_mcst_branch</span>
 
 <span class="c1"># Print number of particles</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Number of particles:&#39;</span><span class="p">,</span><span class="n">cpp_particle</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Number of particles:'</span><span class="p">,</span><span class="n">cpp_particle</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
 <span class="c1"># Print number of stored clusters in the first projection</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Number of clusters:&#39;</span><span class="p">,</span><span class="n">cpp_cluster2d</span><span class="o">.</span><span class="n">cluster_pixel_2d</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Number of clusters:'</span><span class="p">,</span><span class="n">cpp_cluster2d</span><span class="o">.</span><span class="n">cluster_pixel_2d</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
     
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Number of particles: 4
 Number of clusters: 5
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -7151,34 +6943,26 @@ Number of clusters: 5
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Don't panic! Here's the reason why two numbers do not match. particle_mcst_tree stores particles that are tracked (i.e. their trajectories are simulated in the detector) but <strong>not all of them</strong>. In actuality the number of partickes tracked can become huge, sometimes more than 10,000, so we employ a certain criteria to record only useful ones with pretty low criteria thresholds to avoid missing information. cluster2d_mcst_tree stores all energy depositions per particle stored in particle_mcst_tree <strong>plus</strong> all energy depositions made by other particles (not stored in particle_mcst_tree) combined into 1 cluster. This is why the number of clusters stored in cluster2d_mcst_tree is <strong>always 1 larger</strong> than number of particles stored in particle_mcst_tree.</p>
 <p>Let's look at a bit more:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In [18]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">particle</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cpp_particle</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()):</span>
     <span class="n">cluster</span> <span class="o">=</span> <span class="n">cpp_cluster2d</span><span class="o">.</span><span class="n">cluster_pixel_2d</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()[</span><span class="n">index</span><span class="p">]</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Particle {:d} has TrackID {:d} and PDG {:d} with {:d} non-zero pixels!&#39;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s1">'Particle {:d} has TrackID {:d} and PDG {:d} with {:d} non-zero pixels!'</span>
     <span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">particle</span><span class="o">.</span><span class="n">track_id</span><span class="p">(),</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">(),</span><span class="n">cluster</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">()))</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Particle 0 has TrackID 1 and PDG 2212 with 89 non-zero pixels!
 Particle 1 has TrackID 2 and PDG 2212 with 43 non-zero pixels!
@@ -7187,56 +6971,44 @@ Particle 3 has TrackID 4 and PDG 22 with 920 non-zero pixels!
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>My next natural question would be... <strong>"Can we draw clusters?"</strong> We sure can! Here, I use a handy function that converts cluster2d into image2d.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In [19]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">num_particles</span> <span class="o">=</span> <span class="n">cpp_particle</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">num_particles</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">num_particles</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">particle</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cpp_particle</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()):</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;TrackID {:d} PDG {:d}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">track_id</span><span class="p">(),</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">())</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">'TrackID {:d} PDG {:d}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">track_id</span><span class="p">(),</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">())</span>
     <span class="c1"># Draw image from cluster2d_mcst_tree (from projection 0)</span>
     <span class="n">cluster2d</span> <span class="o">=</span> <span class="n">cpp_cluster2d</span><span class="o">.</span><span class="n">cluster_pixel_2d</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()[</span><span class="n">index</span><span class="p">]</span>
     <span class="n">image2d</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_image2d</span><span class="p">(</span><span class="n">cluster2d</span><span class="p">,</span> <span class="n">cpp_cluster2d</span><span class="o">.</span><span class="n">cluster_pixel_2d</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">meta</span><span class="p">())</span>
     <span class="n">image2d</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">image2d</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAFPCAYAAAAsgAwTAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3X2cjXX+x/H3NTPHukuoTNbIUSaMyE0hUm5itQm5TXIX
@@ -7591,74 +7363,61 @@ adOm/Nlnn83Hx8dnXt+MPZ49ezav1Wp5V1dXvnnz5nzz5s356dOnk5rlvXo8depUcrNslMxtHnK3
 +a9VmZvGHOcrtdyVubc043mceubmudxNaZaNSi1z81zuTmu281jmpjHHojO3luf3+HgvAAAAAAAW
 RKm/jgAAAAAA4EFjCQsAAAAAUCBLWAAAAACAAlnCAgAAAAAUyBIWAAAAAKBAlrAAAAAAAAWyhAUA
 AAAAKJAlLAAAAABAgf4fk+kEwD8khGwAAAAASUVORK5CYII=
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can see that I multiplied "100." scaling factor to each image so that it would look like what we visualized from image2d earlier (see <a href="#overview">sample generation configuration</a>). We can even plot all clusters and compare with the corresponding image data from image2d_data_tree.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In [20]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Draw image2d</span>
-<span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">&quot;image2d_data_tree&quot;</span><span class="p">)</span>
-<span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">&#39;test_10k.root&#39;</span><span class="p">)</span>
+<span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">TChain</span><span class="p">(</span><span class="s2">"image2d_data_tree"</span><span class="p">)</span>
+<span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">'test_10k.root'</span><span class="p">)</span>
 <span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">ENTRY</span><span class="p">)</span>
 <span class="n">cpp_image2d</span> <span class="o">=</span> <span class="n">chain_image2d</span><span class="o">.</span><span class="n">image2d_data_branch</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">front</span><span class="p">()</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 
 <span class="n">image2d</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">cpp_image2d</span><span class="p">)</span>
-<span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-<span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;image2d_data_tree&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'image2d_data_tree'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
 
 <span class="c1"># Draw from cluster2d</span>
 <span class="n">cluster2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">image2d</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
 <span class="n">num_particles</span> <span class="o">=</span> <span class="n">cpp_particle</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">particle</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cpp_particle</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()):</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;TrackID {:d} PDG {:d}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">track_id</span><span class="p">(),</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">())</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">'TrackID {:d} PDG {:d}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">track_id</span><span class="p">(),</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">())</span>
     <span class="c1"># Draw image from cluster2d_mcst_tree (from projection 0)</span>
     <span class="n">particle_cluster</span> <span class="o">=</span> <span class="n">cpp_cluster2d</span><span class="o">.</span><span class="n">cluster_pixel_2d</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()[</span><span class="n">index</span><span class="p">]</span>
     <span class="n">image2d_from_cluster2d</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_image2d</span><span class="p">(</span><span class="n">particle_cluster</span><span class="p">,</span> <span class="n">cpp_cluster2d</span><span class="o">.</span><span class="n">cluster_pixel_2d</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">meta</span><span class="p">())</span>
     <span class="n">image2d_from_cluster2d</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">image2d_from_cluster2d</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.</span>
     <span class="n">cluster2d</span> <span class="o">=</span> <span class="n">cluster2d</span> <span class="o">+</span> <span class="n">image2d_from_cluster2d</span>
     
-<span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cluster2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;cluster2d_mcst_tree&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cluster2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'cluster2d_mcst_tree'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA6AAAAHJCAYAAACboVQKAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xd8FGX+B/DPpEACSYBQAibARoJ0CJwCCpgAoqJgg1PB
@@ -8085,102 +7844,79 @@ Wlqy9vb27Jlnnrnmen3rW9/KNmzYkG3evDkbHBzMcfL8fXDtjhw5kh08eDDr6urKtm7dmn3uc5/L
 JicnK4+3dn/28ssvZ4VCIevu7s62bduWbdu2LTt58qRjbxHmW7sTJ0449hKTzYsnm6sjl+sjm2sn
 m2u33NlcyLJ5LmUEAAAASyzpKbgAAACsXAooAAAASSigAAAAJKGAAgAAkIQCCgAAQBIKKAAAAEko
 oAAAACShgAIAAJDE/wOGDKBKEiPsUwAAAABJRU5ErkJggg==
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As you can see, by combining clusters, we recovered image2d! But are they really identical? We can check some numpy array function returns.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In [21]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Image from {:s} ... mean {:.4g} pixel count {:d}&#39;</span>
-<span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;image2d_data_tree&#39;</span><span class="p">,</span><span class="n">image2d</span><span class="o">.</span><span class="n">mean</span><span class="p">(),(</span><span class="n">image2d</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;cluster2d_data_tree&#39;</span><span class="p">,</span><span class="n">cluster2d</span><span class="o">.</span><span class="n">mean</span><span class="p">(),(</span><span class="n">cluster2d</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">msg</span> <span class="o">=</span> <span class="s1">'Image from {:s} ... mean {:.4g} pixel count {:d}'</span>
+<span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">'image2d_data_tree'</span><span class="p">,</span><span class="n">image2d</span><span class="o">.</span><span class="n">mean</span><span class="p">(),(</span><span class="n">image2d</span><span class="o">></span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">'cluster2d_data_tree'</span><span class="p">,</span><span class="n">cluster2d</span><span class="o">.</span><span class="n">mean</span><span class="p">(),(</span><span class="n">cluster2d</span><span class="o">></span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Image from image2d_data_tree ... mean 1.936 pixel count 650
 Image from cluster2d_data_tree ... mean 1.979 pixel count 1204
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Wow, the mean is close but pixel count is <em>very much</em> different! Why?! What we missed is to apply another condition described in <a href="#overview">sample generation configuration</a> section: apply $\geq10$ pixel value threshold.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In [22]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Image from {:s} ... mean {:.4g} pixel count {:d}&#39;</span>
-<span class="n">nonzero_image2d</span>   <span class="o">=</span> <span class="n">image2d</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">image2d</span><span class="o">&gt;=</span><span class="mf">10.</span><span class="p">)]</span>
-<span class="n">nonzero_cluster2d</span> <span class="o">=</span> <span class="n">cluster2d</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cluster2d</span><span class="o">&gt;=</span><span class="mf">10.</span><span class="p">)]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;image2d_data_tree&#39;</span><span class="p">,</span><span class="n">nonzero_image2d</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="nb">len</span><span class="p">(</span><span class="n">nonzero_image2d</span><span class="p">)))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;cluster2d_data_tree&#39;</span><span class="p">,</span><span class="n">nonzero_cluster2d</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="nb">len</span><span class="p">(</span><span class="n">nonzero_cluster2d</span><span class="p">)))</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">msg</span> <span class="o">=</span> <span class="s1">'Image from {:s} ... mean {:.4g} pixel count {:d}'</span>
+<span class="n">nonzero_image2d</span>   <span class="o">=</span> <span class="n">image2d</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">image2d</span><span class="o">>=</span><span class="mf">10.</span><span class="p">)]</span>
+<span class="n">nonzero_cluster2d</span> <span class="o">=</span> <span class="n">cluster2d</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cluster2d</span><span class="o">>=</span><span class="mf">10.</span><span class="p">)]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">'image2d_data_tree'</span><span class="p">,</span><span class="n">nonzero_image2d</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="nb">len</span><span class="p">(</span><span class="n">nonzero_image2d</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">'cluster2d_data_tree'</span><span class="p">,</span><span class="n">nonzero_cluster2d</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="nb">len</span><span class="p">(</span><span class="n">nonzero_cluster2d</span><span class="p">)))</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Image from image2d_data_tree ... mean 195.2 pixel count 650
 Image from cluster2d_data_tree ... mean 194.2 pixel count 657
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -8188,52 +7924,42 @@ Image from cluster2d_data_tree ... mean 194.2 pixel count 657
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>which shows not exactly the same, but quite close. I am not quite sure the reason that causes this difference. But it is possible because <strong>image2d is not derived from cluster2d</strong> and they are created in 2 parallel processes in the production chain. I opened an <a href="https://github.com/DeepLearnPhysics/larcv2/issues/14">issue on github</a> to look at this difference in the future release of larcv. Nevertheless, this does not change the usefulness of cluster2d!</p>
 <p>Finally, with what I showed already, you are right to think about an image with particle instance-wise label.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In [23]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 
-<span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cluster2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-<span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Trajectory&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cluster2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Trajectory'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
 
 <span class="c1"># Create instance-wise label</span>
 <span class="n">label_cluster2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">cluster2d</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
 <span class="n">num_particles</span> <span class="o">=</span> <span class="n">cpp_particle</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">particle</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cpp_particle</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()):</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;TrackID {:d} PDG {:d}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">track_id</span><span class="p">(),</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">())</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">'TrackID {:d} PDG {:d}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">track_id</span><span class="p">(),</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">())</span>
     <span class="c1"># Draw image from cluster2d_mcst_tree (from projection 0)</span>
     <span class="n">particle_cluster</span> <span class="o">=</span> <span class="n">cpp_cluster2d</span><span class="o">.</span><span class="n">cluster_pixel_2d</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()[</span><span class="n">index</span><span class="p">]</span>
     <span class="n">image2d_from_cluster2d</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_image2d</span><span class="p">(</span><span class="n">particle_cluster</span><span class="p">,</span> <span class="n">cpp_cluster2d</span><span class="o">.</span><span class="n">cluster_pixel_2d</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">meta</span><span class="p">())</span>
     <span class="n">image2d_from_cluster2d</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">image2d_from_cluster2d</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.</span>
-    <span class="n">label_cluster2d</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">image2d_from_cluster2d</span> <span class="o">&gt;=</span> <span class="mf">10.</span><span class="p">)]</span> <span class="o">=</span> <span class="n">index</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">label_cluster2d</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">image2d_from_cluster2d</span> <span class="o">>=</span> <span class="mf">10.</span><span class="p">)]</span> <span class="o">=</span> <span class="n">index</span><span class="o">+</span><span class="mi">1</span>
     
-<span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">label_cluster2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">num_particles</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Instance labels&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">label_cluster2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">num_particles</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Instance labels'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
 </div>
 </div>
 </div>
-
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
 <div class="prompt"></div>
-
-
-
-
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA6AAAAHJCAYAAACboVQKAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8VPW9//H3IQkmgSAoAhaQIKAYWa0r7kVq64J7kKVC
@@ -8625,26 +8351,20 @@ bRxDQ0NZa2tr1tLSkrW3t2cff/zxn+7r7bffzjo6OrKtW7dmo6OjdZy8/v64u5MnT2aHDh3Kenp6
 sp07d2bPPPNMdu3atfLt7e53Fy9ezHK5XNbb25v19fVlfX192fnz5529ZVhsd+fOnXP2EpPNyyeb
 V0YuV0c2V042V261szmXZYt8lBEAAADUWNK34AIAAPDXpYACAACQhAIKAABAEgooAAAASSigAAAA
 JKGAAgAAkIQCCgAAQBIKKAAAAEn8G0KgoR+AfcZ9AAAAAElFTkSuQmCC
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Closing-remark">Closing remark<a class="anchor-link" href="#Closing-remark">&#182;</a></h2><p>In this notebook I swept the surface of the <a href="http://deeplearnphysics.org/DataChallenge/#ChallengeSegmentation">segmentation challenge</a> public data set we added recently. The sample was primarily prepared for training an algorithm for <a href="#semantic_segmentation">track/shower pixel segmentation</a>. However it can be used for training an algorithm for object detection and/or instance-aware semantic segmentation. I hope you find this data set interesting. As usual, if you have feature requests for future versions of this data set, <a href="mailto:contact@deeplearnphysics.org">contact us</a>. If you find our software useful, please give stars to <a href="https://github.com/DeepLearnPhysics/larcv">our software</a>.</p>
-
+<h2 id="Closing-remark">Closing remark<a class="anchor-link" href="#Closing-remark">¶</a></h2><p>In this notebook I swept the surface of the <a href="http://deeplearnphysics.org/DataChallenge/#ChallengeSegmentation">segmentation challenge</a> public data set we added recently. The sample was primarily prepared for training an algorithm for <a href="#semantic_segmentation">track/shower pixel segmentation</a>. However it can be used for training an algorithm for object detection and/or instance-aware semantic segmentation. I hope you find this data set interesting. As usual, if you have feature requests for future versions of this data set, <a href="mailto:contact@deeplearnphysics.org">contact us</a>. If you find our software useful, please give stars to <a href="https://github.com/DeepLearnPhysics/larcv">our software</a>.</p>
 </div>
 </div>
 </div>
- 
-
 
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var mathjaxscript = document.createElement('script');
