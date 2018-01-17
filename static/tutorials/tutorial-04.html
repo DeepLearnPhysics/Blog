@@ -8,13 +8,6 @@
   <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/pygments/github.min.css">
   <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/font-awesome/css/font-awesome.min.css">
 
-  <!-- script is a local library -->
-  <link href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css" rel="stylesheet">
-
-  <!--  
-    <link href="http://deeplearnphysics.org/Blog/theme/stylesheet/[u'kazunotebook.css']" rel="stylesheet">
-  -->
-
 
 
 
@@ -33,11 +26,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 <meta name="author" content="Kazuhiro Terao" />
-<meta name="description" content="This notebook demonstrates how one can use a dedicated tool to fast read data from larcv file and load into a numpy array for network training. We will use a python interface class called dataloader2.larcv_threadio (let's not ask what happened to dataloader1). Some details (feel free to ignore)¶larcv_threadio is a mere python API to use ThreadProcessor" />
+<meta name="description" content="From larcv-tutorial/notebooks/tutorial04_larcv_threadio.ipynb" />
 <meta name="keywords" content="">
 <meta property="og:site_name" content="DeepLearnPhysics Blog"/>
 <meta property="og:title" content="Tutorial 04: larcv_threadio for training"/>
-<meta property="og:description" content="This notebook demonstrates how one can use a dedicated tool to fast read data from larcv file and load into a numpy array for network training. We will use a python interface class called dataloader2.larcv_threadio (let's not ask what happened to dataloader1). Some details (feel free to ignore)¶larcv_threadio is a mere python API to use ThreadProcessor"/>
+<meta property="og:description" content="From larcv-tutorial/notebooks/tutorial04_larcv_threadio.ipynb"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="http://deeplearnphysics.org/Blog/tutorial-04.html"/>
 <meta property="og:type" content="article"/>
@@ -46,6 +39,16 @@
 <meta property="article:author" content="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">
 <meta property="article:section" content="misc"/>
 <meta property="og:image" content="profile.png">
+
+
+<!-- Default meta cards for twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@dlphysics">
+<meta name="twitter:creator" content="@dlphysics">
+<meta name="twitter:title" content="Tutorial 04: larcv_threadio for training">
+<meta name="twitter:description" content="<p>From larcv-tutorial/notebooks/tutorial04_larcv_threadio.ipynb</p>">
+<meta name="twitter:image" content="http://deeplearnphysics.org/Blog/theme/img/profile_small.png" />
+
 
   <title>DeepLearnPhysics Blog &ndash; Tutorial 04: larcv_threadio for training</title>
 </head>
@@ -61,6 +64,7 @@
 
       <ul class="social">
         <li><a class="sc-home" href="http://deeplearnphysics.org" target="_blank"><i class="fa fa-home"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/dlphysics" target="_blank"><i class="fa fa-twitter"></i></a></li>
         <li><a class="sc-github" href="http://github.com/DeepLearnPhysics" target="_blank"><i class="fa fa-github"></i></a></li>
       </ul>
     </div>
@@ -85,9 +89,13 @@
     <p>
           Posted on Wed 06 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/misc.html">misc</a>
 
+            by
 
-    </p>
+              <a href="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">Kazuhiro Terao</a>    </p>
   </header>
+
+  <!-- script is a local library -->
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css">
 
   <div>
     <style type="text/css">/*!
@@ -1917,6 +1925,7 @@ RU5ErkJggg==
 </script>
 
   </div>
+
   <div class="tag-cloud">
     <p>
     </p>

@@ -8,13 +8,6 @@
   <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/pygments/github.min.css">
   <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/font-awesome/css/font-awesome.min.css">
 
-  <!-- script is a local library -->
-  <link href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css" rel="stylesheet">
-
-  <!--  
-    <link href="http://deeplearnphysics.org/Blog/theme/stylesheet/[u'kazunotebook.css']" rel="stylesheet">
-  -->
-
 
 
 
@@ -33,11 +26,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 <meta name="author" content="Kazuhiro Terao" />
-<meta name="description" content="In this notebook we will run an inference of the network trained in the training example. For data sample we use the same sample used to test the network during the training (practice_test_10k.root can be found at our public dataset). For the setup of this example, we need to prepare practice_test_10k.root" />
+<meta name="description" content="From larcv-tutorial/notebooks/tutorial06-classification-inference.ipynb" />
 <meta name="keywords" content="">
 <meta property="og:site_name" content="DeepLearnPhysics Blog"/>
 <meta property="og:title" content="Tutorial 06: public data inference (classification)"/>
-<meta property="og:description" content="In this notebook we will run an inference of the network trained in the training example. For data sample we use the same sample used to test the network during the training (practice_test_10k.root can be found at our public dataset). For the setup of this example, we need to prepare practice_test_10k.root"/>
+<meta property="og:description" content="From larcv-tutorial/notebooks/tutorial06-classification-inference.ipynb"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="http://deeplearnphysics.org/Blog/tutorial-06.html"/>
 <meta property="og:type" content="article"/>
@@ -46,6 +39,16 @@
 <meta property="article:author" content="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">
 <meta property="article:section" content="misc"/>
 <meta property="og:image" content="profile.png">
+
+
+<!-- Default meta cards for twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@dlphysics">
+<meta name="twitter:creator" content="@dlphysics">
+<meta name="twitter:title" content="Tutorial 06: public data inference (classification)">
+<meta name="twitter:description" content="<p>From larcv-tutorial/notebooks/tutorial06-classification-inference.ipynb</p>">
+<meta name="twitter:image" content="http://deeplearnphysics.org/Blog/theme/img/profile_small.png" />
+
 
   <title>DeepLearnPhysics Blog &ndash; Tutorial 06: public data inference (classification)</title>
 </head>
@@ -61,6 +64,7 @@
 
       <ul class="social">
         <li><a class="sc-home" href="http://deeplearnphysics.org" target="_blank"><i class="fa fa-home"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/dlphysics" target="_blank"><i class="fa fa-twitter"></i></a></li>
         <li><a class="sc-github" href="http://github.com/DeepLearnPhysics" target="_blank"><i class="fa fa-github"></i></a></li>
       </ul>
     </div>
@@ -85,9 +89,13 @@
     <p>
           Posted on Wed 06 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/misc.html">misc</a>
 
+            by
 
-    </p>
+              <a href="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">Kazuhiro Terao</a>    </p>
   </header>
+
+  <!-- script is a local library -->
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css">
 
   <div>
     <style type="text/css">/*!
@@ -4515,6 +4523,7 @@ Track correct fraction: 2958 / 3000 = 98.6 [%]
 </script>
 
   </div>
+
   <div class="tag-cloud">
     <p>
     </p>

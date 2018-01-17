@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<meta name="author" content="Kazuhiro Terao" />
+<meta name="description" content="List of tutorials covering software installations, training a network using (public) larcv data files, and developing your own code in larcv." />
+<meta name="keywords" content="python tutorial, larcv tutorial, public data">
+<meta property="og:site_name" content="DeepLearnPhysics Blog"/>
+<meta property="og:title" content="Tutorials"/>
+<meta property="og:description" content="List of tutorials covering software installations, training a network using (public) larcv data files, and developing your own code in larcv."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://deeplearnphysics.org/Blog/tutorial_summary.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-12-19 00:00:00-06:00"/>
+<meta property="article:modified_time" content="2017-12-19 00:00:00-06:00"/>
+<meta property="article:author" content="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">
+<meta property="article:section" content="tutorial"/>
+<meta property="article:tag" content="python tutorial"/>
+<meta property="article:tag" content="larcv tutorial"/>
+<meta property="article:tag" content="public data"/>
+<meta property="og:image" content="profile.png">
+
+
+<!-- Default meta cards for twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@dlphysics">
+<meta name="twitter:creator" content="@dlphysics">
+<meta name="twitter:title" content="Tutorials">
+<meta name="twitter:description" content="<p>List of tutorials covering software installations, training a network using (public) larcv data files, and developing your own code in larcv.</p>">
+<meta name="twitter:image" content="http://deeplearnphysics.org/Blog/theme/img/profile_small.png" />
+
+
+  <title>DeepLearnPhysics Blog &ndash; Tutorials</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="http://deeplearnphysics.org/Blog">
+        <img src="http://deeplearnphysics.org/Blog/theme/img/profile.png" alt="Blog" title="Blog">
+      </a>
+      <h1><a href="http://deeplearnphysics.org/Blog">Blog</a></h1>
+
+<p>DeepLearnPhysics Group</p>
+
+      <ul class="social">
+        <li><a class="sc-home" href="http://deeplearnphysics.org" target="_blank"><i class="fa fa-home"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/dlphysics" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-github" href="http://github.com/DeepLearnPhysics" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+    <nav>
+
+
+      <a href="http://deeplearnphysics.org/Blog/index.html">Home</a>
+      <a href="http://deeplearnphysics.org/Blog/categories.html">Category</a>
+      <a href="http://deeplearnphysics.org/Blog/archives.html">Archives</a>
+      <a href="http://deeplearnphysics.org/Blog/tags.html">Tags</a>
+      <a href="http://deeplearnphysics.org/Blog/authors.html">Authors</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+    <h1 id="tutorial_summary">Tutorials</h1>
+    <p>
+          Posted on Tue 19 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/tutorial.html">tutorial</a>
+
+            by
+
+              <a href="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">Kazuhiro Terao</a>    </p>
+  </header>
+
+  <!-- script is a local library -->
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css">
+
+  <div>
+    <p>If you are looking for "how to get started" with hands-on experience, you are in the right place.
+Below is a summary of tutorials made available voluntarily by our group members.
+The most (if not all) of them are written in <code>python</code>, and in fact in <em>jupyter</em> <code>notebook</code> format.</p>
+<h3><strong>Installing Jupyter Notebook</strong></h3>
+<p>Jupyter notebook is not a requirement for using our software, but we share lots of examples in this format. 
+So you might want to install it if you don't have one. Installation is same as many other python packages.</p>
+<ol>
+<li>If you don't have it, install either <a href="https://pypi.python.org/pypi/pip">pip</a> or <a href="https://conda.io/docs/index.html">conda</a> python package manager.</li>
+<li>Either <a href="https://pip.pypa.io/en/stable/reference/pip_install/">pip install</a> or <a href="https://conda.io/docs/commands.html">conda install</a> <code>jupyter</code>.</li>
+</ol>
+<p>You might find a few glitches. Try googling a solution by copy-and-paste the error message (usually "package X not found") in the browser.</p>
+<p><strong>Additional packages</strong>: other extremely useful python packages include <code>numpy</code>, <code>scipy</code>, <code>matplotlib</code>, <code>scikit-learn</code>, and <code>scikit-image</code>.
+<strong>Optional packages</strong>: want more? you can install <code>tensorflow</code> and <code>pyqtgraph</code>!</p>
+<h2><a name="quickstart"></a><strong>Quick Start</strong></h2>
+<p>Before starting, <code>git clone</code> our <a href="https://github.com/DeepLearnPhysics/larcv-tutorial">tutorial repository</a>. All notebooks in this section can be found there (and you can execute/run the notebook by yourself as you follow the tutorial).</p>
+<ul>
+<li><a href="tutorials/tutorial-00.html">Jupyter Notebook</a><ul>
+<li>Introduction, very brief on our end. Features awesome <a href="http://arogozhnikov.github.io/2016/09/10/jupyter-features.html">Brilliantly wrong</a> blog post by Alex Rogozhnikov)</li>
+</ul>
+</li>
+<li><a href="tutorials/tutorial-01.html">larcv Installation</a><ul>
+<li>How to install <code>larcv</code> software (our C++ framework for file IO and image processing)</li>
+</ul>
+</li>
+<li><a href="tutorials/tutorial-02.html">Opening larcv Data File</a><ul>
+<li>What's in the file? Shows how to access images as numpy arrays and visualize them.</li>
+</ul>
+</li>
+<li><a href="tutorials/tutorial-03.html">Storing larcv Data File</a><ul>
+<li>Brief demo on how to store your own data.</li>
+</ul>
+</li>
+<li><a href="tutorials/tutorial-04.html">Reading larcv Data File <em>Fast</em></a><ul>
+<li>Covers the basics of the tool you will be using for training a network.</li>
+</ul>
+</li>
+</ul>
+<h2><a name="intro_opendata"></a> <strong>Introduction to Open Data</strong></h2>
+<p>These links are the blog posts that covered the contents of data files made available in our <a href="http://deeplearnphysics.org/DataChallenge">public data</a>.</p>
+<ul>
+<li><a href="http://deeplearnphysics.org/Blog/2017-12-29-BrowsingClassificationData_v0.1.0.html">Image classification sample</a><ul>
+<li>Images of 5 different particle types, prepared for an image classification challenge.</li>
+</ul>
+</li>
+<li><a href="http://deeplearnphysics.org/Blog/2018-01-01-BrowsingSegmentationData_v0.1.0.html">Semantic-segmentation sample</a><ul>
+<li>Images of many particles prepared for semantic-segmentation challenge. Can be also used for object detection and instance-aware semantic segmentation algorithm training!</li>
+</ul>
+</li>
+</ul>
+<h2><a name="opendata"></a> <strong>Training on Open Data</strong></h2>
+<p>These are tutorial notebooks that actually train a toy algorithm for available open data. Like <a href="#quickstart">Quick Start</a>, you can find these notebooks in our <a href="https://github.com/DeepLearnPhysics/larcv-tutorial">tutorial repository</a>. But these examples use our <a href="http://deeplearnphysics.org/DataChallenge">public data</a> which you have to download before executing the notebooks. </p>
+<ul>
+<li><a href="tutorials/tutorial-05.html">Image classification training</a><ul>
+<li>Train a network to classify an image containing one of 5 particles (e-, gamma, mu-, pi+, proton).</li>
+</ul>
+</li>
+<li><a href="tutorials/tutorial-06.html">Image classification inference</a><ul>
+<li>Example of how to run an <em>analysis</em> (inference) using the trained network's weights.</li>
+</ul>
+</li>
+<li><a href="http://deeplearnphysics.org/Blog/2018-01-05-TrainingSegmentationData_v0.1.0.html">Semantic segmentation training</a><ul>
+<li>Train <a href="https://github.com/DeepLearnPhysics/u-resnet">U-ResNet</a> for track/shower separation.</li>
+</ul>
+</li>
+<li>Semantic segmentation inference<ul>
+<li>coming soon</li>
+</ul>
+</li>
+</ul>
+<h2><strong>LArCV</strong> <a name="larcv"></a></h2>
+<p>Coming soon</p>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="http://deeplearnphysics.org/Blog/tag/python-tutorial.html">python tutorial</a>
+      <a href="http://deeplearnphysics.org/Blog/tag/larcv-tutorial.html">larcv tutorial</a>
+      <a href="http://deeplearnphysics.org/Blog/tag/public-data.html">public data</a>
+    </p>
+  </div>
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy; DeepLearnPhysics 2017 - This work is licensed under a <a rel="license" href="https://opensource.org/licenses/MIT">MIT License</a>
+</p>
+<p>
+</p>    </footer>
+  </main>
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " DeepLearnPhysics Blog ",
+  "url" : "http://deeplearnphysics.org/Blog",
+  "image": "profile.png",
+  "description": "description!"
+}
+</script>
+</body>
+</html>
