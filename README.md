@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/DeepLearnPhysics/Blog.svg?branch=develop)](https://travis-ci.org/DeepLearnPhysics/Blog)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://raw.githubusercontent.com/DeepLearnPhysics/Blog/master/LICENSE)
 
 # Blog
 A repository for the DeepLearnPhysics group [Blog](https://deeplearnphysics.org/Blog) webpage.
