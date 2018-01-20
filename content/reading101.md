@@ -8,13 +8,23 @@ Authors: Kazuhiro Terao
 Summary: Useful readings for (new) group members.
 
 This is a message I compiled once for myself but also share with my students etc..
-You can easily find a similar compilation of papers on people's github: just google it :) 
+You can easily find a similar compilation of readings on people's github: just google it :) 
 But here's just one of those for our group's reference.
+
+## **Online ML/DL Introduction**
+
+* [Stanford lecture CS231](http://cs231n.github.io) 
+	* A golden material for convolutional neural networks (CNNs)
+* [Deep Learning textbook](http://www.deeplearningbook.org)
+	* by Ian Goodfellow, Yoshua Bengio and Aaron Courville
+* [Homework & Solutions](https://github.com/kaleko/CourseraML) for machine learning coursera course
+	* Compiled by our fomer colleague David Kaleko (look how many stars he got on this repo!)
+	* You can [sign up](https://www.coursera.org/learn/machine-learning) for yourself :)
+
+## **Modern CNN papers**
 
 I list them in an order of history, hoping this allows you to skip some toward the beginning.
 I put “**recommended**” next to the paper i think it’s good/important to read.
-
-## **Modern CNN**
 
 * 2012 [Drop-out](https://arxiv.org/pdf/1207.0580.pdf) (**recommended**)
 	* A big jump in training technique to avoid over-fitting and improve final accuracy, key technique for AlexNet
