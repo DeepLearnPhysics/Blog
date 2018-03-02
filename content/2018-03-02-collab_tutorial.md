@@ -9,7 +9,9 @@ Summary: List of tutorials covering basics of tensorflow, slim, image classifica
 
 This is a compilation of jupyter notebooks written for hands-on workshops held at Stanford/SLAC during last month (February/March 2018). They are targetted toward beginners, starting from how to use tensorflow and ends (currently) with training a deep convolutional neural network for semantic segmentation (pixel-level object categorization).
 
-All notebooks referenced here are executable on [google colaboratory](https://colab.research.google.com) with a free K80 GPU. You do not need your own GPU machine or an account (well, you do need gmail account to use colaboratory). **Click a hyperlink, and choose "Connected apps"=>"Colaboratory" to open them.** 
+All notebooks referenced here are executable on [google colaboratory](https://colab.research.google.com) with a free K80 GPU. You do not need your own GPU machine or an account (well, you do need gmail account to use colaboratory). 
+
+To run jupyter notebooks below, click a hyperlink, and choose "Connected apps" => "Colaboratory" to open them.
 
 0. [Start google colaboratory](https://drive.google.com/file/d/1P7okDVh6viCIOkii6UAF2O9sTAcKGNWq/view?usp=sharing)
 1. [Introduction to tensorflow: linear regression](https://drive.google.com/file/d/1R-1oFo92RHv4goFt7jxd49FDH6a9Z9FO/view?usp=sharing)
