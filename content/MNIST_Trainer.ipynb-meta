@@ -1,0 +1,10 @@
+Title: Analyzing Network Output - Part 1, Training and Saving
+Slug: mnist-ana-00
+Lang: en
+Date: 2018-4-12
+Category: Tutorial
+Tags: MNIST, training, saving, minibatching, batch norm
+Authors: Corey Adams
+Summary: I train a very simple and basic mnist classification network with a lot of overkill: I use minibatching, batch normalization, and save the network weights to disk.  This tutorial can be done on a CPU.  In Part 2, I restore the model, run on the validation set, and analyze the results.
+
+
