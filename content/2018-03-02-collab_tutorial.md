@@ -13,15 +13,15 @@ All notebooks referenced here are executable on [google colaboratory](https://co
 
 To run jupyter notebooks below, click a hyperlink, and choose "Connected apps" => "Colaboratory" to open them.
 
-0. [Start google colaboratory](https://drive.google.com/file/d/1P7okDVh6viCIOkii6UAF2O9sTAcKGNWq/view?usp=sharing)
-1. [Introduction to tensorflow: linear regression](https://drive.google.com/file/d/1R-1oFo92RHv4goFt7jxd49FDH6a9Z9FO/view?usp=sharing)
-2. [MNIST data set for ML-101](https://drive.google.com/file/d/1dOoyPk9wOtwatTCmLxij3YnvWq5pfrjw/view?usp=sharing)
-3. [MNIST image classification](https://drive.google.com/file/d/1JMuqstQmiM4L7Bf9mzEl68c1NANTmTRC/view?usp=sharing)
-4. [Tensorflow-Slim: high level APIs for building a graph](https://drive.google.com/file/d/1sH9XbUtw5GqVjeR8gvNGUPmhJHs9GSrb/view?usp=sharing)
-5. [Batch normalization](https://drive.google.com/file/d/11f6Krj6fkFzE7AQ7qNAQKx7bjSlPOb1d/view?usp=sharing)
-6. [Saving & Restoring Trained Weights](https://drive.google.com/file/d/1H9C1_XDdf7UJXgFRTua-n0YXmC5QpvcI/view?usp=sharing)
-7. [Semantic segmentation with shallow CNN](https://drive.google.com/file/d/1Y6NGMmVGKDbGyUIFrV33G-mZcCwVLUtw/view?usp=sharing)
-8. [Semantic segmentation with deep CNN](https://drive.google.com/file/d/11M1SJ2DnOmtGF91d58zJKf8BYplcZ27-/view?usp=sharing)
+0. [Start google colaboratory](https://colab.research.google.com/drive/1P7okDVh6viCIOkii6UAF2O9sTAcKGNWq)
+1. [Introduction to tensorflow: linear regression](https://colab.research.google.com/drive/1R-1oFo92RHv4goFt7jxd49FDH6a9Z9FO)
+2. [MNIST data set for ML-101](https://colab.research.google.com/drive/1dOoyPk9wOtwatTCmLxij3YnvWq5pfrjw)
+3. [MNIST image classification](https://colab.research.google.com/drive/1JMuqstQmiM4L7Bf9mzEl68c1NANTmTRC)
+4. [Tensorflow-Slim: high level APIs for building a graph](https://colab.research.google.com/drive/1sH9XbUtw5GqVjeR8gvNGUPmhJHs9GSrb)
+5. [Batch normalization](https://colab.research.google.com/drive/11f6Krj6fkFzE7AQ7qNAQKx7bjSlPOb1d)
+6. [Saving & Restoring Trained Weights](https://colab.research.google.com/drive/1H9C1_XDdf7UJXgFRTua-n0YXmC5QpvcI)
+7. [Semantic segmentation with shallow CNN](https://colab.research.google.com/drive/1Y6NGMmVGKDbGyUIFrV33G-mZcCwVLUtw)
+8. [Semantic segmentation with deep CNN](https://colab.research.google.com/drive/11M1SJ2DnOmtGF91d58zJKf8BYplcZ27-)
 
 Your feedbacks are always welcome! You know better how to improve them so that we can guide others better. Suggestions to include more items (like other network tasks) are also welcome! We will try our best to keep this list interesting to new members.
 
