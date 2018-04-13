@@ -1,0 +1,8 @@
+Title: Analyzing Network Output - Part 2, Restoring and Analyzing
+Slug: 2018-04-13-MNIST_Analyzer
+Lang: en
+Date: 2018-4-12
+Category: Tutorial
+Tags: MNIST, retoring, analysis, minibatching, batch norm
+Authors: Corey Adams
+Summary: See Part 1 first!  There, I trained an mnist classifier.  Here, I restore the trained network, run the network on the validation script, and do some analysis on the output. This is meant as a template for new users to see "how do I actually use a trained network?" Lots of this information exists elsewhere too, I've just tried to consolidate the basics.
