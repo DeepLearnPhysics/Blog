@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<meta name="author" content="Kazuhiro Terao" />
+<meta name="description" content="News from the last week's meeting publications and talk/job opportunities!" />
+<meta name="keywords" content="news, paper">
+<meta property="og:site_name" content="DeepLearnPhysics Blog"/>
+<meta property="og:title" content="News @ 2018-09-07"/>
+<meta property="og:description" content="News from the last week's meeting publications and talk/job opportunities!"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://deeplearnphysics.org/Blog/2018-09-07-Update.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-09-07 00:00:00-05:00"/>
+<meta property="article:modified_time" content="2018-09-07 00:00:00-05:00"/>
+<meta property="article:author" content="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">
+<meta property="article:section" content="news"/>
+<meta property="article:tag" content="news"/>
+<meta property="article:tag" content="paper"/>
+<meta property="og:image" content="profile.png">
+
+
+<!-- Default meta cards for twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@dlphysics">
+<meta name="twitter:creator" content="@dlphysics">
+<meta name="twitter:title" content="News @ 2018-09-07">
+<meta name="twitter:description" content="<p>News from the last week's meeting publications and talk/job opportunities!</p>">
+<meta name="twitter:image" content="http://deeplearnphysics.org/Blog/theme/img/profile_small.png" />
+
+
+  <title>DeepLearnPhysics Blog &ndash; News @ 2018-09-07</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="http://deeplearnphysics.org/Blog">
+        <img src="http://deeplearnphysics.org/Blog/theme/img/profile.png" alt="Blog" title="Blog">
+      </a>
+      <h1><a href="http://deeplearnphysics.org/Blog">Blog</a></h1>
+
+<p>DeepLearnPhysics Group</p>
+
+      <ul class="social">
+        <li><a class="sc-home" href="http://deeplearnphysics.org" target="_blank"><i class="fa fa-home"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/dlphysics" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-github" href="http://github.com/DeepLearnPhysics" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+    <nav>
+
+
+      <a href="http://deeplearnphysics.org/Blog/index.html">Home</a>
+      <a href="http://deeplearnphysics.org/Blog/categories.html">Category</a>
+      <a href="http://deeplearnphysics.org/Blog/archives.html">Archives</a>
+      <a href="http://deeplearnphysics.org/Blog/tags.html">Tags</a>
+      <a href="http://deeplearnphysics.org/Blog/authors.html">Authors</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+    <h1 id="2018-09-07-Update">News @ 2018-09-07</h1>
+    <p>
+          Posted on Fri 07 September 2018 in <a href="http://deeplearnphysics.org/Blog/category/news.html">news</a>
+
+            by
+
+              <a href="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">Kazuhiro Terao</a>    </p>
+  </header>
+
+  <!-- script is a local library -->
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css">
+
+  <div>
+    <p>Here's the meeting week's summary and some opportunity reminders.</p>
+<h3>Meeting:</h3>
+<ul>
+<li>
+<p><strong>Next meeting</strong></p>
+<ul>
+<li>Let's plan on <strong>September 19th 11:30AM Fermilab/Chicago (US/Central) time</strong>.
+Please ping me if you have an awesome update to share. </li>
+</ul>
+</li>
+<li>
+<p><strong>This week's summary</strong></p>
+<ul>
+<li>
+<p><a href="https://lsa-phys-spitz-docdb.miserver.it.umich.edu/deeplp/cgi-bin/ShowDocument?docid=26"><strong>Manuel</strong> presented</a> highlights on <a href="https://arxiv.org/abs/1804.09641">EXO-200 paper</a>. It was very clear and interesting talk! Two highlights focused was using CNN for energy estimation and vertex reconstruction where they <strong>trained on data</strong> for the latter. The architecture is fairly simple: 6 convolution + max pooling layers followed by 3 fully connected layers as shown in Figure 10 in the paper. For the energy estimation, the final layer has one filter to output the reconstructed energy. For the vertex reconstruction, the architecture was modified to output vertex positions. <strong>Take aways</strong>: CNN performed slightly better than the traditional method for the energy estimation. The vertex reconstruction is trained on real data. They have two readout channels: charge and optical signals where the former is used for reconstructing vertex to 3mm resolution in 3D space. They used that (i.e. reconstructed vertex from charge signal) as a label and to train the CNN for reconstructing vertex from the optical signal. This worked and CNN could reconstruct the vertex at about 25mm resolution. Although this resolution is much bigger than the charge signal channel, it could be used in a complimentary manner for events in the kinematic regime where charge signal reconstruction may perform pooly.
+<center>
+<figure>
+<img src="imgs/2018-09-07-Update/EXO-200-Energy.png" title="EXO-200-Energy" style="width:54%">
+<img src="imgs/2018-09-07-Update/EXO-200-Vertex.png" title="EXO-200-Vertex" style="width:45%">
+</figure>
+<small> Left: energy reconstruction on Thorium decay chain spectrum comparing CNN vs. traditional reconstruction techniques. Right: comparison of reconstructed vertex between CNN vs. traditional method (i.e. "true") on Y-projection. Both are from <a href="https://lsa-phys-spitz-docdb.miserver.it.umich.edu/deeplp/cgi-bin/ShowDocument?docid=26">Manuel's talk on DocDB</a></small>
+</center></p>
+</li>
+<li>
+<p><a href="https://lsa-phys-spitz-docdb.miserver.it.umich.edu/deeplp/cgi-bin/ShowDocument?docid=25"><strong>Samantha</strong> presented</a> her research plan for utilizing deep learning for charged-current multi-proton (CCNP) neutrino interaction analysis in MicroBooNE experiment. The detector is a liquid argon time projection chamber (LArTPC) and she gets a beautiful image of particle trajectories. Her target should contain 1 muon and any non-zero multiplicity of protons in a picture! She has worked with Rui An in the past to train a CNN for multi-class (i.e. multiple particle type) identification in one image and plan to extends that. She ultimately wish to perform instance-aware semantic segmentation technique to cluster individual particles and thus solving the multiplicity identification and clustering problem together. <strong>She is seeking for a collaboration</strong> so please contact her or us (then we can forward your contact to her!). 
+<center>
+<figure>
+<img src="https://microboone-exp.fnal.gov/public/approved_plots/plots/4987/run_3493_sub_548_ev_27435_COLLECTION.png" title="MicroBooNE CCNP" style="width:75%">
+</figure>
+<small> A MicroBooNE's event display showing CC interaction with a likely proton candidate (short tracks). Samantha would like to efficiently identify this type of an event (picture) with ab arbitrary number of protons. You can find more event displays from MicroBooNE <a href="https://microboone-exp.fnal.gov/public/approved_plots/Event_Displays.html">here</a></small>
+</center></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Job/Conference/Funding opportunities</h3>
+<p>As usual, thanks to Gabe Perdue for sharing many opportunities! Checkout deep.learn.physics slack organization for more updates.</p>
+<ul>
+<li><large><strong>Job opportunities</strong></large><ul>
+<li><a href="https://careers.peopleclick.com/careerscp/client_argonnelab/external/jobDetails.do?functionName=getJobDetail&amp;jobPostId=5880&amp;localeCode=en-us">Assistant Computer Scientist</a> (postdoc and beyond) @ Argonne National Lab</li>
+<li><a href="https://academicjobsonline.org/ajo/jobs/11530">ML/Neutrino Research Associate</a> (postdoc equivalent) @ SLAC National Lab</li>
+<li>ML/HEP Research Associate (DUNE/ATLAS/LSST) (postdoc equivalent, ML for intensity, energy, and cosmic frontiers) @ SLAC National Lab</li>
+</ul>
+</li>
+<li><large><strong>Conference opportunities</strong></large><ul>
+<li><a href="https://sites.google.com/lbl.gov/ml4sci/">Machine Learning for Science Workshop at LBNL</a></li>
+<li><a href="https://indico.fnal.gov/event/17199/">Next steps in Quantum Science for HEP @ Fermilab</a></li>
+<li><a href="https://indico.cern.ch/event/735431/">Phystat-Nu Workshop @ CERN, Geneva</a></li>
+<li><a href="http://qbna3.eventzilla.net/web/event?eventid=2138962884">D-wave conference in Knoxville @ Oak Ridge</a></li>
+<li><a href="https://nnn18.triumf.ca">International Workshop on Next Generation Nucleon Decay and Neutrino Detectors</a><ul>
+<li>DLP group invited to give a talk. Contact me!</li>
+</ul>
+</li>
+<li><a href="https://quantumtechdialogue2018.com/">Quantum Opportunities @ Vancouver Convention Center</a></li>
+</ul>
+</li>
+<li><large><strong>Funding opportunities</strong></large><ul>
+<li><a href="https://science.energy.gov/wdts/scgsr/">DOE Office of Science Graduate Student Research Program</a><ul>
+<li>Get a support for conducting a research at national labs for graduate students at U.S. universities! Up to $3k stipend and travels, 3 to 12 months stay at any national lab for Ph.D thesis related research. The <strong>deadline is October 15th</strong>.</li>
+</ul>
+</li>
+<li><a href="https://www.aps.org/programs/innovation/moore/visitor.cfm">NSF Moore's travel grants</a> (Thanks to Flip Tanedo @ UC Reverside!)<ul>
+<li>Get up to $5k for 1-3 week visit, or $10k for 4-6 week visit to inspire and collaborate with colleagues at different institutions (come to SLAC! :) )</li>
+</ul>
+</li>
+<li><a href="https://pioneer.app">Pioneer grants</a> (non academic)<ul>
+<li>The same people organized "AI Grant" contacted me to spread this. This grant is a bit wider opportunity: no need to be AI, any ML projects (and beyond) count. "Apply with any project you need help with. After 30 days, the best players will receive $5,000, a round-trip ticket to Silicon Valley, and access to mentorship from some of the world’s most successful individuals." (from their website)</li>
+</ul>
+</li>
+<li><a href="https://www.insightdatascience.com/apply">Insight Fellows Program</a> (non academic)<ul>
+<li>The next cycle starts on January 14th, <strong>all deadlines on October 22nd</strong>!</li>
+<li><strong>Seattle</strong>: Data Science</li>
+<li><strong>Toronto</strong>: Data Science, Artificial Intelligence</li>
+<li><strong>Boston</strong>: Data Science, Health Data Science, Data Engineering</li>
+<li><strong>New York</strong>: Data Science, Data Engineering, Artificial Intelligence</li>
+<li><strong>Remote</strong>: Data Science</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="http://deeplearnphysics.org/Blog/tag/news.html">news</a>
+      <a href="http://deeplearnphysics.org/Blog/tag/paper.html">paper</a>
+    </p>
+  </div>
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy; DeepLearnPhysics 2017 - This work is licensed under a <a rel="license" href="https://opensource.org/licenses/MIT">MIT License</a>
+</p>
+<p>
+</p>    </footer>
+  </main>
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " DeepLearnPhysics Blog ",
+  "url" : "http://deeplearnphysics.org/Blog",
+  "image": "profile.png",
+  "description": "description!"
+}
+</script>
+</body>
+</html>
