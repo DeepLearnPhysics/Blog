@@ -1,0 +1,8 @@
+Title: Profiling Tensorflow
+Slug: profiling-tensorflow
+Date: 2018-09-25
+Category: Tutorial
+Tags: Tensorflow, profiling, memory, comparisons
+Author: Corey Adams
+Summary:  A walkthrough of many of the current techniques for profiling time and memory usage for tensorflow.
+
