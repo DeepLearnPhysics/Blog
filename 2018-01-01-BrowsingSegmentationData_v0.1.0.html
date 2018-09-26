@@ -105,9 +105,124 @@
 * IPython notebook
 *
 */
-/* CSS font colors for translated ANSI colors. */
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3E424D;
+}
+.ansi-black-bg {
+  background-color: #3E424D;
+}
+.ansi-black-intense-fg {
+  color: #282C36;
+}
+.ansi-black-intense-bg {
+  background-color: #282C36;
+}
+.ansi-red-fg {
+  color: #E75C58;
+}
+.ansi-red-bg {
+  background-color: #E75C58;
+}
+.ansi-red-intense-fg {
+  color: #B22B31;
+}
+.ansi-red-intense-bg {
+  background-color: #B22B31;
+}
+.ansi-green-fg {
+  color: #00A250;
+}
+.ansi-green-bg {
+  background-color: #00A250;
+}
+.ansi-green-intense-fg {
+  color: #007427;
+}
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #DDB62B;
+}
+.ansi-yellow-bg {
+  background-color: #DDB62B;
+}
+.ansi-yellow-intense-fg {
+  color: #B27D12;
+}
+.ansi-yellow-intense-bg {
+  background-color: #B27D12;
+}
+.ansi-blue-fg {
+  color: #208FFB;
+}
+.ansi-blue-bg {
+  background-color: #208FFB;
+}
+.ansi-blue-intense-fg {
+  color: #0065CA;
+}
+.ansi-blue-intense-bg {
+  background-color: #0065CA;
+}
+.ansi-magenta-fg {
+  color: #D160C4;
+}
+.ansi-magenta-bg {
+  background-color: #D160C4;
+}
+.ansi-magenta-intense-fg {
+  color: #A03196;
+}
+.ansi-magenta-intense-bg {
+  background-color: #A03196;
+}
+.ansi-cyan-fg {
+  color: #60C6C8;
+}
+.ansi-cyan-bg {
+  background-color: #60C6C8;
+}
+.ansi-cyan-intense-fg {
+  color: #258F8F;
+}
+.ansi-cyan-intense-bg {
+  background-color: #258F8F;
+}
+.ansi-white-fg {
+  color: #C5C1B4;
+}
+.ansi-white-bg {
+  background-color: #C5C1B4;
+}
+.ansi-white-intense-fg {
+  color: #A1A6B2;
+}
+.ansi-white-intense-bg {
+  background-color: #A1A6B2;
+}
+.ansi-default-inverse-fg {
+  color: #FFFFFF;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+/* The following styles are deprecated an will be removed in a future version */
 .ansibold {
   font-weight: bold;
+}
+.ansi-inverse {
+  outline: 0.5px dotted;
 }
 /* use dark versions for foreground, to improve visibility */
 .ansiblack {
@@ -186,12 +301,20 @@ div.cell {
   /* This acts as a spacer between cells, that is outside the border */
   margin: 0px;
   outline: none;
-  border-left-width: 1px;
-  padding-left: 5px;
-  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
 }
 div.cell.jupyter-soft-selected {
-  border-left-color: #90CAF9;
   border-left-color: #E3F2FD;
   border-left-width: 1px;
   padding-left: 5px;
@@ -204,27 +327,39 @@ div.cell.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected {
+div.cell.selected,
+div.cell.selected.jupyter-soft-selected {
   border-color: #ababab;
-  border-left-width: 0px;
-  padding-left: 6px;
-  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #42A5F5;
 }
 @media print {
-  div.cell.selected {
+  div.cell.selected,
+  div.cell.selected.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected.jupyter-soft-selected {
-  border-left-width: 0;
-  padding-left: 6px;
-  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
-}
 .edit_mode div.cell.selected {
   border-color: #66BB6A;
-  border-left-width: 0px;
-  padding-left: 6px;
-  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+.edit_mode div.cell.selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #66BB6A;
 }
 @media print {
   .edit_mode div.cell.selected {
@@ -420,7 +555,9 @@ div.input_area > div.highlight > pre {
 .CodeMirror-lines {
   /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
   /* we have set a different line-height and want this to scale with that. */
-  padding: 0.4em;
+  /* Note that this should set vertical padding only, since CodeMirror assumes
+       that horizontal padding will be set on CodeMirror pre */
+  padding: 0.4em 0;
 }
 .CodeMirror-linenumber {
   padding: 0 8px 0 4px;
@@ -430,11 +567,24 @@ div.input_area > div.highlight > pre {
   border-top-left-radius: 2px;
 }
 .CodeMirror pre {
-  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
-  /* .CodeMirror-lines */
-  padding: 0;
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
   border: 0;
   border-radius: 0;
+}
+.CodeMirror-cursor {
+  border-left: 1.4px solid black;
+}
+@media screen and (min-width: 2138px) and (max-width: 4319px) {
+  .CodeMirror-cursor {
+    border-left: 2px solid black;
+  }
+}
+@media screen and (min-width: 4320px) {
+  .CodeMirror-cursor {
+    border-left: 4px solid black;
+  }
 }
 /*
 
@@ -682,6 +832,9 @@ div.output_area img.unconfined,
 div.output_area svg.unconfined {
   max-width: none;
 }
+div.output_area .mglyph > img {
+  max-width: none;
+}
 /* This is needed to protect the pre formating from global settings such
    as that of bootstrap */
 .output {
@@ -720,7 +873,7 @@ div.output_area svg.unconfined {
 }
 div.output_area pre {
   margin: 0;
-  padding: 0;
+  padding: 1px 0 1px 0;
   border: 0;
   vertical-align: baseline;
   color: black;
@@ -842,6 +995,10 @@ div.output_unrecognized a:hover {
 .rendered_html h6:first-child {
   margin-top: 1em;
 }
+.rendered_html ul:not(.list-inline),
+.rendered_html ol:not(.list-inline) {
+  padding-left: 2em;
+}
 
 
 
@@ -858,16 +1015,24 @@ div.output_unrecognized a:hover {
 }
 
 
+
+
+
 .rendered_html pre,
+
 
 
 
 .rendered_html tr,
 .rendered_html th,
 
-.rendered_html td,
 
-
+.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 .rendered_html * + table {
   margin-top: 1em;
 }
@@ -883,6 +1048,11 @@ div.output_unrecognized a:hover {
 
 .rendered_html img.unconfined,
 
+
+.rendered_html * + .alert {
+  margin-top: 1em;
+}
+[dir="rtl"] 
 div.text_cell {
   /* Old browsers */
   display: -webkit-box;
@@ -933,8 +1103,15 @@ h6:hover .anchor-link {
   display: none;
 }
 .text_cell.rendered 
+.text_cell.rendered .rendered_html tr,
+.text_cell.rendered .rendered_html th,
+.text_cell.rendered 
 .text_cell.unrendered .text_cell_render {
   display: none;
+}
+.text_cell .dropzone .input_area {
+  border: 2px dashed #bababa;
+  margin: -1px;
 }
 .cm-header-1,
 .cm-header-2,
@@ -1073,8 +1250,7 @@ h6:hover .anchor-link {
 .ansi-bold { font-weight: bold; }
 </style>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><meta name="twitter:card" content="summary_large_image"></p>
 <meta name="twitter:image" content="http://deeplearnphysics.org/Blog/imgs/2018-01-01-BrowsingSegmentationData_v0.1.0.thumbnail.png" />
@@ -1082,8 +1258,7 @@ h6:hover .anchor-link {
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Recently we added a new sample to our <a href="http://deeplearnphysics.org/DataChallenge">public data</a> for <strong><em>semantic segmentation</em></strong> challenge. In this notebook I describe what this challenge is about and go over the sample contents. The goal is to make this sample Here's the outline.</p>
 <ol>
@@ -1114,14 +1289,13 @@ h6:hover .anchor-link {
 <span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We will use <a href="http://deeplearnphysics.org/DataChallenge/ChallengeSegmentation">test sample file</a> to study the sample in this notebook.</p>
 
@@ -1129,8 +1303,7 @@ h6:hover .anchor-link {
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="semantic_segmentation"></a></p>
 <h2 id="Semantic-Segmentation:-what-&amp;-how">Semantic Segmentation: what &amp; how<a class="anchor-link" href="#Semantic-Segmentation:-what-&amp;-how">&#182;</a></h2><p>In this challenge we train a machine learning algorithm to perform pixel-level image analysis. The task is to <strong>classify every pixel in an image (i.e. <font color="blue">segmentation</font>) into one of pre-defined set of object classes (i.e. <font color="blue">semantics</font>) that the pixel represents.</strong>. Unlike image classification, in which you only need to give one object label for the whole image, semantic segmentation algorithm can be used to identify multiple object types and locations at pixel level.  An output of an algorithm should look exactly like an input image (same size, same spatial resolution) except for the point that pixel values indicate an object category at each pixel. In this sample, there are only 3 pre-defined object categories: <strong>shower</strong> (<em>electromagnetic shower</em> to be precise, electron or gamma ray), <strong>track</strong> (all other particles), and <strong>background</strong> (pixels without energy deposition from a particle).</p>
@@ -1197,7 +1370,7 @@ h6:hover .anchor-link {
 <span class="n">image2d</span><span class="p">,</span> <span class="n">label2d</span> <span class="o">=</span> <span class="n">show_event</span><span class="p">(</span><span class="n">ENTRY</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1207,7 +1380,7 @@ h6:hover .anchor-link {
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1498,8 +1671,7 @@ OhkAAAAAAIAV/x/TgapfcB2LsgAAAABJRU5ErkJggg==
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>On the left, you find an image that contains multiple particles. The label image is shown on the right. To be pedantic, our task is to train an algorithm to output the right image from the left :) If you could not follow how I accessed image data from the file, you may want to read about "<a href="http://deeplearnphysics.org/Blog/2017-12-29-BrowsingClassificationData_v0.1.0">Browsing Classification Data</a>" and/or follow more explicit list of <a href="http://deeplearnphysics.org/Blog/tutorial_summary.html">tutorials</a>.</p>
 <p>The label image contains only 3 unique pixel values (0, 1, and 2) that indicate background (deep blue), shower (cyan), and track (yellow). I used an arbitrary color scale to make it easy to visualize. Let's just confirm there are really 3 unique pixel values in this image:</p>
@@ -1517,7 +1689,7 @@ OhkAAAAAAIAV/x/TgapfcB2LsgAAAABJRU5ErkJggg==
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Label counts:&#39;</span><span class="p">,</span><span class="n">unique_counts</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1527,7 +1699,7 @@ OhkAAAAAAIAV/x/TgapfcB2LsgAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1542,8 +1714,7 @@ Label counts: [64886   520   130]
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Which means 64886 background, 520 shower, and 130 track pixels.</p>
 <p>OK, one more question before moving onto the next topic: <font color="red">**Is this label image good at pixel-level?**</font> If we are to use the right image as a label, it is better be correct at pixel-level. We can check the precision of object labels by using it as a mask to visualize three category of pixels in the input image.</p>
@@ -1570,7 +1741,7 @@ Label counts: [64886   520   130]
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1580,7 +1751,7 @@ Label counts: [64886   520   130]
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1850,8 +2021,7 @@ AABJRU5ErkJggg==
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>... which looks pretty good!</p>
 <h3 id="Pixels-that-are-track-and-shower?">Pixels that are track <em>and</em> shower?<a class="anchor-link" href="#Pixels-that-are-track-and-shower?">&#182;</a></h3><p>By now you might have wondered "what about pixels where both track <strong>and</strong> shower particle deposit energy?" Very good point! Indeed that happens although the fraction to all none-background pixels is quite small. In this sample, we followed a convention that <strong>such pixels are labeled as track.</strong> In future, we plan to make a sample in which a pixel is allowed to have a <em>fractional</em> categorization (i.e. X% track and Y% shower). One way to define such fraction could be the ratio of particle energy deposition from all contributing object categories. If you are interested in this sample and/or have a different suggestion, by all means <a href="mailto:contact@deeplearnphysics.org">contact us</a>!</p>
@@ -1860,8 +2030,7 @@ AABJRU5ErkJggg==
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="overview"></a></p>
 <h2 id="Conditions-to-make-the-samples">Conditions to make the samples<a class="anchor-link" href="#Conditions-to-make-the-samples">&#182;</a></h2><p>Below you find a list of conditions used to generate this sample. The goal was to make a good mixture of shower and track particles with a "reasonable" (not too boring) particle multiplicity per event, so that it suits training an algorithm for separating track and shower particle trajectories.</p>
@@ -1893,7 +2062,7 @@ AABJRU5ErkJggg==
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span> <span class="n">show_event</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1903,7 +2072,7 @@ AABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2361,7 +2530,7 @@ wIgOBAAAAAAAYPT/qaRNqqNwzyIAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2619,7 +2788,7 @@ uQQQAAAAgFwCCAAAAECu/x+809IFlygVnwAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -2945,7 +3114,7 @@ RU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -3284,7 +3453,7 @@ ADIJEAAAAIBMAgQAAAAgkwABAAAAyCRAAAAAADL9LxN6IyhB6I+sAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -3647,8 +3816,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="file_contents"></a></p>
 <h2 id="Exploring-the-contents">Exploring the contents<a class="anchor-link" href="#Exploring-the-contents">&#182;</a></h2><p>Yeah, let's start by listing what data products we have in this file.</p>
@@ -3664,7 +3832,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">ROOT</span><span class="o">.</span><span class="n">TFile</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">&#39;test_10k.root&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3674,7 +3842,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -3697,8 +3865,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We already looked at <font color="blue">**image2d_data_tree**</font> and <font color="blue">**image2d_segment_tree**</font>: these are input data image to an algorithm and label (i.e. <em>answer</em>) to be used for supervised training. If you jumped to this section from the top, you can read <a href="#semantic_segmentation">previous section</a> where we explored them briefly. Let me describe 3 more data products in the list below.</p>
 <ul>
@@ -3720,8 +3887,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="particle"></a></p>
 <h2 id="Particle-data-product">Particle data product<a class="anchor-link" href="#Particle-data-product">&#182;</a></h2><p>Let's take a closer look at the difference between <strong>particle_mctruth_tree</strong> and <strong>particle_mcst_tree</strong>. We start with particle_mctruth_tree and will simply dump summary information about particles using a handy larcv::Particle::dump() function.</p>
@@ -3747,7 +3913,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
     <span class="k">print</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">dump</span><span class="p">())</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3757,7 +3923,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -3803,8 +3969,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><em>Vertex</em> (i.e. 3D position), <em>Momentum</em>, and <em>Initial Energy</em> are the parameters of a particle at its creation. These are information that must be available when injecting a primary particle into the detector simulation. On the other hand, <em>Deposit Energy</em>, <em>TrackID</em>, and <em>BBox3D</em> (3D axis-aligned bounding box defined by 2 diagonal points) are not filled. This is because particle_mctruth_tree holds information of primary particles after the generation but before the detector simulation.</p>
 <p>... <font color="red">**Note a bug:**</font> the <em>Initial Energy</em> is in the unit of GeV while it should be in MeV!</p>
@@ -3828,7 +3993,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
     <span class="k">print</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">dump</span><span class="p">())</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3838,7 +4003,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -3896,8 +4061,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Here, you see <em>Deposit Energy</em> and <em>BBox3D</em> are filled. Both information are only available after simulation of a particle's trajectory in the detector is finished. <em>BBox2D</em> is a projection of <em>BBox3D</em> onto 3 created 2D projection images. We also see <em>TrackID</em> is now filled. This is a unique, positive integer per particle that can be used to identify a unique particle instance.</p>
 <p>We used larcv::Particle::dump() function to be lazy and only see a part of information stored in this data product. There is a lot more to explore, and you can find all list by either looking at <a href="https://github.com/DeepLearnPhysics/larcv2/blob/develop/larcv/core/DataFormat/Particle.h">C++ header file</a> or simply running python <code>help</code> function. It is worth mentioning that this data product also contains the parent particle information for the secondaries (and also the root primary particle, called <em>ancestor</em>) that created them. In the above text summary, you can see all particles' <em>TrackID</em> is matching with its <em>Parent TrackID</em>. This is a unique feature of the primaries (i.e. they are registered as their own parents).</p>
@@ -3907,8 +4071,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Particle-bounding-box">Particle bounding-box<a class="anchor-link" href="#Particle-bounding-box">&#182;</a></h3><p>Finally let me demonstrate bounding-box variable. Let's use the same event and draw the stored bounding box on the same image we already visualized in the <a href="#semantic_segmentation">previous section</a>. This can tell us which <em>particle</em> data product corresponds to which <em>particle</em> we visually observe!</p>
 
@@ -3974,7 +4137,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -3984,7 +4147,7 @@ YoAAAAAAAABCMUAAAAAAAAChGCAAAAAAAIBQDBAAAAAAAECoX0E/QL414xAtAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -4407,8 +4570,7 @@ iN+hIJcQQgghhPgdCnIJIYQQQojf+X/G8G8n4f8m3gAAAABJRU5ErkJggg==
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I hope you are now thinking "I can totally use this to train an object detection network" :) You are correct! <a href="https://arxiv.org/abs/1611.05531">This paper</a> used a similar sample to train a convolutional neural network to find an interaction region in an event.</p>
 <p>One last comment: can we do better than just bounding box? Can we know exactly which pixel corresponds to a particle instead of just a rectangular box? Can we know how much energy deposition in every pixel is made by each particle? <font color="blue">**The answer is yes**</font>, and that is what stored in <strong>cluster2d_mcst_tree</strong> and we will cover in the <a href="#cluster2">later section</a>.</p>
@@ -4417,8 +4579,7 @@ iN+hIJcQQgghhPgdCnIJIYQQQojf+X/G8G8n4f8m3gAAAABJRU5ErkJggg==
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="kinematics"></a></p>
 <h2 id="Physics-distributions">Physics distributions<a class="anchor-link" href="#Physics-distributions">&#182;</a></h2><p>We saw lots of pictures so far, so it's time to look at "plots" and exercise some quantification of physics parameters in the sample :) Let's take a look at several physics parameter distributions. We create <code>pandas</code> <em>DataFrame</em> in this example analysis.</p>
@@ -4477,14 +4638,13 @@ iN+hIJcQQgghhPgdCnIJIYQQQojf+X/G8G8n4f8m3gAAAABJRU5ErkJggg==
                         <span class="s1">&#39;multi_proton&#39;</span>   <span class="p">:</span> <span class="n">particle_multiplicity</span><span class="p">[</span><span class="mi">5</span><span class="p">]})</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Particle-multiplicity">Particle multiplicity<a class="anchor-link" href="#Particle-multiplicity">&#182;</a></h3><p>Let's check out multiplicity distributions and see if they look like what we expect (see the <a href="#overview">previous section</a> for the sample generation configuration). First, the total multiplicity per event should be flat from 2 to 5.</p>
 
@@ -4503,7 +4663,7 @@ iN+hIJcQQgghhPgdCnIJIYQQQojf+X/G8G8n4f8m3gAAAABJRU5ErkJggg==
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Multiplicity counts:&#39;</span><span class="p">,</span><span class="n">unique_counts</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -4513,7 +4673,7 @@ iN+hIJcQQgghhPgdCnIJIYQQQojf+X/G8G8n4f8m3gAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -4529,8 +4689,7 @@ Multiplicity counts: [  17 2545 2422 2552 2464]
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>... which confirms our expectation. How about particle-wise distribution? Let's compare electron, muon, and gamma ray. We expect electron and muon (from category 0 in <a href="#overview">configuration</a>) to have the same multiplicity distribution within statistical fluctuation. Those two particles can have multiplicity between 0 to 3 while gamma ray is expected to be between 0 and 2. Further, likelihood of having at least one electron <strong>or</strong> muon (category 0) should be similar to that of gamma ray (category 1). Let's find out!</p>
 
@@ -4563,7 +4722,7 @@ Multiplicity counts: [  17 2545 2422 2552 2464]
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Event counts with at least 1 gamma ray:&#39;</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;multi_gamma&gt;0&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -4573,7 +4732,7 @@ Multiplicity counts: [  17 2545 2422 2552 2464]
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -5162,7 +5321,7 @@ iIiIiCyLnVoiIiIiIiKyLHZqiYiIiIiIyLLYqSUiIiIiIiLLYqeWiIiIiIiILIudWiIiIiIiIrKs
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -5177,8 +5336,7 @@ Event counts with at least 1 gamma ray: 6208
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Again, this seems to confirm our expectation. Finally, when we went over the <a href="#overview">sample generation configuration</a>, we predicted the mean number of track particles to be slightly higher than shower particles.</p>
 
@@ -5214,7 +5372,7 @@ Event counts with at least 1 gamma ray: 6208
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -5224,7 +5382,7 @@ Event counts with at least 1 gamma ray: 6208
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -5758,8 +5916,7 @@ SUJ8fDxatWqFjz/+WO3y7sgzzzyDIUOG4MEHH8Rjjz2GDz74wOrP9BLpETN3IiIiJ8MjdyIiIifD
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>... which confirms our hypothesis. Next, let's check on particle energy distributions for fun. We stored "initial kinetic energy" and "deposit energy" sums. If generated particles give up all available energy in the image, then these two quantities should match. If a particle deposit energy outside, then deposit energy would be lower.</p>
 
@@ -5784,7 +5941,7 @@ SUJ8fDxatWqFjz/+WO3y7sgzzzyDIUOG4MEHH8Rjjz2GDz74wOrP9BLpETN3IiIiJ8MjdyIiIifD
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -5794,7 +5951,7 @@ SUJ8fDxatWqFjz/+WO3y7sgzzzyDIUOG4MEHH8Rjjz2GDz74wOrP9BLpETN3IiIiJ8MjdyIiIifD
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -6465,8 +6622,7 @@ AAAAgiKAAgAAICgCKAAAAIIigAIAACCoB3QbMnHDXJ9NAAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This shows we have a significant portion of energy escaped (i.e. not contributing in the recorded image). Is this OK?! It is OK :) Let's take an example of a muon which is generated in the range of 50 to 1000 MeV (see <a href="#overview">sample generation overview</a> section). A <a href="https://en.wikipedia.org/wiki/Stopping_power_(particle_radiation">minimum-ionizing-particle (MIP)</a>#Minimum_ionizing_particle) muon deposits $\approx2$ MeV/cm. Given our image size of 128 cm$^2$, that means a high energy muon, say 500 MeV$, won't fit in our image region. So this is somewhat expected.</p>
 <p>To see this effect more clearly, maybe we can look at 3 categories of events:</p>
@@ -6516,7 +6672,7 @@ AAAAgiKAAgAAICgCKAAAAIIigAIAACCoB3QbMnHDXJ9NAAAAAElFTkSuQmCC
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -6526,7 +6682,7 @@ AAAAgiKAAgAAICgCKAAAAIIigAIAACCoB3QbMnHDXJ9NAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -7078,8 +7234,7 @@ cKBLREREREREqvJ/olMYUBBoz/YAAAAASUVORK5CYII=
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>These are roughly what we would expect. So protons are <em>largely</em> contained, and muon and pions have a fair chance of escaping.</p>
 
@@ -7087,8 +7242,7 @@ cKBLREREREREqvJ/olMYUBBoz/YAAAAASUVORK5CYII=
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="cluster"></a></p>
 <h2 id="Particle-Instance-wise-2D-Pixel-Cluster">Particle Instance-wise 2D Pixel Cluster<a class="anchor-link" href="#Particle-Instance-wise-2D-Pixel-Cluster">&#182;</a></h2><p>Here we come back to discuss about <strong>cluster2d_mcst_tree</strong> mentioned in the <a href="#file_contents">"file contents"</a> section. This is a data product that stores a list of 2D pixels that belong to a particular particle stored in particle_mcst_tree. The stored 2D pixels also records the fraction of charge in the corresponding pixel of an image stored in image2d_data_tree. So you really get the <em>full</em> information about individual particle instance. In this notebook I cover the basics of cluster2d data product and some useful example applications.</p>
@@ -7121,7 +7275,7 @@ cKBLREREREREqvJ/olMYUBBoz/YAAAAASUVORK5CYII=
     
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -7131,7 +7285,7 @@ cKBLREREREREqvJ/olMYUBBoz/YAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -7146,8 +7300,7 @@ Number of clusters: 5
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Don't panic! Here's the reason why two numbers do not match. particle_mcst_tree stores particles that are tracked (i.e. their trajectories are simulated in the detector) but <strong>not all of them</strong>. In actuality the number of partickes tracked can become huge, sometimes more than 10,000, so we employ a certain criteria to record only useful ones with pretty low criteria thresholds to avoid missing information. cluster2d_mcst_tree stores all energy depositions per particle stored in particle_mcst_tree <strong>plus</strong> all energy depositions made by other particles (not stored in particle_mcst_tree) combined into 1 cluster. This is why the number of clusters stored in cluster2d_mcst_tree is <strong>always 1 larger</strong> than number of particles stored in particle_mcst_tree.</p>
 <p>Let's look at a bit more:</p>
@@ -7166,7 +7319,7 @@ Number of clusters: 5
     <span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="n">particle</span><span class="o">.</span><span class="n">track_id</span><span class="p">(),</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">(),</span><span class="n">cluster</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">()))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -7176,7 +7329,7 @@ Number of clusters: 5
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -7193,8 +7346,7 @@ Particle 3 has TrackID 4 and PDG 22 with 920 non-zero pixels!
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>My next natural question would be... <strong>"Can we draw clusters?"</strong> We sure can! Here, I use a handy function that converts cluster2d into image2d.</p>
 
@@ -7222,7 +7374,7 @@ Particle 3 has TrackID 4 and PDG 22 with 920 non-zero pixels!
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -7232,7 +7384,7 @@ Particle 3 has TrackID 4 and PDG 22 with 920 non-zero pixels!
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -7601,8 +7753,7 @@ AAAAKJAlLAAAAABAgf4fk+kEwD8khGwAAAAASUVORK5CYII=
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can see that I multiplied "100." scaling factor to each image so that it would look like what we visualized from image2d earlier (see <a href="#overview">sample generation configuration</a>). We can even plot all clusters and compare with the corresponding image data from image2d_data_tree.</p>
 
@@ -7644,7 +7795,7 @@ AAAAKJAlLAAAAABAgf4fk+kEwD8khGwAAAAASUVORK5CYII=
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -7654,7 +7805,7 @@ AAAAKJAlLAAAAABAgf4fk+kEwD8khGwAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -8095,8 +8246,7 @@ oAAAACShgAIAAJDE/wOGDKBKEiPsUwAAAABJRU5ErkJggg==
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As you can see, by combining clusters, we recovered image2d! But are they really identical? We can check some numpy array function returns.</p>
 
@@ -8113,7 +8263,7 @@ oAAAACShgAIAAJDE/wOGDKBKEiPsUwAAAABJRU5ErkJggg==
 <span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;cluster2d_data_tree&#39;</span><span class="p">,</span><span class="n">cluster2d</span><span class="o">.</span><span class="n">mean</span><span class="p">(),(</span><span class="n">cluster2d</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -8123,7 +8273,7 @@ oAAAACShgAIAAJDE/wOGDKBKEiPsUwAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -8138,8 +8288,7 @@ Image from cluster2d_data_tree ... mean 1.979 pixel count 1204
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Wow, the mean is close but pixel count is <em>very much</em> different! Why?! What we missed is to apply another condition described in <a href="#overview">sample generation configuration</a> section: apply $\geq10$ pixel value threshold.</p>
 
@@ -8158,7 +8307,7 @@ Image from cluster2d_data_tree ... mean 1.979 pixel count 1204
 <span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;cluster2d_data_tree&#39;</span><span class="p">,</span><span class="n">nonzero_cluster2d</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="nb">len</span><span class="p">(</span><span class="n">nonzero_cluster2d</span><span class="p">)))</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -8168,7 +8317,7 @@ Image from cluster2d_data_tree ... mean 1.979 pixel count 1204
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -8183,8 +8332,7 @@ Image from cluster2d_data_tree ... mean 194.2 pixel count 657
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>which shows not exactly the same, but quite close. I am not quite sure the reason that causes this difference. But it is possible because <strong>image2d is not derived from cluster2d</strong> and they are created in 2 parallel processes in the production chain. I opened an <a href="https://github.com/DeepLearnPhysics/larcv2/issues/14">issue on github</a> to look at this difference in the future release of larcv. Nevertheless, this does not change the usefulness of cluster2d!</p>
 <p>Finally, with what I showed already, you are right to think about an image with particle instance-wise label.</p>
@@ -8219,7 +8367,7 @@ Image from cluster2d_data_tree ... mean 194.2 pixel count 657
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -8229,7 +8377,7 @@ Image from cluster2d_data_tree ... mean 194.2 pixel count 657
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -8635,8 +8783,7 @@ JKGAAgAAkIQCCgAAQBIKKAAAAEn8G0KgoR+AfcZ9AAAAAElFTkSuQmCC
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Closing-remark">Closing remark<a class="anchor-link" href="#Closing-remark">&#182;</a></h2><p>In this notebook I swept the surface of the <a href="http://deeplearnphysics.org/DataChallenge/#ChallengeSegmentation">segmentation challenge</a> public data set we added recently. The sample was primarily prepared for training an algorithm for <a href="#semantic_segmentation">track/shower pixel segmentation</a>. However it can be used for training an algorithm for object detection and/or instance-aware semantic segmentation. I hope you find this data set interesting. As usual, if you have feature requests for future versions of this data set, <a href="mailto:contact@deeplearnphysics.org">contact us</a>. If you find our software useful, please give stars to <a href="https://github.com/DeepLearnPhysics/larcv">our software</a>.</p>
 

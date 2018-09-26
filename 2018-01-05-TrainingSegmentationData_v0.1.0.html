@@ -106,9 +106,124 @@
 * IPython notebook
 *
 */
-/* CSS font colors for translated ANSI colors. */
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3E424D;
+}
+.ansi-black-bg {
+  background-color: #3E424D;
+}
+.ansi-black-intense-fg {
+  color: #282C36;
+}
+.ansi-black-intense-bg {
+  background-color: #282C36;
+}
+.ansi-red-fg {
+  color: #E75C58;
+}
+.ansi-red-bg {
+  background-color: #E75C58;
+}
+.ansi-red-intense-fg {
+  color: #B22B31;
+}
+.ansi-red-intense-bg {
+  background-color: #B22B31;
+}
+.ansi-green-fg {
+  color: #00A250;
+}
+.ansi-green-bg {
+  background-color: #00A250;
+}
+.ansi-green-intense-fg {
+  color: #007427;
+}
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #DDB62B;
+}
+.ansi-yellow-bg {
+  background-color: #DDB62B;
+}
+.ansi-yellow-intense-fg {
+  color: #B27D12;
+}
+.ansi-yellow-intense-bg {
+  background-color: #B27D12;
+}
+.ansi-blue-fg {
+  color: #208FFB;
+}
+.ansi-blue-bg {
+  background-color: #208FFB;
+}
+.ansi-blue-intense-fg {
+  color: #0065CA;
+}
+.ansi-blue-intense-bg {
+  background-color: #0065CA;
+}
+.ansi-magenta-fg {
+  color: #D160C4;
+}
+.ansi-magenta-bg {
+  background-color: #D160C4;
+}
+.ansi-magenta-intense-fg {
+  color: #A03196;
+}
+.ansi-magenta-intense-bg {
+  background-color: #A03196;
+}
+.ansi-cyan-fg {
+  color: #60C6C8;
+}
+.ansi-cyan-bg {
+  background-color: #60C6C8;
+}
+.ansi-cyan-intense-fg {
+  color: #258F8F;
+}
+.ansi-cyan-intense-bg {
+  background-color: #258F8F;
+}
+.ansi-white-fg {
+  color: #C5C1B4;
+}
+.ansi-white-bg {
+  background-color: #C5C1B4;
+}
+.ansi-white-intense-fg {
+  color: #A1A6B2;
+}
+.ansi-white-intense-bg {
+  background-color: #A1A6B2;
+}
+.ansi-default-inverse-fg {
+  color: #FFFFFF;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+/* The following styles are deprecated an will be removed in a future version */
 .ansibold {
   font-weight: bold;
+}
+.ansi-inverse {
+  outline: 0.5px dotted;
 }
 /* use dark versions for foreground, to improve visibility */
 .ansiblack {
@@ -187,12 +302,20 @@ div.cell {
   /* This acts as a spacer between cells, that is outside the border */
   margin: 0px;
   outline: none;
-  border-left-width: 1px;
-  padding-left: 5px;
-  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
 }
 div.cell.jupyter-soft-selected {
-  border-left-color: #90CAF9;
   border-left-color: #E3F2FD;
   border-left-width: 1px;
   padding-left: 5px;
@@ -205,27 +328,39 @@ div.cell.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected {
+div.cell.selected,
+div.cell.selected.jupyter-soft-selected {
   border-color: #ababab;
-  border-left-width: 0px;
-  padding-left: 6px;
-  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #42A5F5;
 }
 @media print {
-  div.cell.selected {
+  div.cell.selected,
+  div.cell.selected.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected.jupyter-soft-selected {
-  border-left-width: 0;
-  padding-left: 6px;
-  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
-}
 .edit_mode div.cell.selected {
   border-color: #66BB6A;
-  border-left-width: 0px;
-  padding-left: 6px;
-  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+.edit_mode div.cell.selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #66BB6A;
 }
 @media print {
   .edit_mode div.cell.selected {
@@ -421,7 +556,9 @@ div.input_area > div.highlight > pre {
 .CodeMirror-lines {
   /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
   /* we have set a different line-height and want this to scale with that. */
-  padding: 0.4em;
+  /* Note that this should set vertical padding only, since CodeMirror assumes
+       that horizontal padding will be set on CodeMirror pre */
+  padding: 0.4em 0;
 }
 .CodeMirror-linenumber {
   padding: 0 8px 0 4px;
@@ -431,11 +568,24 @@ div.input_area > div.highlight > pre {
   border-top-left-radius: 2px;
 }
 .CodeMirror pre {
-  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
-  /* .CodeMirror-lines */
-  padding: 0;
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
   border: 0;
   border-radius: 0;
+}
+.CodeMirror-cursor {
+  border-left: 1.4px solid black;
+}
+@media screen and (min-width: 2138px) and (max-width: 4319px) {
+  .CodeMirror-cursor {
+    border-left: 2px solid black;
+  }
+}
+@media screen and (min-width: 4320px) {
+  .CodeMirror-cursor {
+    border-left: 4px solid black;
+  }
 }
 /*
 
@@ -683,6 +833,9 @@ div.output_area img.unconfined,
 div.output_area svg.unconfined {
   max-width: none;
 }
+div.output_area .mglyph > img {
+  max-width: none;
+}
 /* This is needed to protect the pre formating from global settings such
    as that of bootstrap */
 .output {
@@ -721,7 +874,7 @@ div.output_area svg.unconfined {
 }
 div.output_area pre {
   margin: 0;
-  padding: 0;
+  padding: 1px 0 1px 0;
   border: 0;
   vertical-align: baseline;
   color: black;
@@ -843,6 +996,10 @@ div.output_unrecognized a:hover {
 .rendered_html h6:first-child {
   margin-top: 1em;
 }
+.rendered_html ul:not(.list-inline),
+.rendered_html ol:not(.list-inline) {
+  padding-left: 2em;
+}
 
 
 
@@ -859,16 +1016,24 @@ div.output_unrecognized a:hover {
 }
 
 
+
+
+
 .rendered_html pre,
+
 
 
 
 .rendered_html tr,
 .rendered_html th,
 
-.rendered_html td,
 
-
+.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
 .rendered_html * + table {
   margin-top: 1em;
 }
@@ -884,6 +1049,11 @@ div.output_unrecognized a:hover {
 
 .rendered_html img.unconfined,
 
+
+.rendered_html * + .alert {
+  margin-top: 1em;
+}
+[dir="rtl"] 
 div.text_cell {
   /* Old browsers */
   display: -webkit-box;
@@ -934,8 +1104,15 @@ h6:hover .anchor-link {
   display: none;
 }
 .text_cell.rendered 
+.text_cell.rendered .rendered_html tr,
+.text_cell.rendered .rendered_html th,
+.text_cell.rendered 
 .text_cell.unrendered .text_cell_render {
   display: none;
+}
+.text_cell .dropzone .input_area {
+  border: 2px dashed #bababa;
+  margin: -1px;
 }
 .cm-header-1,
 .cm-header-2,
@@ -1074,16 +1251,14 @@ h6:hover .anchor-link {
 .ansi-bold { font-weight: bold; }
 </style>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <meta name="twitter:image" content="http://deeplearnphysics.org/Blog/imgs/2018-01-05-TrainingSegmentationData_v0.1.0/thumbnail.png" />
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In this notebook I demonstrate training of a semantic segmentation algorithm for <strong>separating track/shower particles at pixel level</strong> using <a href="http://deeplearnphysics.org/DataChallenge/#TutorialSegmentation">practice samples in public data set</a>. To learn about this sample, or what the challenge is about, you might want to start from <a href="http://deeplearnphysics.org/Blog/2018-01-01-BrowsingSegmentationData_v0.1.0.html"><strong>this post</strong></a>. Here's an outline.</p>
 <ol>
@@ -1121,7 +1296,7 @@ h6:hover .anchor-link {
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1131,16 +1306,16 @@ h6:hover .anchor-link {
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
 
 
-<div id="bd72ff2c-f045-4c40-96f1-d61e81b6588c"></div>
+<div id="58cb7d64-ea6b-4a47-a8c7-ef448b654da7"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#bd72ff2c-f045-4c40-96f1-d61e81b6588c');
+var element = $('#58cb7d64-ea6b-4a47-a8c7-ef448b654da7');
 require(['codemirror/mode/clike/clike'], function(Clike) { console.log('ROOTaaS - C++ CodeMirror module loaded'); });
 </script>
 </div>
@@ -1149,16 +1324,16 @@ require(['codemirror/mode/clike/clike'], function(Clike) { console.log('ROOTaaS 
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
 
 
-<div id="3b4324a7-9013-4d21-9737-5944b5dbb111"></div>
+<div id="0b405079-16c6-46e5-a32d-47e9f5d3bdcf"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#3b4324a7-9013-4d21-9737-5944b5dbb111');
+var element = $('#0b405079-16c6-46e5-a32d-47e9f5d3bdcf');
 IPython.CodeCell.config_defaults.highlight_modes['magic_text/x-c++src'] = {'reg':[/^%%cpp/]};
 </script>
 </div>
@@ -1167,7 +1342,7 @@ IPython.CodeCell.config_defaults.highlight_modes['magic_text/x-c++src'] = {'reg'
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1183,8 +1358,7 @@ env: CUDA_VISIBLE_DEVICES=2
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="uresnet"></a></p>
 <h2 id="U-ResNet">U-ResNet<a class="anchor-link" href="#U-ResNet">&#182;</a></h2><p>In this tutorial, we use <strong>U-ResNet</strong>, one type of convolutional neural networks for sematic segmentation task. It is developed/used within <a href="http://microboone.fnal.gov">MicroBooNE</a> experiment. They showed a beautiful track/shower separation images on both data and simulation in <a href="https://indico.fnal.gov/event/9942/timetable/#20170619">conferences</a>. Below is a result of running a trained U-ResNet on real MicroBooNE detector data (<a href="https://indico.fnal.gov/event/9942/session/4/contribution/68/material/slides/0.pdf">source</a>).</p>
@@ -1210,7 +1384,7 @@ env: CUDA_VISIBLE_DEVICES=2
 <span class="k">fi</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1220,7 +1394,7 @@ env: CUDA_VISIBLE_DEVICES=2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -1234,8 +1408,7 @@ env: CUDA_VISIBLE_DEVICES=2
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's add u-resnet python library to system path, and we are ready to import.</p>
 
@@ -1253,14 +1426,13 @@ env: CUDA_VISIBLE_DEVICES=2
 <span class="n">t</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">ssnet_trainval</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Software preparation is done. We will use <code>ssnet_trainval</code> python class. It's an interface to run training and/or inference (i.e. analysis) of U-ResNet. It needs a configuration file to pass parameters, which we cover in the next part.</p>
 
@@ -1268,8 +1440,7 @@ env: CUDA_VISIBLE_DEVICES=2
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="config"></a></p>
 <h2 id="IO-Configuration">IO Configuration<a class="anchor-link" href="#IO-Configuration">&#182;</a></h2><p>Here we go over 3 kinds of configurations.</p>
@@ -1324,14 +1495,13 @@ env: CUDA_VISIBLE_DEVICES=2
 <span class="n">train_io_config</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We use a handy python <code>tempfile</code> to create a named file that only exists during its lifetime (and hence only in this process).</p>
 <p>You might have noticed other slight differences. First, the most-outer-block is named "MainIO" as opposed to "ThreadProcessor" back in the <a href="http://deeplearnphysics.org/Blog/tutorials/tutorial-05.html">image classification example</a>. This is purely conventional: <code>u-resnet</code> code identifies the training image supplier with a keyword <code>MainIO</code>. Also you see two BatchFillerImage2D instances are named as <code>main_data</code> and <code>main_label</code>. This is to distinguish with other BatchFillerImage2D instances that we will run for fetching test data samples, that comes next!</p>
@@ -1381,14 +1551,13 @@ env: CUDA_VISIBLE_DEVICES=2
 <span class="n">test_io_config</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The configuration is very similar to training sample, except we will rename the most-outer-block to <code>TestIO</code>, again u-resnet specific convention. Also, to distinguish from BatchFillerImage2D instances in <code>MainIO</code>, we name them as <code>test_data</code> and <code>test_label</code>. But the rest is pretty much the same.</p>
 <p><a name="config_uresnet"></a></p>
@@ -1438,14 +1607,13 @@ env: CUDA_VISIBLE_DEVICES=2
 <span class="n">ssnet_config</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's go over parameters, in case you want to use/customize <code>u-resnet</code> code for yourself. Otherwise <a href="#train">skip to the training</a>.</p>
 <ul>
@@ -1481,8 +1649,7 @@ env: CUDA_VISIBLE_DEVICES=2
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="train"></a></p>
 <h2 id="Training-the-net">Training the net<a class="anchor-link" href="#Training-the-net">&#182;</a></h2><p>We first override the default configuration with the custom one defined above. Then initialize the u-resnet APIs.</p>
@@ -1499,7 +1666,7 @@ env: CUDA_VISIBLE_DEVICES=2
 <span class="n">t</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1509,7 +1676,7 @@ env: CUDA_VISIBLE_DEVICES=2
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1553,8 +1720,7 @@ KEYWORD_TEST_LABEL.. test_label
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Next, actually all you have to do is to execute <code>t.batch_process()</code> and it will run 8000 training iterations. Then we can watch how loss and accuracy changes (= get bored and go watch movie instead). But that is a bit boring. So I propose to play with one image from the <strong>test_10k.root</strong> during training.</p>
 
@@ -1589,7 +1755,7 @@ KEYWORD_TEST_LABEL.. test_label
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1599,7 +1765,7 @@ KEYWORD_TEST_LABEL.. test_label
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -1916,8 +2082,7 @@ AAC2+/8BqWlCghvUhkAAAAAASUVORK5CYII=
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>On the left, you see the input data image. On the right is the <em>label</em>, an answer that our algorithm is supposed to generate. This is the same image frequently reffered to when we <a href="http://deeplearnphysics.org/Blog/2018-01-01-BrowsingSegmentationData_v0.1.0.html">browsed the file contents</a>, the event with 2 protons and 2 gamma rays. During the network training, we will periodically run the network to analyze this event image.</p>
 <p>In order to add this small task, we write a simple training loop below by ourselves instead of using a prepared <code>batch_process</code> function (of u-resnet). We will analyze the above image at certain steps defined in <code>image_dump_steps</code> below.</p>
@@ -1960,7 +2125,7 @@ AAC2+/8BqWlCghvUhkAAAAAASUVORK5CYII=
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -1970,7 +2135,7 @@ AAC2+/8BqWlCghvUhkAAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1981,7 +2146,7 @@ AAC2+/8BqWlCghvUhkAAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -4202,7 +4367,7 @@ hAUAAAAAKJBFWAAAAACAAlmEBQAAAAAokEVYAAAAAIAC/T8ap/4HMUJUUAAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -4213,7 +4378,7 @@ hAUAAAAAKJBFWAAAAACAAlmEBQAAAAAokEVYAAAAAIAC/T8ap/4HMUJUUAAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -6311,7 +6476,7 @@ AAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -6322,7 +6487,7 @@ AAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -8160,7 +8325,7 @@ QmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -8171,7 +8336,7 @@ QmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -8862,7 +9027,7 @@ AAAAkKH/B+LoYA20rr1iAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -8874,7 +9039,7 @@ Image dump @ iteration 100
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -9554,7 +9719,7 @@ YII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -9569,7 +9734,7 @@ Image dump @ iteration 200
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -10328,7 +10493,7 @@ BQAAAAAokRAWAAAAAKBE/x/WUTZy0epI1QAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -10340,7 +10505,7 @@ Image dump @ iteration 300
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -11090,7 +11255,7 @@ ACAhJSwAAAAAQEJKWAAAAACAhJSwAAAAAAAJKWEBAAAAABL6fyjlw3i5FtQIAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -11105,7 +11270,7 @@ Image dump @ iteration 400
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -11832,7 +11997,7 @@ KWEBAAAAABJSwgIAAAAAJKSEBQAAAABISAkLAAAAAJDQ/wOMDE+zLKPLSwAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -11848,7 +12013,7 @@ Image dump @ iteration 600
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -12564,7 +12729,7 @@ JSwAAAAAQEL/D37+4bOA+5rVAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -12580,7 +12745,7 @@ Image dump @ iteration 800
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -13286,7 +13451,7 @@ AEBG/w+G9V3JmRCTgQAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -13302,7 +13467,7 @@ Image dump @ iteration 1000
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -13980,7 +14145,7 @@ Dv0fu8hMthLHoukAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -14002,7 +14167,7 @@ Image dump @ iteration 1500
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -14646,7 +14811,7 @@ AOBb8GIuAAAAAAAAAPCIS1gAAAAAAAAA8IhLWAAAAAAAAADwiEtYAAAAAAAAAPCIS1gAAAAAAAAA
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -14671,7 +14836,7 @@ Image dump @ iteration 2000
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -15339,7 +15504,7 @@ AIAAcQgLAAAAAAAAAAH6C7TubjM8l8noAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -15361,7 +15526,7 @@ Image dump @ iteration 2500
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -15948,7 +16113,7 @@ BQAAAACokCIsAAAAAECFFGEBAAAAACr0/wM4iOLDwu++BwAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -15973,7 +16138,7 @@ Image dump @ iteration 3000
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -16559,7 +16724,7 @@ LAAAAABAhRRhAQAAAAAqpAgLAAAAAFAhRVgAAAAAgAopwgIAAAAAVEgRFgAAAACgQoqwAAAAAAAV
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -16581,7 +16746,7 @@ Image dump @ iteration 3500
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -17140,7 +17305,7 @@ AAAAKqQICwAAAABQof8faZXLL5s3gn0AAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -17165,7 +17330,7 @@ Image dump @ iteration 4000
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -17716,7 +17881,7 @@ kCIsAAAAAECFFGEBAAAAACqkCAsAAAAAUKH/H+IdoRyGwN44AAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -17738,7 +17903,7 @@ Image dump @ iteration 4500
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -18289,7 +18454,7 @@ AAAAgBIpwgIAAAAAlEgRFgAAAACgRP8/NtSk3v67eUwAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -18314,7 +18479,7 @@ Image dump @ iteration 5000
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -18848,7 +19013,7 @@ B2cY0FfMV7FqAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -18870,7 +19035,7 @@ Image dump @ iteration 5500
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -19398,7 +19563,7 @@ AAAAoEaKsAAAAAAANVKEBQAAAACokSIsAAAAAECN/n9ONMWsy4niigAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -19423,7 +19588,7 @@ Image dump @ iteration 6000
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -19940,7 +20105,7 @@ AAAASEgICwAAAACQ0P8HYQKIkiJ0uW0AAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -19962,7 +20127,7 @@ Image dump @ iteration 6500
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -20485,7 +20650,7 @@ UoQFAAAAAEjo/wM2mrpEHk2VTQAAAABJRU5ErkJggg==
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -20510,7 +20675,7 @@ Image dump @ iteration 7000
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -21019,7 +21184,7 @@ qh08BupnfTQAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -21041,7 +21206,7 @@ Image dump @ iteration 7500
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 
@@ -21548,7 +21713,7 @@ EsICAAAAACQkhAUAAAAASEgICwAAAACQ0P8HxaMmID23xioAAAAASUVORK5CYII=
 
 <div class="output_area">
 
-<div class="prompt"></div>
+    <div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -21566,8 +21731,7 @@ saved @ ssnet_checkpoint/uresnet-7700
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="train_result"></a></p>
 <h2 id="Training-Results">Training Results<a class="anchor-link" href="#Training-Results">&#182;</a></h2><p><strong>Phew that was long!</strong> Lots of dumped image/text. It took nearly 2 hours using an old generation (maxwell) <a href="https://www.inet.se/files/pdf/5411391_0.pdf">Titan X</a> GPU on my box. If you jumped here from much earlier part of this note book, I made a gif animation of the dumped "test images" for us to see the network's learning progress visually.</p>
@@ -21608,8 +21772,7 @@ saved @ ssnet_checkpoint/uresnet-7700
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="uresnet_brief"></a></p>
 <h2 id="Extra:-a-bit-more-about-U-ResNet">Extra: a bit more about U-ResNet<a class="anchor-link" href="#Extra:-a-bit-more-about-U-ResNet">&#182;</a></h2><p>I add a few abstract/qualitative descriptions about U-ResNet. This network design is not from us (MicroBooNE). All we did is to combine two novel network designs: <a href="https://arxiv.org/abs/1505.04597">U-Net</a> to attack the semantic segmentation task, and <a href="https://arxiv.org/abs/1512.03385">ResNet</a> to improve the internal convolution layers. You can find tensorboard graph for the u-resnet below.</p>
@@ -21618,8 +21781,7 @@ saved @ ssnet_checkpoint/uresnet-7700
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/uresnet_graph.png" alt="U-ResNet Graph"></p>
 
@@ -21627,8 +21789,7 @@ saved @ ssnet_checkpoint/uresnet-7700
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Why-U-Net?">Why U-Net?<a class="anchor-link" href="#Why-U-Net?">&#182;</a></h3><p>A typical convolutional neural network design for image classification involves down-sampling of an image to expand the receptive field of a neuron at deeper layers, hoping for it to learn a large (abstract) fetures. A typical semantic segmentation network contains the same design but with an additional portion which performs convolution-transpose to expand the contracted feature map size back to the size of the original input.</p>
 <p>A problem in this scheme is the fact that down sampling would lose spatial resolution. In order to overcome this issue, U-Net added an information flow-path between the convolution and convolution-transpose layers by simply concatenating the feature maps. By doing this, neurons at deeper layers can always recover the best possible spatial resolution information.</p>
