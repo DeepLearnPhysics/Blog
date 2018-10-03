@@ -1,0 +1,7 @@
+Title: Writing your own CUDA kernel (Part 1)
+Slug: 2018-10-02-Writing-your-own-CUDA-kernel-1
+Date: 2018-10-02
+Category: Tutorial
+Tags: cuda, tensorflow, pytorch
+Author: Laura Domine
+Summary: First part of a tutorial serie to write your own CUDA kernel and use it in Tensorflow or PyTorch.

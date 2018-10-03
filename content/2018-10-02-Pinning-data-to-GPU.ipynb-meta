@@ -1,0 +1,7 @@
+Title: Pinning data to GPU in Tensorflow and PyTorch
+Slug: 2018-10-02-Pinning-data-to-GPU
+Date: 2018-10-02
+Category: Tutorial
+Tags: memory, tensorflow, pytorch
+Author: Laura Domine
+Summary: Sometimes you might want to keep ('pin') some data on GPU. We demonstrate how to do it in Tensorflow and PyTorch.
