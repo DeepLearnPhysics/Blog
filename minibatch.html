@@ -90,7 +90,7 @@
   <header>
     <h1 id="minibatch">How to Implement Minibatching in Tensorflow</h1>
     <p>
-          Posted on Fri 22 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/minibatch.html">Minibatch</a>
+          Posted on ven. 22 décembre 2017 in <a href="http://deeplearnphysics.org/Blog/category/minibatch.html">Minibatch</a>
 
             by
 
@@ -106,124 +106,9 @@
 * IPython notebook
 *
 */
-/* CSS font colors for translated ANSI escape sequences */
-/* The color values are a mix of
-   http://www.xcolors.net/dl/baskerville-ivorylight and
-   http://www.xcolors.net/dl/euphrasia */
-.ansi-black-fg {
-  color: #3E424D;
-}
-.ansi-black-bg {
-  background-color: #3E424D;
-}
-.ansi-black-intense-fg {
-  color: #282C36;
-}
-.ansi-black-intense-bg {
-  background-color: #282C36;
-}
-.ansi-red-fg {
-  color: #E75C58;
-}
-.ansi-red-bg {
-  background-color: #E75C58;
-}
-.ansi-red-intense-fg {
-  color: #B22B31;
-}
-.ansi-red-intense-bg {
-  background-color: #B22B31;
-}
-.ansi-green-fg {
-  color: #00A250;
-}
-.ansi-green-bg {
-  background-color: #00A250;
-}
-.ansi-green-intense-fg {
-  color: #007427;
-}
-.ansi-green-intense-bg {
-  background-color: #007427;
-}
-.ansi-yellow-fg {
-  color: #DDB62B;
-}
-.ansi-yellow-bg {
-  background-color: #DDB62B;
-}
-.ansi-yellow-intense-fg {
-  color: #B27D12;
-}
-.ansi-yellow-intense-bg {
-  background-color: #B27D12;
-}
-.ansi-blue-fg {
-  color: #208FFB;
-}
-.ansi-blue-bg {
-  background-color: #208FFB;
-}
-.ansi-blue-intense-fg {
-  color: #0065CA;
-}
-.ansi-blue-intense-bg {
-  background-color: #0065CA;
-}
-.ansi-magenta-fg {
-  color: #D160C4;
-}
-.ansi-magenta-bg {
-  background-color: #D160C4;
-}
-.ansi-magenta-intense-fg {
-  color: #A03196;
-}
-.ansi-magenta-intense-bg {
-  background-color: #A03196;
-}
-.ansi-cyan-fg {
-  color: #60C6C8;
-}
-.ansi-cyan-bg {
-  background-color: #60C6C8;
-}
-.ansi-cyan-intense-fg {
-  color: #258F8F;
-}
-.ansi-cyan-intense-bg {
-  background-color: #258F8F;
-}
-.ansi-white-fg {
-  color: #C5C1B4;
-}
-.ansi-white-bg {
-  background-color: #C5C1B4;
-}
-.ansi-white-intense-fg {
-  color: #A1A6B2;
-}
-.ansi-white-intense-bg {
-  background-color: #A1A6B2;
-}
-.ansi-default-inverse-fg {
-  color: #FFFFFF;
-}
-.ansi-default-inverse-bg {
-  background-color: #000000;
-}
-.ansi-bold {
-  font-weight: bold;
-}
-.ansi-underline {
-  text-decoration: underline;
-}
-/* The following styles are deprecated an will be removed in a future version */
+/* CSS font colors for translated ANSI colors. */
 .ansibold {
   font-weight: bold;
-}
-.ansi-inverse {
-  outline: 0.5px dotted;
 }
 /* use dark versions for foreground, to improve visibility */
 .ansiblack {
@@ -302,20 +187,12 @@ div.cell {
   /* This acts as a spacer between cells, that is outside the border */
   margin: 0px;
   outline: none;
-  position: relative;
-  overflow: visible;
-}
-div.cell:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: transparent;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
 }
 div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
   border-left-color: #E3F2FD;
   border-left-width: 1px;
   padding-left: 5px;
@@ -328,39 +205,27 @@ div.cell.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected,
-div.cell.selected.jupyter-soft-selected {
+div.cell.selected {
   border-color: #ababab;
-}
-div.cell.selected:before,
-div.cell.selected.jupyter-soft-selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #42A5F5;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
 }
 @media print {
-  div.cell.selected,
-  div.cell.selected.jupyter-soft-selected {
+  div.cell.selected {
     border-color: transparent;
   }
 }
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
 .edit_mode div.cell.selected {
   border-color: #66BB6A;
-}
-.edit_mode div.cell.selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
 }
 @media print {
   .edit_mode div.cell.selected {
@@ -556,9 +421,7 @@ div.input_area > div.highlight > pre {
 .CodeMirror-lines {
   /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
   /* we have set a different line-height and want this to scale with that. */
-  /* Note that this should set vertical padding only, since CodeMirror assumes
-       that horizontal padding will be set on CodeMirror pre */
-  padding: 0.4em 0;
+  padding: 0.4em;
 }
 .CodeMirror-linenumber {
   padding: 0 8px 0 4px;
@@ -568,24 +431,11 @@ div.input_area > div.highlight > pre {
   border-top-left-radius: 2px;
 }
 .CodeMirror pre {
-  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
-    use .CodeMirror-lines for vertical */
-  padding: 0 0.4em;
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
   border: 0;
   border-radius: 0;
-}
-.CodeMirror-cursor {
-  border-left: 1.4px solid black;
-}
-@media screen and (min-width: 2138px) and (max-width: 4319px) {
-  .CodeMirror-cursor {
-    border-left: 2px solid black;
-  }
-}
-@media screen and (min-width: 4320px) {
-  .CodeMirror-cursor {
-    border-left: 4px solid black;
-  }
 }
 /*
 
@@ -833,9 +683,6 @@ div.output_area img.unconfined,
 div.output_area svg.unconfined {
   max-width: none;
 }
-div.output_area .mglyph > img {
-  max-width: none;
-}
 /* This is needed to protect the pre formating from global settings such
    as that of bootstrap */
 .output {
@@ -874,7 +721,7 @@ div.output_area .mglyph > img {
 }
 div.output_area pre {
   margin: 0;
-  padding: 1px 0 1px 0;
+  padding: 0;
   border: 0;
   vertical-align: baseline;
   color: black;
@@ -996,10 +843,6 @@ div.output_unrecognized a:hover {
 .rendered_html h6:first-child {
   margin-top: 1em;
 }
-.rendered_html ul:not(.list-inline),
-.rendered_html ol:not(.list-inline) {
-  padding-left: 2em;
-}
 
 
 
@@ -1016,24 +859,16 @@ div.output_unrecognized a:hover {
 }
 
 
-
-
-
 .rendered_html pre,
-
 
 
 
 .rendered_html tr,
 .rendered_html th,
 
+.rendered_html td,
 
-.rendered_html tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-.rendered_html tbody tr:hover {
-  background: rgba(66, 165, 245, 0.2);
-}
+
 .rendered_html * + table {
   margin-top: 1em;
 }
@@ -1049,11 +884,6 @@ div.output_unrecognized a:hover {
 
 .rendered_html img.unconfined,
 
-
-.rendered_html * + .alert {
-  margin-top: 1em;
-}
-[dir="rtl"] 
 div.text_cell {
   /* Old browsers */
   display: -webkit-box;
@@ -1104,15 +934,8 @@ h6:hover .anchor-link {
   display: none;
 }
 .text_cell.rendered 
-.text_cell.rendered .rendered_html tr,
-.text_cell.rendered .rendered_html th,
-.text_cell.rendered 
 .text_cell.unrendered .text_cell_render {
   display: none;
-}
-.text_cell .dropzone .input_area {
-  border: 2px dashed #bababa;
-  margin: -1px;
 }
 .cm-header-1,
 .cm-header-2,
@@ -1251,39 +1074,32 @@ h6:hover .anchor-link {
 .ansi-bold { font-weight: bold; }
 </style>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In this notebook, I show how to implement "minibatches", a method which stores gradients over several chunks of data ("mini" batch) and apply them altogether. To keep this exercise concise, I use the MNIST image set and a very simple neural network as an example. I will compare how the results differ when the network is trained with and without minibatches, for several popular optimizers.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In [1]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span> <span class="c1"># I use version 1.4</span>
 <span class="kn">from</span> <span class="nn">tensorflow.examples.tutorials.mnist</span> <span class="kn">import</span> <span class="n">input_data</span>
-<span class="n">mnist</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s2">&quot;MNIST_data/&quot;</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">mnist</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s2">"MNIST_data/"</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Extracting MNIST_data/train-images-idx3-ubyte.gz
 Extracting MNIST_data/train-labels-idx1-ubyte.gz
@@ -1292,24 +1108,22 @@ Extracting MNIST_data/t10k-labels-idx1-ubyte.gz
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Build-a-toy-network">Build a toy network<a class="anchor-link" href="#Build-a-toy-network">&#182;</a></h2><p>For simplicity, we will build a simple (single-layer) fully connected feed-forward neural network. <code>x</code> is the input data placeholder for an arbitrary batch size (784 = 28x28 is MNIST image size). <code>W</code> and <code>b</code> are weights and biases for the output layer, and <code>y</code> is the output to be compared against the label. For MNIST (10 digit classification), let's use the softmax cross entropy as our loss function.</p>
-
+<h2 id="Build-a-toy-network">Build a toy network<a class="anchor-link" href="#Build-a-toy-network">¶</a></h2><p>For simplicity, we will build a simple (single-layer) fully connected feed-forward neural network. <code>x</code> is the input data placeholder for an arbitrary batch size (784 = 28x28 is MNIST image size). <code>W</code> and <code>b</code> are weights and biases for the output layer, and <code>y</code> is the output to be compared against the label. For MNIST (10 digit classification), let's use the softmax cross entropy as our loss function.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In [2]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">784</span><span class="p">])</span>
 <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">]))</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">10</span><span class="p">]))</span>
@@ -1320,48 +1134,44 @@ Extracting MNIST_data/t10k-labels-idx1-ubyte.gz
 <span class="n">accuracy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">correct_prediction</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
 <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax_cross_entropy_with_logits</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y_</span><span class="p">,</span> <span class="n">logits</span><span class="o">=</span><span class="n">y</span><span class="p">))</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Data-preparation">Data preparation<a class="anchor-link" href="#Data-preparation">&#182;</a></h2><p>We will use this simple function to load and store data prior to entering the training loop. This allows us to remove randomness in data-fetching, so that we can compare training with and without minibatches on the same dataset. Note that <code>shuffle=False</code> so that data is not randomly shuffled and we seed <code>read_data_sets</code> for reproducibility (in the first cell).
+<h2 id="Data-preparation">Data preparation<a class="anchor-link" href="#Data-preparation">¶</a></h2><p>We will use this simple function to load and store data prior to entering the training loop. This allows us to remove randomness in data-fetching, so that we can compare training with and without minibatches on the same dataset. Note that <code>shuffle=False</code> so that data is not randomly shuffled and we seed <code>read_data_sets</code> for reproducibility (in the first cell).
 NOTE: the shuffle argument is available as of Tensorflow v1.3.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In [3]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">n_iterations</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iterations</span><span class="p">)]</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Standard-(no-minibatch)-training">Standard (no minibatch) training<a class="anchor-link" href="#Standard-(no-minibatch)-training">&#182;</a></h2><p>Define a function <code>train-standard</code> that uses the optimizer's <code>minimize</code> function with the minimization target as an argument. There is no minibatch involved here. Note we seed the initialization of all variables.</p>
-
+<h2 id="Standard-(no-minibatch)-training">Standard (no minibatch) training<a class="anchor-link" href="#Standard-(no-minibatch)-training">¶</a></h2><p>Define a function <code>train-standard</code> that uses the optimizer's <code>minimize</code> function with the minimization target as an argument. There is no minibatch involved here. Note we seed the initialization of all variables.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In [4]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">train_standard</span><span class="p">(</span><span class="n">opt_type</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">image_set</span><span class="p">):</span>
     <span class="c1"># Arrays for logging accuracy and loss</span>
     <span class="n">acc_log</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">image_set</span><span class="p">))</span>
@@ -1388,25 +1198,23 @@ NOTE: the shuffle argument is available as of Tensorflow v1.3.</p>
         
     <span class="k">return</span> <span class="n">acc_log</span><span class="p">,</span> <span class="n">loss_log</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Minibatch-training">Minibatch training<a class="anchor-link" href="#Minibatch-training">&#182;</a></h2><p>Define <code>train_minibatch</code> function and implement asynchronous weight updates. The idea is to accummulate gradients across a batch-worth of minibatches, then apply the accummulated gradients to update the parameters. One should not forget to <em>nullify</em> (i.e. set to zero) the gradients when starting on a new batch. Note we set the same random number generator seed as <code>train_standard</code>. Much of this implementation was taken from <a href="https://stackoverflow.com/a/42222976/5507784">this</a> Stack Overflow post.</p>
-
+<h2 id="Minibatch-training">Minibatch training<a class="anchor-link" href="#Minibatch-training">¶</a></h2><p>Define <code>train_minibatch</code> function and implement asynchronous weight updates. The idea is to accummulate gradients across a batch-worth of minibatches, then apply the accummulated gradients to update the parameters. One should not forget to <em>nullify</em> (i.e. set to zero) the gradients when starting on a new batch. Note we set the same random number generator seed as <code>train_standard</code>. Much of this implementation was taken from <a href="https://stackoverflow.com/a/42222976/5507784">this</a> Stack Overflow post.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In [5]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">train_minibatch</span><span class="p">(</span><span class="n">opt_type</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">image_set</span><span class="p">,</span> <span class="n">minibatch_size</span><span class="p">):</span>
     <span class="c1"># Arrays for logging accuracy and loss</span>
     <span class="n">acc_log</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">image_set</span><span class="p">))</span>
@@ -1418,7 +1226,7 @@ NOTE: the shuffle argument is available as of Tensorflow v1.3.</p>
     <span class="c1">#</span>
     <span class="c1"># 0) Retrieve trainable variables</span>
     <span class="n">tvs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">()</span> 
-    <span class="c1"># 1) Create placeholders for the accumulating gradients we&#39;ll be storing</span>
+    <span class="c1"># 1) Create placeholders for the accumulating gradients we'll be storing</span>
     <span class="n">accum_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tv</span><span class="o">.</span><span class="n">initialized_value</span><span class="p">(),</span>
                   <span class="n">trainable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">tv</span> <span class="ow">in</span> <span class="n">tvs</span><span class="p">]</span>
     <span class="c1"># 2) Operation to initialize accum_vars to zero</span>
@@ -1453,35 +1261,33 @@ NOTE: the shuffle argument is available as of Tensorflow v1.3.</p>
         <span class="n">loss_log</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> 
                                <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">images</span><span class="p">,</span> <span class="n">y_</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">labels</span><span class="p">})</span>
 
-        <span class="c1">#print(&quot;in iteration {}&quot;.format(i), sess.run(accum_vars))</span>
+        <span class="c1">#print("in iteration {}".format(i), sess.run(accum_vars))</span>
     <span class="k">return</span> <span class="n">acc_log</span><span class="p">,</span> <span class="n">loss_log</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="main-function"><em>main</em> function<a class="anchor-link" href="#main-function">&#182;</a></h2><p>We are almost there! Let's now define our <em>main</em> function that does the comparison between <code>train_standard</code> and <code>train_minibatch</code> methods. Here we define a set of optimizers, try the comparison for each optimizer independently. We use the network's loss and accuracy as a comparison metric.</p>
-
+<h2 id="main-function"><em>main</em> function<a class="anchor-link" href="#main-function">¶</a></h2><p>We are almost there! Let's now define our <em>main</em> function that does the comparison between <code>train_standard</code> and <code>train_minibatch</code> methods. Here we define a set of optimizers, try the comparison for each optimizer independently. We use the network's loss and accuracy as a comparison metric.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">compare</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">minibatch_size</span><span class="p">,</span> <span class="n">n_iterations</span><span class="p">):</span>
 
     <span class="c1"># Define optimizers (type, learning rate, and name) to be compared</span>
-    <span class="n">options</span> <span class="o">=</span> <span class="p">{</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span> <span class="p">:</span> <span class="p">(</span><span class="mf">0.03</span><span class="p">,</span>  <span class="s2">&quot;SGD&quot;</span><span class="p">),</span>
-                <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdagradOptimizer</span>         <span class="p">:</span> <span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="s2">&quot;Adagrad&quot;</span><span class="p">),</span>
-                <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span>            <span class="p">:</span> <span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="s2">&quot;Adam&quot;</span><span class="p">),</span>
-                <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">RMSPropOptimizer</span>         <span class="p">:</span> <span class="p">(</span><span class="mf">0.0001</span><span class="p">,</span><span class="s2">&quot;RMSProp&quot;</span><span class="p">)</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">{</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span> <span class="p">:</span> <span class="p">(</span><span class="mf">0.03</span><span class="p">,</span>  <span class="s2">"SGD"</span><span class="p">),</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdagradOptimizer</span>         <span class="p">:</span> <span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="s2">"Adagrad"</span><span class="p">),</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span>            <span class="p">:</span> <span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="s2">"Adam"</span><span class="p">),</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">RMSPropOptimizer</span>         <span class="p">:</span> <span class="p">(</span><span class="mf">0.0001</span><span class="p">,</span><span class="s2">"RMSProp"</span><span class="p">)</span>
               <span class="p">}</span>
 
     <span class="c1"># Load a fixed set of images to run the training on</span>
@@ -1490,30 +1296,30 @@ NOTE: the shuffle argument is available as of Tensorflow v1.3.</p>
     <span class="c1"># Loop over optimizers to compare</span>
     <span class="k">for</span> <span class="n">opt_type</span><span class="p">,</span> <span class="p">(</span><span class="n">lr</span><span class="p">,</span><span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
         <span class="c1"># Canvas making</span>
-        <span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">sharey</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;{} Batch {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">batch_size</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">fontname</span><span class="o">=</span><span class="s2">&quot;Georgia&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">sharey</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">'{} Batch {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">batch_size</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">fontname</span><span class="o">=</span><span class="s2">"Georgia"</span><span class="p">)</span>
 
         <span class="c1"># accuracy plot</span>
-        <span class="n">ax0</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s2">&quot;Georgia&quot;</span><span class="p">)</span>
-        <span class="n">ax0</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;iterations&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s2">&quot;Georgia&quot;</span><span class="p">)</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"accuracy"</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s2">"Georgia"</span><span class="p">)</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"iterations"</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s2">"Georgia"</span><span class="p">)</span>
         <span class="c1"># loss plot</span>
-        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s2">&quot;Georgia&quot;</span><span class="p">)</span>
-        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;iterations&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s2">&quot;Georgia&quot;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"loss"</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s2">"Georgia"</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"iterations"</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s2">"Georgia"</span><span class="p">)</span>
         
-        <span class="c1"># &quot;standard&quot; training first</span>
+        <span class="c1"># "standard" training first</span>
         <span class="n">acc_log</span><span class="p">,</span> <span class="n">loss_log</span> <span class="o">=</span> <span class="n">train_standard</span>  <span class="p">(</span><span class="n">opt_type</span><span class="o">=</span><span class="n">opt_type</span><span class="p">,</span> 
                                              <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> 
                                              <span class="n">image_set</span><span class="o">=</span><span class="n">image_set</span><span class="p">)</span>
-        <span class="n">ax0</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">acc_log</span><span class="p">,</span>  <span class="s1">&#39;r.-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;No minibatch&quot;</span><span class="p">)</span>
-        <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_log</span><span class="p">,</span> <span class="s1">&#39;r.-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;No minibatch&quot;</span><span class="p">)</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">acc_log</span><span class="p">,</span>  <span class="s1">'r.-'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"No minibatch"</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_log</span><span class="p">,</span> <span class="s1">'r.-'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"No minibatch"</span><span class="p">)</span>
         
-        <span class="c1"># &quot;minibatch&quot; training second</span>
+        <span class="c1"># "minibatch" training second</span>
         <span class="n">acc_log</span><span class="p">,</span> <span class="n">loss_log</span> <span class="o">=</span> <span class="n">train_minibatch</span> <span class="p">(</span><span class="n">opt_type</span><span class="o">=</span><span class="n">opt_type</span><span class="p">,</span> 
                                              <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> 
                                              <span class="n">image_set</span><span class="o">=</span><span class="n">image_set</span><span class="p">,</span> 
                                              <span class="n">minibatch_size</span><span class="o">=</span><span class="n">minibatch_size</span><span class="p">)</span>
-        <span class="n">ax0</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">acc_log</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Minibatch {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">minibatch_size</span><span class="p">))</span>
-        <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_log</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Minibatch {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">minibatch_size</span><span class="p">))</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">acc_log</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Minibatch {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">minibatch_size</span><span class="p">))</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_log</span><span class="p">,</span><span class="s1">'b'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Minibatch {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">minibatch_size</span><span class="p">))</span>
 
         <span class="c1"># Show</span>
         <span class="n">ax0</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
@@ -1522,45 +1328,34 @@ NOTE: the shuffle argument is available as of Tensorflow v1.3.</p>
         <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Test-0">Test 0<a class="anchor-link" href="#Test-0">&#182;</a></h2><p>It is important to demonstrate that this implementation for ONE minibatch is equivalent to the no-minibatch (i.e. standard) implementation. To perform this test, we set <code>minibatch_size</code> and <code>batch_size</code> the same value.</p>
-
+<h2 id="Test-0">Test 0<a class="anchor-link" href="#Test-0">¶</a></h2><p>It is important to demonstrate that this implementation for ONE minibatch is equivalent to the no-minibatch (i.e. standard) implementation. To perform this test, we set <code>minibatch_size</code> and <code>batch_size</code> the same value.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In [7]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">compare</span><span class="p">(</span> <span class="n">batch_size</span>     <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
          <span class="n">minibatch_size</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
          <span class="n">n_iterations</span>   <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA8MAAAEqCAYAAAAxoYJVAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XdYFNfXB/DvLL0poiIoCIgiSEcpIiCi2FuU2GKLxm5i
@@ -2235,18 +2030,11 @@ ioSEBGGz2cSKFSvE8ePHle0DAwPCarUqjzcYDOLpp58WDofDbdzT01OUlJSICxcuiIiICFFUVCSi
 o6NFcnKySElJEeXl5VN+XIiISL+YzcxmIkmISS5bR0RERERERPQfw8ukiYiIiIiISHfYDBMRERER
 EZHusBkmIiIiIiIi3WEzTERERERERLrDZpiIiIiIiIh0h80wERERERER6Q6bYSIiIiIiItIdNsNE
 RERERESkO2yGiYiIiIiISHfYDBMREREREZHu/A/jBoZmovvnbAAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA8MAAAEqCAYAAAAxoYJVAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XlYVGX7wPHvDCCigKiIoCCuyKoDiOKOuJTmLm9p5ZKm
@@ -2860,18 +2648,11 @@ nSsyMzOFs7OzCA0NFe7u7qJLly7C399fLF68WOvlQkREuou5mbmZSCFEJW9bR0RERERERFTDsJs0
 ERERERER6Rw2homIiIiIiEjnsDFMREREREREOoeNYSIiIiIiItI5bAwTERERERGRzmFjmIiIiIiI
 iHQOG8NERERERESkc9gYJiIiIiIiIp3DxjARERERERHpHDaGiYiIiIiISOf8P60el3W+jA6LAAAA
 AElFTkSuQmCC
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA8MAAAEqCAYAAAAxoYJVAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XdUVMfbB/DvLixIkyZYAAGlSQdFEAERxS5RQ9TEqNhr
@@ -3570,18 +3351,11 @@ y5eFr6+vWLNmjfD39xfjx48X4eHhIiUlpdv7hYiI9IvZzGwmkoTo4rR1RERERERERA8ZXiZNRERE
 REREusPBMBEREREREekOB8NERERERESkOxwMExERERERke5wMExERERERES6w8EwERERERER6Q4H
 w0RERERERKQ7HAwTERERERGR7nAwTERERERERLrDwTARERERERHpzv8A45AeC1Up1Q0AAAAASUVO
 RK5CYII=
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA70AAAEqCAYAAADZITd+AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XdcVfX/wPHXZQnKUskFOHKwFdwLRCtNM82Ro9wDrcw9
@@ -4182,49 +3956,37 @@ w4cPRUdHRzEkJER0dXUVfX19RT8/P3Hx4sVazxciIqq+WDezbiYSRLGc08cRERERERERyRS7NxMR
 EREREZHOYqOXiIiIiIiIdBYbvURERERERKSz2OglIiIiIiIincVGLxEREREREeksNnqJiIiIiIhI
 Z7HRS0RERERERDqLjV4iIiIiIiLSWWz0EhERERERkc5io5eIiIiIiIh01v8B/NxXUyhw3K8AAAAA
 SUVORK5CYII=
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This looks great = what we expected.</p>
-<h2 id="Test-1">Test 1<a class="anchor-link" href="#Test-1">&#182;</a></h2><p>Next, let's see what happens if we enable the minibatch option by setting <code>minibatch_size</code> and <code>batch_size</code> 5 and 10, respectively. This means there will be 2 minibatches in the minibatch implementation.</p>
-
+<h2 id="Test-1">Test 1<a class="anchor-link" href="#Test-1">¶</a></h2><p>Next, let's see what happens if we enable the minibatch option by setting <code>minibatch_size</code> and <code>batch_size</code> 5 and 10, respectively. This means there will be 2 minibatches in the minibatch implementation.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In [8]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">compare</span><span class="p">(</span> <span class="n">batch_size</span>     <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
          <span class="n">minibatch_size</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
          <span class="n">n_iterations</span>   <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA8MAAAEqCAYAAAAxoYJVAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XdYFNfXB/DvLKAiYhcLqFhAYJGiARFREcWaYOO1dxP9
@@ -5003,18 +4765,11 @@ sFB5/t69eyIgIEDZX6fTiaVLl4rKykqz8s6dO4tVq1aJ27dvCy8vLxEfHy98fHzEuHHjRFBQkEhM
 TGzzeiEiItvF3MzcTCQJ0cpp64iIiIiIiIgsDIdJExERERERkc1hZ5iIiIiIiIhsDjvDRERERERE
 ZHPYGSYiIiIiIiKbw84wERERERER2Rx2homIiIiIiMjmsDNMRERERERENoedYSIiIiIiIrI57AwT
 ERERERGRzWFnmIiIiIiIiGzO/wFT1SfpwLtzhwAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA8MAAAEqCAYAAAAxoYJVAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XlcFfX++PHXHEBFQUERASVxQ1YFFCT3vSx3+ZVbanrV
@@ -5644,18 +5399,11 @@ saKiIqutrbV379654+Fw2ILBoHt/SkqKtba22ubmZlzc7/fbgwcPbGtrywKBgHV1dVleXp5dvnzZ
 ysvLrbu7+5f/LgAA76I2U5sBn1mC29YBAAAAAPA/wzJpAAAAAIDn0AwDAAAAADyHZhgAAAAA4Dk0
 wwAAAAAAz6EZBgAAAAB4Ds0wAAAAAMBzaIYBAAAAAJ5DMwwAAAAA8ByaYQAAAACA59AMAwAAAAA8
 5w+63W1KaFQw/QAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA8MAAAEqCAYAAAAxoYJVAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XlcVNX7wPHPDIu4oCiKIiIggiCIiOGKCqS4m5mVbeaS
@@ -6442,18 +6190,11 @@ pfD29hYTJkwQP//8s1iwYIGwtLTUxt6rVy+dY/viiy+Et7e36Nmzp/Dx8RFDhgwRx48f1y6/ffu2
 jBdzM3MzkSREPYetIyIiIiIiImpkeJs0ERERERERGR12homIiIiIiMjosDNMRERERERERoedYSIi
 IiIiIjI67AwTERERERGR0WFnmIiIiIiIiIwOO8NERERERERkdNgZJiIiIiIiIqPDzjAREREREREZ
 HXaGiYiIiIiIyOj8H8wt94YpfJb8AAAAAElFTkSuQmCC
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA70AAAEqCAYAAADZITd+AAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XdYU9cbB/BvQFEpKCpucCtDUcCBqxSw7j1q3eK2rXVX
@@ -7199,26 +6940,21 @@ TEyMWK1WmTdvnhw/flxb3tbWJhaLRXu+yWSS559/Xpqbm+3GBw8eLGvWrJGLFy9KaGioZGVlSXh4
 uMTGxkpcXJzk5OQ4fL8QEZHrYjYzm4kUkQFOH0dERERERERkUDy9mYiIiIiIiJwWm14iIiIiIiJy
 Wmx6iYiIiIiIyGmx6SUiIiIiIiKnxaaXiIiIiIiInBabXiIiIiIiInJabHqJiIiIiIjIabHpJSIi
 IiIiIqfFppeIiIiIiIicFpteIiIiIiIiclr/A7QFU3/du+OrAAAAAElFTkSuQmCC
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The results are more interesting than the previous test. For AdamOptimizer, it shows two methods are effectively identical. This is what we would expect naturally unless there is a dynamic state of an optimizer, which changed during minibatch loop. It turns out this is the case for the three other optimizers we tested here. So we do expect red and blue not to completely overlap. However, for all those methods, the state shift is designed to help the gradient applications. This is why using minibatches ends up with a <em>better</em> result, i.e. loss curve of minibatch method (blue) almost always resides below no-minibatch method (red).</p>
 <p>In this notebook we exercised how to implement minibatches in TensorFlow. You can <code>git clone</code> this notebook from <a href="https://github.com/jiwoncpark/deep-learning">Ji Won's repository</a>.</p>
-
 </div>
 </div>
 </div>
- 
-
 
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var mathjaxscript = document.createElement('script');

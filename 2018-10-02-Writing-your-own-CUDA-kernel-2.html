@@ -1,0 +1,1606 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<meta name="author" content="Laura Domine" />
+<meta name="description" content="Second part of a tutorial serie to write your own CUDA kernel and use it in Tensorflow or PyTorch." />
+<meta name="keywords" content="cuda, tensorflow, pytorch">
+<meta property="og:site_name" content="DeepLearnPhysics Blog"/>
+<meta property="og:title" content="Writing your own CUDA kernel (Part 2)"/>
+<meta property="og:description" content="Second part of a tutorial serie to write your own CUDA kernel and use it in Tensorflow or PyTorch."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://deeplearnphysics.org/Blog/2018-10-02-Writing-your-own-CUDA-kernel-2.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-10-02 00:00:00-05:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://deeplearnphysics.org/Blog/author/laura-domine.html">
+<meta property="article:section" content="Tutorial"/>
+<meta property="article:tag" content="cuda"/>
+<meta property="article:tag" content="tensorflow"/>
+<meta property="article:tag" content="pytorch"/>
+<meta property="og:image" content="profile.png">
+
+
+<!-- Default meta cards for twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@dlphysics">
+<meta name="twitter:creator" content="@dlphysics">
+<meta name="twitter:title" content="Writing your own CUDA kernel (Part 2)">
+<meta name="twitter:description" content="<p>Second part of a tutorial serie to write your own CUDA kernel and use it in Tensorflow or PyTorch.</p>">
+<meta name="twitter:image" content="http://deeplearnphysics.org/Blog/theme/img/profile_small.png" />
+
+
+  <title>DeepLearnPhysics Blog &ndash; Writing your own CUDA kernel (Part 2)</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="http://deeplearnphysics.org/Blog">
+        <img src="http://deeplearnphysics.org/Blog/theme/img/profile.png" alt="Blog" title="Blog">
+      </a>
+      <h1><a href="http://deeplearnphysics.org/Blog">Blog</a></h1>
+
+<p>DeepLearnPhysics Group</p>
+
+      <ul class="social">
+        <li><a class="sc-home" href="http://deeplearnphysics.org" target="_blank"><i class="fa fa-home"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/dlphysics" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-github" href="http://github.com/DeepLearnPhysics" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+    <nav>
+
+
+      <a href="http://deeplearnphysics.org/Blog/index.html">Home</a>
+      <a href="http://deeplearnphysics.org/Blog/categories.html">Category</a>
+      <a href="http://deeplearnphysics.org/Blog/archives.html">Archives</a>
+      <a href="http://deeplearnphysics.org/Blog/tags.html">Tags</a>
+      <a href="http://deeplearnphysics.org/Blog/authors.html">Authors</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+    <h1 id="2018-10-02-Writing-your-own-CUDA-kernel-2">Writing your own CUDA kernel (Part 2)</h1>
+    <p>
+          Posted on mar. 02 octobre 2018 in <a href="http://deeplearnphysics.org/Blog/category/tutorial.html">Tutorial</a>
+
+            by
+
+              <a href="http://deeplearnphysics.org/Blog/author/laura-domine.html">Laura Domine</a>    </p>
+  </header>
+
+  <!-- script is a local library -->
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css">
+
+  <div>
+    <style type="text/css">/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI colors. */
+.ansibold {
+  font-weight: bold;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected {
+  border-color: #ababab;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  div.cell.selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell > div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  padding: 0.4em;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+.rendered_html pre,
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+.rendered_html td,
+
+
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell > div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+</style>
+<style type="text/css">.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you followed part 1 of the tutorial, you now understand how to write the CUDA kernel itself. However it would be even better if you could use it directly in your Tensorflow or PyTorch program. In this part of the tutorial we show how to do it in Tensorflow.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to integrate this new CUDA kernel to our network we have to wrap it into a new TensorFlow operation. The <a href="https://www.tensorflow.org/extend/adding_an_op#gpu_kernels">official documentation</a> on this point is pretty poor and full of mistakes. We will end up with 3 new files:</p>
+<ul>
+<li><code>crop_op.h</code> header file</li>
+<li><code>crop_op.cc</code> Registers the new TF operation and CPU/GPU kernels. Defines CPU implementation and OpKernel.</li>
+<li><code>crop_op.cu.cc</code> Defines GPU kernels</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="crop_op.h"><code>crop_op.h</code><a class="anchor-link" href="#crop_op.h">¶</a></h2><p>This is the headers file, it contains 2 definitions:</p>
+<div class="highlight"><pre><span></span><span class="cp">#ifndef CROP_OP_H_</span>
+<span class="cp">#define CROP_OP_H_</span>
+
+<span class="cp">#include</span> <span class="cpf">"tensorflow/core/framework/op_kernel.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf"><iostream></span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">tensorflow</span><span class="p">;</span>
+
+<span class="k">template</span> <span class="o"><</span><span class="k">typename</span> <span class="n">Device</span><span class="p">,</span> <span class="k">typename</span> <span class="n">T</span><span class="o">></span>
+<span class="k">struct</span> <span class="n">CropFunctor</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span>
+    <span class="k">const</span> <span class="n">Device</span><span class="o">&</span> <span class="n">d</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">image_ptr</span><span class="p">,</span>
+    <span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">crop_centers_ptr</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">crop_size</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">image_size</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">channels</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">num_crops</span><span class="p">,</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">crops_ptr</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+<p>We define here a general version of <code>CropFunctor</code> which will run on CPU.</p>
+<div class="highlight"><pre><span></span><span class="cp">#if GOOGLE_CUDA</span>
+<span class="c1">// Partially specialize functor for GpuDevice.</span>
+<span class="k">template</span> <span class="o"><</span><span class="k">typename</span> <span class="n">T</span><span class="o">></span>
+<span class="k">struct</span> <span class="n">CropFunctor</span><span class="o"><</span><span class="n">Eigen</span><span class="o">::</span><span class="n">GpuDevice</span><span class="p">,</span> <span class="n">T</span><span class="o">></span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span>
+    <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">GpuDevice</span><span class="o">&</span> <span class="n">d</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">image_ptr</span><span class="p">,</span>
+    <span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">crop_centers_ptr</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">crop_size</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">image_size</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">channels</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">num_crops</span><span class="p">,</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">crops_ptr</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#endif </span><span class="c1">// CROP_OP_H_</span>
+</pre></div>
+<p>This partially specialized version of <code>CropFunctor</code> will run on GPU.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="crop_op.cc"><code>crop_op.cc</code><a class="anchor-link" href="#crop_op.cc">¶</a></h2><p>Moving on to <code>crop_op.cc</code>, we have the registration of the new TF operation called <code>Crop</code> and of all its arguments:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">"crop_op.h"</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">tensorflow</span><span class="p">;</span>
+
+<span class="c1">// Register TF operation</span>
+<span class="n">REGISTER_OP</span><span class="p">(</span><span class="s">"Crop"</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Attr</span><span class="p">(</span><span class="s">"T: {float, int32} = DT_FLOAT"</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">"image: float32"</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">"crop_centers: int32"</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">"crop_size: int32"</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">"crops: float32"</span><span class="p">);</span>
+
+<span class="k">using</span> <span class="n">CPUDevice</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">ThreadPoolDevice</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">GPUDevice</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">GpuDevice</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We then define an (empty) CPU implementation of <code>CropFunctor</code>.</p>
+<div class="highlight"><pre><span></span><span class="c1">// CPU specialization of actual computation.</span>
+<span class="k">template</span> <span class="o"><</span><span class="k">typename</span> <span class="n">T</span><span class="o">></span>
+<span class="k">struct</span> <span class="n">CropFunctor</span><span class="o"><</span><span class="n">CPUDevice</span><span class="p">,</span> <span class="n">T</span><span class="o">></span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span>
+    <span class="k">const</span> <span class="n">CPUDevice</span><span class="o">&</span> <span class="n">d</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">image_ptr</span><span class="p">,</span>
+    <span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">crop_centers_ptr</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">crop_size</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">image_size</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">channels</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">num_crops</span><span class="p">,</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">crops_ptr</span>
+  <span class="p">)</span> <span class="p">{</span>
+
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We then define the <code>OpKernel</code> which will interface between TF and the <code>CropFunctor</code> functions.</p>
+<div class="highlight"><pre><span></span><span class="c1">// OpKernel definition.</span>
+<span class="c1">// template parameter <t> is the datatype of the tensors.</span>
+<span class="k">template</span> <span class="o"><</span><span class="k">typename</span> <span class="n">Device</span><span class="p">,</span> <span class="k">typename</span> <span class="n">T</span><span class="o">></span>
+<span class="k">class</span> <span class="nc">CropOp</span> <span class="o">:</span> <span class="k">public</span> <span class="n">OpKernel</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="k">explicit</span> <span class="n">CropOp</span><span class="p">(</span><span class="n">OpKernelConstruction</span><span class="o">*</span> <span class="n">context</span><span class="p">)</span> <span class="o">:</span> <span class="n">OpKernel</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="kt">void</span> <span class="n">Compute</span><span class="p">(</span><span class="n">OpKernelContext</span><span class="o">*</span> <span class="n">context</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+</pre></div>
+<p>We can grab the input data, crop centers and crop size through <code>context->input</code>.</p>
+<div class="highlight"><pre><span></span><span class="c1">// Grab the input tensors</span>
+    <span class="k">const</span> <span class="n">Tensor</span><span class="o">&</span> <span class="n">image</span> <span class="o">=</span> <span class="n">context</span><span class="o">-></span><span class="n">input</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">const</span> <span class="n">Tensor</span><span class="o">&</span> <span class="n">crop_centers</span> <span class="o">=</span> <span class="n">context</span><span class="o">-></span><span class="n">input</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">const</span> <span class="n">Tensor</span><span class="o">&</span> <span class="n">crop_size_tensor</span> <span class="o">=</span> <span class="n">context</span><span class="o">-></span><span class="n">input</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="c1">// FIXME</span>
+    <span class="n">OP_REQUIRES</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">TensorShapeUtils</span><span class="o">::</span><span class="n">IsScalar</span><span class="p">(</span><span class="n">crop_size_tensor</span><span class="p">.</span><span class="n">shape</span><span class="p">()),</span> <span class="n">errors</span><span class="o">::</span><span class="n">InvalidArgument</span><span class="p">(</span><span class="s">"crop_size must be scalar, has shape "</span><span class="p">,</span> <span class="n">crop_size_tensor</span><span class="p">.</span><span class="n">shape</span><span class="p">().</span><span class="n">DebugString</span><span class="p">()));</span>
+    <span class="c1">//const int crop_size = crop_size_tensor.scalar<int32>()();</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">crop_size</span> <span class="o">=</span> <span class="mi">64</span><span class="p">;</span>
+</pre></div>
+<p>We define the output array and its shape:</p>
+<div class="highlight"><pre><span></span><span class="c1">// Get shapes of input tensors</span>
+    <span class="k">const</span> <span class="n">TensorShape</span><span class="o">&</span> <span class="n">image_shape</span> <span class="o">=</span> <span class="n">image</span><span class="p">.</span><span class="n">shape</span><span class="p">();</span>
+    <span class="k">const</span> <span class="n">TensorShape</span><span class="o">&</span> <span class="n">crop_centers_shape</span> <span class="o">=</span> <span class="n">crop_centers</span><span class="p">.</span><span class="n">shape</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">image_size</span> <span class="o">=</span> <span class="n">image_shape</span><span class="p">.</span><span class="n">dim_size</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">channels</span> <span class="o">=</span> <span class="n">image_shape</span><span class="p">.</span><span class="n">dim_size</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">num_crops</span> <span class="o">=</span> <span class="n">crop_centers_shape</span><span class="p">.</span><span class="n">dim_size</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">dim</span> <span class="o">=</span> <span class="n">crop_centers_shape</span><span class="p">.</span><span class="n">dim_size</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+    <span class="c1">// Create an output tensor</span>
+    <span class="n">Tensor</span><span class="o">*</span> <span class="n">crops</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="c1">// create output shape</span>
+    <span class="n">TensorShape</span> <span class="n">crops_shape</span><span class="p">;</span>
+    <span class="n">crops_shape</span><span class="p">.</span><span class="n">AddDim</span><span class="p">(</span><span class="n">num_crops</span><span class="p">);</span>
+    <span class="n">crops_shape</span><span class="p">.</span><span class="n">AddDim</span><span class="p">(</span><span class="n">crop_size</span><span class="p">);</span>
+    <span class="n">crops_shape</span><span class="p">.</span><span class="n">AddDim</span><span class="p">(</span><span class="n">crop_size</span><span class="p">);</span>
+    <span class="n">crops_shape</span><span class="p">.</span><span class="n">AddDim</span><span class="p">(</span><span class="n">crop_size</span><span class="p">);</span>
+    <span class="n">crops_shape</span><span class="p">.</span><span class="n">AddDim</span><span class="p">(</span><span class="n">channels</span><span class="p">);</span>
+    <span class="n">OP_REQUIRES_OK</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">context</span><span class="o">-></span><span class="n">allocate_output</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">crops_shape</span><span class="p">,</span>
+                                                     <span class="o">&</span><span class="n">crops</span><span class="p">));</span>
+</pre></div>
+<p>Finally <code>CropFunctor</code> is called.</p>
+<div class="highlight"><pre><span></span><span class="c1">// Do the computation.</span>
+    <span class="n">CropFunctor</span><span class="o"><</span><span class="n">Device</span><span class="p">,</span> <span class="n">T</span><span class="o">></span><span class="p">()(</span>
+        <span class="n">context</span><span class="o">-></span><span class="n">eigen_device</span><span class="o"><</span><span class="n">Device</span><span class="o">></span><span class="p">(),</span>
+        <span class="n">image</span><span class="p">.</span><span class="n">flat</span><span class="o"><</span><span class="n">T</span><span class="o">></span><span class="p">().</span><span class="n">data</span><span class="p">(),</span>
+        <span class="n">crop_centers</span><span class="p">.</span><span class="n">flat</span><span class="o"><</span><span class="kt">int</span><span class="o">></span><span class="p">().</span><span class="n">data</span><span class="p">(),</span>
+        <span class="n">crop_size</span><span class="p">,</span>
+        <span class="n">image_size</span><span class="p">,</span>
+        <span class="n">channels</span><span class="p">,</span>
+        <span class="n">num_crops</span><span class="p">,</span>
+        <span class="n">crops</span><span class="o">-></span><span class="n">flat</span><span class="o"><</span><span class="n">T</span><span class="o">></span><span class="p">().</span><span class="n">data</span><span class="p">()</span>
+      <span class="p">);</span>
+
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Last thing in <code>crop_op.cc</code>, we register our CPU and GPU kernels with TensorFlow.</p>
+<div class="highlight"><pre><span></span><span class="c1">// Register the CPU kernels.</span>
+<span class="cp">#define REGISTER_CPU(T) \</span>
+<span class="cp">  REGISTER_KERNEL_BUILDER( \</span>
+<span class="cp">      Name("Crop") \</span>
+<span class="cp">      .Device(DEVICE_CPU) \</span>
+<span class="cp">      .TypeConstraint<t>("T"), \</span>
+<span class="cp">    CropOp<cpudevice, t>);</span>
+<span class="n">REGISTER_CPU</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+<span class="n">REGISTER_CPU</span><span class="p">(</span><span class="n">int32</span><span class="p">);</span>
+
+<span class="c1">// Register the GPU kernels.</span>
+<span class="cp">#ifdef GOOGLE_CUDA</span>
+<span class="cp">#define REGISTER_GPU(T) \</span>
+<span class="cp">  extern template struct CropFunctor<gpudevice, t>; \</span>
+<span class="cp">  REGISTER_KERNEL_BUILDER( \</span>
+<span class="cp">      Name("Crop")      \</span>
+<span class="cp">      .Device(DEVICE_GPU)   \</span>
+<span class="cp">      .TypeConstraint<t>("T"),  \</span>
+<span class="cp">    CropOp<gpudevice, t>);</span>
+<span class="n">REGISTER_GPU</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+<span class="n">REGISTER_GPU</span><span class="p">(</span><span class="n">int32</span><span class="p">);</span>
+<span class="cp">#endif </span><span class="c1">// GOOGLE_CUDA</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="crop_op.cu.cc"><code>crop_op.cu.cc</code><a class="anchor-link" href="#crop_op.cu.cc">¶</a></h2><p>This is the CUDA kernel definition itself.</p>
+<div class="highlight"><pre><span></span><span class="cp">#ifdef GOOGLE_CUDA</span>
+<span class="cp">#define EIGEN_USE_GPU</span>
+
+<span class="cp">#include</span> <span class="cpf">"crop_op.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"tensorflow/core/util/cuda_kernel_helper.h"</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">tensorflow</span><span class="p">;</span>
+
+<span class="k">using</span> <span class="n">GPUDevice</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">GpuDevice</span><span class="p">;</span>
+
+<span class="c1">// Define the CUDA kernel.</span>
+<span class="c1">// template <typename t></span>
+<span class="c1">// __global__ void CropCudaKernel</span>
+<span class="c1">// ...</span>
+</pre></div>
+<p>Our custom CUDA kernel implementation should come around here.</p>
+<div class="highlight"><pre><span></span><span class="c1">// Define the GPU implementation that launches the CUDA kernel.</span>
+<span class="k">template</span> <span class="o"><</span><span class="k">typename</span> <span class="n">T</span><span class="o">></span>
+<span class="kt">void</span> <span class="n">CropFunctor</span><span class="o"><</span><span class="n">GPUDevice</span><span class="p">,</span> <span class="n">T</span><span class="o">>::</span><span class="k">operator</span><span class="p">()(</span>
+    <span class="k">const</span> <span class="n">GPUDevice</span><span class="o">&</span> <span class="n">d</span><span class="p">,</span>
+    <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">image_ptr</span><span class="p">,</span>
+    <span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">crop_centers_ptr</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">crop_size</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">image_size</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">channels</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="n">num_crops</span><span class="p">,</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">crops_ptr</span>
+  <span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Launch the cuda kernel.</span>
+  <span class="kt">int</span> <span class="n">block_count</span> <span class="o">=</span> <span class="n">num_crops</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">thread_per_block</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
+  <span class="n">CropCudaKernel</span><span class="o"><</span><span class="n">T</span><span class="o">></span>
+      <span class="o"><<<</span><span class="n">block_count</span><span class="p">,</span> <span class="n">thread_per_block</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">stream</span><span class="p">()</span><span class="o">>>></span><span class="p">(</span>
+        <span class="n">image_ptr</span><span class="p">,</span>
+        <span class="n">crop_centers_ptr</span><span class="p">,</span>
+        <span class="n">image_size</span><span class="p">,</span>
+        <span class="n">channels</span><span class="p">,</span>
+        <span class="n">crop_size</span><span class="p">,</span>
+        <span class="n">num_crops</span><span class="p">,</span>
+        <span class="n">crops_ptr</span>
+      <span class="p">);</span>
+    <span class="n">cudaDeviceSynchronize</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// Explicitly instantiate functors for the types of OpKernels registered.</span>
+<span class="k">template</span> <span class="k">struct</span> <span class="n">CropFunctor</span><span class="o"><</span><span class="n">GPUDevice</span><span class="p">,</span> <span class="kt">float</span><span class="o">></span><span class="p">;</span>
+<span class="k">template</span> <span class="k">struct</span> <span class="n">CropFunctor</span><span class="o"><</span><span class="n">GPUDevice</span><span class="p">,</span> <span class="n">int32</span><span class="o">></span><span class="p">;</span>
+
+<span class="cp">#endif </span><span class="c1">// GOOGLE_CUDA</span>
+</pre></div>
+<p>This is the function that will set the number of blocks and threads per block before calling the kernel. The syntax to call the kernel is slightly different from the syntax for a normal function.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Compiling">Compiling<a class="anchor-link" href="#Compiling">¶</a></h2><p>You have to first compile the CUDA kernel using <code>nvcc</code> compiler, then compile the C++ wrappers with <code>g++</code> compiler. There are many subtleties that I do not master in this compilation chain and linking, but in short, here is a Makefile that worked for me (and runs both on CPU and GPU).</p>
+<div class="highlight"><pre><span></span><span class="c">#Get location of Tensorflow headers and library files</span>
+<span class="nv">TF_INC</span><span class="o">=</span><span class="k">$(</span>shell python -c <span class="s1">'import tensorflow as tf; print(tf.sysconfig.get_include())'</span><span class="k">)</span>
+<span class="nv">TF_LIB</span><span class="o">=</span><span class="k">$(</span>shell python -c <span class="s1">'import tensorflow as tf; print(tf.sysconfig.get_lib())'</span><span class="k">)</span>
+
+<span class="nv">CC</span>        <span class="o">=</span> gcc -O2 -pthread
+<span class="nv">CXX</span>       <span class="o">=</span> g++
+<span class="nv">GPUCC</span>     <span class="o">=</span> nvcc
+<span class="nv">CFLAGS</span>    <span class="o">=</span> -std<span class="o">=</span>c++11 -I<span class="k">$(</span>TF_INC<span class="k">)</span> -D_GLIBCXX_USE_CXX11_ABI<span class="o">=</span><span class="m">0</span>
+<span class="nv">GPUCFLAGS</span> <span class="o">=</span> -c
+<span class="nv">LFLAGS</span>    <span class="o">=</span>  -shared -fPIC -ltensorflow_framework -I<span class="k">$(</span>TF_INC<span class="k">)</span> -I<span class="k">$(</span>TF_INC<span class="k">)</span>/external/nsync/public -L<span class="k">$(</span>TF_LIB<span class="k">)</span> -L/usr/local/cuda/lib64 -I/usr/local/cuda/include
+<span class="nv">GPULFLAGS</span> <span class="o">=</span> -x cu -shared -Xcompiler -fPIC -ltensorflow_framework -I<span class="k">$(</span>TF_INC<span class="k">)</span> -I<span class="k">$(</span>TF_INC<span class="k">)</span>/external/nsync/public -L<span class="k">$(</span>TF_LIB<span class="k">)</span>
+<span class="nv">DEBUG</span> <span class="o">=</span> -g -G
+<span class="nv">GPUDEF</span>    <span class="o">=</span> -D <span class="nv">GOOGLE_CUDA</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">CGPUFLAGS</span> <span class="o">=</span> -lcudart
+
+
+<span class="nv">SRC</span>       <span class="o">=</span> crop_op.cc
+<span class="nv">GPUSRC</span>    <span class="o">=</span> crop_op_gpu.cu.cc
+<span class="nv">PROD</span>      <span class="o">=</span> crop_op.so
+<span class="nv">GPUPROD</span> <span class="o">=</span> crop_op_cu.so
+
+<span class="nf">default</span><span class="o">:</span> <span class="n">gpu</span>
+
+<span class="nf">cpu</span><span class="o">:</span>
+    <span class="k">$(</span>CXX<span class="k">)</span> <span class="k">$(</span>CFLAGS<span class="k">)</span> <span class="k">$(</span>SRC<span class="k">)</span> <span class="k">$(</span>LFLAGS<span class="k">)</span> -o <span class="k">$(</span>PROD<span class="k">)</span>
+
+<span class="nf">gpu</span><span class="o">:</span>
+    <span class="k">$(</span>GPUCC<span class="k">)</span> <span class="k">$(</span>CFLAGS<span class="k">)</span> <span class="k">$(</span>GPUCFLAGS<span class="k">)</span> <span class="k">$(</span>GPUSRC<span class="k">)</span> <span class="k">$(</span>GPULFLAGS<span class="k">)</span> -o <span class="k">$(</span>GPUPROD<span class="k">)</span> <span class="k">$(</span>GPUDEF<span class="k">)</span> -I/usr/local/ --expt-relaxed-constexpr -D_MWAITXINTRIN_H_INCLUDED
+    <span class="k">$(</span>CXX<span class="k">)</span> <span class="k">$(</span>CFLAGS<span class="k">)</span>  <span class="k">$(</span>SRC<span class="k">)</span> <span class="k">$(</span>GPUPROD<span class="k">)</span> <span class="k">$(</span>LFLAGS<span class="k">)</span> <span class="k">$(</span>CGPUFLAGS<span class="k">)</span> -o <span class="k">$(</span>PROD<span class="k">)</span> <span class="k">$(</span>GPUDEF<span class="k">)</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+    rm -f <span class="k">$(</span>PROD<span class="k">)</span> <span class="k">$(</span>GPUPROD<span class="k">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Testing-and-using-our-new-Tensorflow-operation">Testing and using our new Tensorflow operation<a class="anchor-link" href="#Testing-and-using-our-new-Tensorflow-operation">¶</a></h2><p>We can use the tensorflow <code>TestCase</code> class to test our new operation. Let us first define a CPU, Numpy implementation of the cropping operation:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">crop</span><span class="p">(</span><span class="n">patch_centers</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Slice patches of size N centered at patch_centers in data.</span>
+<span class="sd">    Assumes data has shape (1, M, M, M, channels)</span>
+<span class="sd">    or (1, M, M, channels)</span>
+<span class="sd">    """</span>
+    <span class="n">coords0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">patch_centers</span> <span class="o">-</span> <span class="n">N</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>  <span class="c1"># bottom left corner</span>
+    <span class="n">coords1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">patch_centers</span> <span class="o">+</span> <span class="n">N</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>  <span class="c1"># top right corner</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">patch_centers</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">image_size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">coords0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">coords0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">coords1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">crops</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">coords0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],)</span> <span class="o">+</span> <span class="p">(</span><span class="n">N</span><span class="p">,)</span> <span class="o">*</span> <span class="n">dim</span> <span class="o">+</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],))</span>
+    <span class="n">crops_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">crops</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coords0</span><span class="p">)):</span>
+        <span class="n">padding</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim</span><span class="p">):</span>
+            <span class="n">pad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="p">(</span><span class="n">coords1</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="n">coords0</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">d</span><span class="p">]),</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">coords0</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="n">padding</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pad</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">padding</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad</span><span class="p">))</span>
+        <span class="n">padding</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">crops</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span>
+                                   <span class="n">coords0</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]:</span><span class="n">coords1</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                   <span class="n">coords0</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span><span class="n">coords1</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                   <span class="p">:],</span>
+                              <span class="n">padding</span><span class="p">,</span> <span class="s1">'constant'</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># dim == 3</span>
+            <span class="n">crops</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span>
+                                   <span class="n">coords0</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]:</span><span class="n">coords1</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                   <span class="n">coords0</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">]:</span><span class="n">coords1</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                   <span class="n">coords0</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span><span class="n">coords1</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                                   <span class="p">:],</span>
+                              <span class="n">padding</span><span class="p">,</span> <span class="s1">'constant'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">crops</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we can define our test and compare the timing between Numpy and CUDA implementations:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">CropTest</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">testCrop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">crop_module</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">load_op_library</span><span class="p">(</span><span class="s1">'./faster_particles/crop_op/crop_op.so'</span><span class="p">)</span>
+
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">set_random_seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+        
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">192</span>
+        <span class="c1"># The more steps here, the more accurate the timings will be</span>
+        <span class="c1"># Remember that TF first few calls to sess.run are always slower</span>
+        <span class="n">MAX_STEPS</span> <span class="o">=</span> <span class="mi">200</span>
+        <span class="n">CROP_SIZE</span> <span class="o">=</span> <span class="mi">64</span>
+        
+        <span class="c1"># Define dummy crop centers</span>
+        <span class="n">image_np</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">crop_centers_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        
+        <span class="c1"># Define TF equivalents</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">image_np</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">crop_centers</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">crop_centers_np</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        
+        <span class="c1"># >>> Call our CUDA kernel! <<<</span>
+        <span class="n">crops</span> <span class="o">=</span> <span class="n">crop_module</span><span class="o">.</span><span class="n">crop</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">crop_centers</span><span class="p">,</span> <span class="n">CROP_SIZE</span><span class="p">)</span>
+        
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_session</span><span class="p">():</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_STEPS</span><span class="p">):</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">tf_result</span> <span class="o">=</span> <span class="n">crops</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">duration</span> <span class="o">+=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"TF duration = </span><span class="si">%f</span><span class="s2"> s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">duration</span> <span class="o">/</span> <span class="n">MAX_STEPS</span><span class="p">))</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_STEPS</span><span class="p">):</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">np_result</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">crop_numpy</span><span class="p">(</span><span class="n">crop_centers_np</span><span class="p">,</span> <span class="n">CROP_SIZE</span><span class="p">,</span> <span class="n">image_np</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">duration</span> <span class="o">+=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"NP duration = </span><span class="si">%f</span><span class="s2"> s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">duration</span> <span class="o">/</span> <span class="n">MAX_STEPS</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAllClose</span><span class="p">(</span><span class="n">tf_result</span><span class="p">,</span> <span class="n">np_result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To run the test just execute the following line:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [ ]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The timing outcomes are in my case:</p>
+<div class="highlight"><pre><span></span>TF <span class="nv">duration</span> <span class="o">=</span> <span class="m">0</span>.011914 s
+NP <span class="nv">duration</span> <span class="o">=</span> <span class="m">0</span>.138170 s
+</pre></div>
+<p>So we get a speedup of 10x for this small toy example. It is not <em>that</em> spectacular, because the number of blocks is relatively low (100 * 64 = 6400 blocks). By tuning the number of blocks, threads per block etc, the speedup could probably be better. How much will you be able to achieve with your own use case? Let us know!</p>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="http://deeplearnphysics.org/Blog/tag/cuda.html">cuda</a>
+      <a href="http://deeplearnphysics.org/Blog/tag/tensorflow.html">tensorflow</a>
+      <a href="http://deeplearnphysics.org/Blog/tag/pytorch.html">pytorch</a>
+    </p>
+  </div>
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy; DeepLearnPhysics 2017 - This work is licensed under a <a rel="license" href="https://opensource.org/licenses/MIT">MIT License</a>
+</p>
+<p>
+</p>    </footer>
+  </main>
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " DeepLearnPhysics Blog ",
+  "url" : "http://deeplearnphysics.org/Blog",
+  "image": "profile.png",
+  "description": "description!"
+}
+</script>
+</body>
+</html>

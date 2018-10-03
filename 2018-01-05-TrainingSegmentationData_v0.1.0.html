@@ -90,7 +90,7 @@
   <header>
     <h1 id="2018-01-05-TrainingSegmentationData_v0.1.0">Training Semantic-Segmentation Data Set (v0.1.0)</h1>
     <p>
-          Posted on Fri 05 January 2018 in <a href="http://deeplearnphysics.org/Blog/category/semantic-segmentation.html">semantic segmentation</a>
+          Posted on ven. 05 janvier 2018 in <a href="http://deeplearnphysics.org/Blog/category/semantic-segmentation.html">semantic segmentation</a>
 
             by
 
@@ -106,124 +106,9 @@
 * IPython notebook
 *
 */
-/* CSS font colors for translated ANSI escape sequences */
-/* The color values are a mix of
-   http://www.xcolors.net/dl/baskerville-ivorylight and
-   http://www.xcolors.net/dl/euphrasia */
-.ansi-black-fg {
-  color: #3E424D;
-}
-.ansi-black-bg {
-  background-color: #3E424D;
-}
-.ansi-black-intense-fg {
-  color: #282C36;
-}
-.ansi-black-intense-bg {
-  background-color: #282C36;
-}
-.ansi-red-fg {
-  color: #E75C58;
-}
-.ansi-red-bg {
-  background-color: #E75C58;
-}
-.ansi-red-intense-fg {
-  color: #B22B31;
-}
-.ansi-red-intense-bg {
-  background-color: #B22B31;
-}
-.ansi-green-fg {
-  color: #00A250;
-}
-.ansi-green-bg {
-  background-color: #00A250;
-}
-.ansi-green-intense-fg {
-  color: #007427;
-}
-.ansi-green-intense-bg {
-  background-color: #007427;
-}
-.ansi-yellow-fg {
-  color: #DDB62B;
-}
-.ansi-yellow-bg {
-  background-color: #DDB62B;
-}
-.ansi-yellow-intense-fg {
-  color: #B27D12;
-}
-.ansi-yellow-intense-bg {
-  background-color: #B27D12;
-}
-.ansi-blue-fg {
-  color: #208FFB;
-}
-.ansi-blue-bg {
-  background-color: #208FFB;
-}
-.ansi-blue-intense-fg {
-  color: #0065CA;
-}
-.ansi-blue-intense-bg {
-  background-color: #0065CA;
-}
-.ansi-magenta-fg {
-  color: #D160C4;
-}
-.ansi-magenta-bg {
-  background-color: #D160C4;
-}
-.ansi-magenta-intense-fg {
-  color: #A03196;
-}
-.ansi-magenta-intense-bg {
-  background-color: #A03196;
-}
-.ansi-cyan-fg {
-  color: #60C6C8;
-}
-.ansi-cyan-bg {
-  background-color: #60C6C8;
-}
-.ansi-cyan-intense-fg {
-  color: #258F8F;
-}
-.ansi-cyan-intense-bg {
-  background-color: #258F8F;
-}
-.ansi-white-fg {
-  color: #C5C1B4;
-}
-.ansi-white-bg {
-  background-color: #C5C1B4;
-}
-.ansi-white-intense-fg {
-  color: #A1A6B2;
-}
-.ansi-white-intense-bg {
-  background-color: #A1A6B2;
-}
-.ansi-default-inverse-fg {
-  color: #FFFFFF;
-}
-.ansi-default-inverse-bg {
-  background-color: #000000;
-}
-.ansi-bold {
-  font-weight: bold;
-}
-.ansi-underline {
-  text-decoration: underline;
-}
-/* The following styles are deprecated an will be removed in a future version */
+/* CSS font colors for translated ANSI colors. */
 .ansibold {
   font-weight: bold;
-}
-.ansi-inverse {
-  outline: 0.5px dotted;
 }
 /* use dark versions for foreground, to improve visibility */
 .ansiblack {
@@ -302,20 +187,12 @@ div.cell {
   /* This acts as a spacer between cells, that is outside the border */
   margin: 0px;
   outline: none;
-  position: relative;
-  overflow: visible;
-}
-div.cell:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: transparent;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
 }
 div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
   border-left-color: #E3F2FD;
   border-left-width: 1px;
   padding-left: 5px;
@@ -328,39 +205,27 @@ div.cell.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected,
-div.cell.selected.jupyter-soft-selected {
+div.cell.selected {
   border-color: #ababab;
-}
-div.cell.selected:before,
-div.cell.selected.jupyter-soft-selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #42A5F5;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
 }
 @media print {
-  div.cell.selected,
-  div.cell.selected.jupyter-soft-selected {
+  div.cell.selected {
     border-color: transparent;
   }
 }
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
 .edit_mode div.cell.selected {
   border-color: #66BB6A;
-}
-.edit_mode div.cell.selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
 }
 @media print {
   .edit_mode div.cell.selected {
@@ -556,9 +421,7 @@ div.input_area > div.highlight > pre {
 .CodeMirror-lines {
   /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
   /* we have set a different line-height and want this to scale with that. */
-  /* Note that this should set vertical padding only, since CodeMirror assumes
-       that horizontal padding will be set on CodeMirror pre */
-  padding: 0.4em 0;
+  padding: 0.4em;
 }
 .CodeMirror-linenumber {
   padding: 0 8px 0 4px;
@@ -568,24 +431,11 @@ div.input_area > div.highlight > pre {
   border-top-left-radius: 2px;
 }
 .CodeMirror pre {
-  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
-    use .CodeMirror-lines for vertical */
-  padding: 0 0.4em;
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
   border: 0;
   border-radius: 0;
-}
-.CodeMirror-cursor {
-  border-left: 1.4px solid black;
-}
-@media screen and (min-width: 2138px) and (max-width: 4319px) {
-  .CodeMirror-cursor {
-    border-left: 2px solid black;
-  }
-}
-@media screen and (min-width: 4320px) {
-  .CodeMirror-cursor {
-    border-left: 4px solid black;
-  }
 }
 /*
 
@@ -833,9 +683,6 @@ div.output_area img.unconfined,
 div.output_area svg.unconfined {
   max-width: none;
 }
-div.output_area .mglyph > img {
-  max-width: none;
-}
 /* This is needed to protect the pre formating from global settings such
    as that of bootstrap */
 .output {
@@ -874,7 +721,7 @@ div.output_area .mglyph > img {
 }
 div.output_area pre {
   margin: 0;
-  padding: 1px 0 1px 0;
+  padding: 0;
   border: 0;
   vertical-align: baseline;
   color: black;
@@ -996,10 +843,6 @@ div.output_unrecognized a:hover {
 .rendered_html h6:first-child {
   margin-top: 1em;
 }
-.rendered_html ul:not(.list-inline),
-.rendered_html ol:not(.list-inline) {
-  padding-left: 2em;
-}
 
 
 
@@ -1016,24 +859,16 @@ div.output_unrecognized a:hover {
 }
 
 
-
-
-
 .rendered_html pre,
-
 
 
 
 .rendered_html tr,
 .rendered_html th,
 
+.rendered_html td,
 
-.rendered_html tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-.rendered_html tbody tr:hover {
-  background: rgba(66, 165, 245, 0.2);
-}
+
 .rendered_html * + table {
   margin-top: 1em;
 }
@@ -1049,11 +884,6 @@ div.output_unrecognized a:hover {
 
 .rendered_html img.unconfined,
 
-
-.rendered_html * + .alert {
-  margin-top: 1em;
-}
-[dir="rtl"] 
 div.text_cell {
   /* Old browsers */
   display: -webkit-box;
@@ -1104,15 +934,8 @@ h6:hover .anchor-link {
   display: none;
 }
 .text_cell.rendered 
-.text_cell.rendered .rendered_html tr,
-.text_cell.rendered .rendered_html th,
-.text_cell.rendered 
 .text_cell.unrendered .text_cell_render {
   display: none;
-}
-.text_cell .dropzone .input_area {
-  border: 2px dashed #bababa;
-  margin: -1px;
 }
 .cm-header-1,
 .cm-header-2,
@@ -1251,14 +1074,16 @@ h6:hover .anchor-link {
 .ansi-bold { font-weight: bold; }
 </style>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<meta name="twitter:image" content="http://deeplearnphysics.org/Blog/imgs/2018-01-05-TrainingSegmentationData_v0.1.0/thumbnail.png" />
+<meta content="http://deeplearnphysics.org/Blog/imgs/2018-01-05-TrainingSegmentationData_v0.1.0/thumbnail.png" name="twitter:image" />
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In this notebook I demonstrate training of a semantic segmentation algorithm for <strong>separating track/shower particles at pixel level</strong> using <a href="http://deeplearnphysics.org/DataChallenge/#TutorialSegmentation">practice samples in public data set</a>. To learn about this sample, or what the challenge is about, you might want to start from <a href="http://deeplearnphysics.org/Blog/2018-01-01-BrowsingSegmentationData_v0.1.0.html"><strong>this post</strong></a>. Here's an outline.</p>
 <ol>
@@ -1270,15 +1095,14 @@ h6:hover .anchor-link {
 </ol>
 <p>I usually write a <em>closing remark</em> in my notebook. But in this one, I write it at the beginning because of a higher chance to be read by you :) If you have a question, comment or request regarding this notebook, softare or data used, please feel free to <a href="mailto:contact@deeplearnphysics.org">contact us</a>! Your inputs are <em>super</em> valuable. If you find softwares used in this notebook useful (<a href="https://github.com/DeepLearnPhysics/larcv2">larcv</a>, <a href="https://github.com/DeepLearnPhysics/u-resnet">u-resnet</a>), please give stars! You can make us really happy by explicitly cheering us up :)</p>
 <p>OK back to the business. Before anything, let's start with the basic (usual) imports.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In [1]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">ROOT</span>
 <span class="kn">from</span> <span class="nn">larcv</span> <span class="kn">import</span> <span class="n">larcv</span>
 <span class="n">larcv</span><span class="o">.</span><span class="n">ThreadProcessor</span>
@@ -1290,61 +1114,38 @@ h6:hover .anchor-link {
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">sys</span><span class="o">,</span><span class="nn">time</span>
 
 <span class="c1"># tensorflow/gpu start-up configuration</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_CPP_MIN_LOG_LEVEL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;3&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">'TF_CPP_MIN_LOG_LEVEL'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'3'</span>
 <span class="o">%</span><span class="k">env</span> CUDA_DEVICE_ORDER=PCI_BUS_ID
 <span class="o">%</span><span class="k">env</span> CUDA_VISIBLE_DEVICES=2
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-
-<div id="53fe129c-4b3e-4049-be76-8bdbb965a963"></div>
+<div class="prompt"></div>
+<div id="a1d137c5-8107-4bf1-a0c0-5d3b7eb41809"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#53fe129c-4b3e-4049-be76-8bdbb965a963');
+var element = $('#a1d137c5-8107-4bf1-a0c0-5d3b7eb41809');
 require(['codemirror/mode/clike/clike'], function(Clike) { console.log('ROOTaaS - C++ CodeMirror module loaded'); });
 </script>
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-
-<div id="dc6a920e-8c51-4460-8253-2dc11a833586"></div>
+<div class="prompt"></div>
+<div id="756406e4-413e-41d1-b7e2-eca1efca11cc"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#dc6a920e-8c51-4460-8253-2dc11a833586');
+var element = $('#756406e4-413e-41d1-b7e2-eca1efca11cc');
 IPython.CodeCell.config_defaults.highlight_modes['magic_text/x-c++src'] = {'reg':[/^%%cpp/]};
 </script>
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Welcome to ROOTaaS 6.06/06
 env: CUDA_DEVICE_ORDER=PCI_BUS_ID
@@ -1352,234 +1153,217 @@ env: CUDA_VISIBLE_DEVICES=2
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="uresnet"></a></p>
-<h2 id="U-ResNet">U-ResNet<a class="anchor-link" href="#U-ResNet">&#182;</a></h2><p>In this tutorial, we use <strong>U-ResNet</strong>, one type of convolutional neural networks for sematic segmentation task. It is developed/used within <a href="http://microboone.fnal.gov">MicroBooNE</a> experiment. They showed a beautiful track/shower separation images on both data and simulation in <a href="https://indico.fnal.gov/event/9942/timetable/#20170619">conferences</a>. Below is a result of running a trained U-ResNet on real MicroBooNE detector data (<a href="https://indico.fnal.gov/event/9942/session/4/contribution/68/material/slides/0.pdf">source</a>).</p>
+<h2 id="U-ResNet">U-ResNet<a class="anchor-link" href="#U-ResNet">¶</a></h2><p>In this tutorial, we use <strong>U-ResNet</strong>, one type of convolutional neural networks for sematic segmentation task. It is developed/used within <a href="http://microboone.fnal.gov">MicroBooNE</a> experiment. They showed a beautiful track/shower separation images on both data and simulation in <a href="https://indico.fnal.gov/event/9942/timetable/#20170619">conferences</a>. Below is a result of running a trained U-ResNet on real MicroBooNE detector data (<a href="https://indico.fnal.gov/event/9942/session/4/contribution/68/material/slides/0.pdf">source</a>).</p>
 <table width="100%">
 <tr>
-<th><img src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/data.png" alt="Data"></th>
-<th><img src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/network.png" alt="Network"></th>
+<th><img alt="Data" src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/data.png" /></th>
+<th><img alt="Network" src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/network.png" /></th>
 </tr>
 </table><p>This work is originally implemented using <a href="http://caffe.berkeleyvision.org">caffe</a> and the details are under preparation to be shared in public. However we made the network design available in our <a href="https://github.com/DeepLearnPhysics/u-resnet">group repository</a> which is what we use in this notebook. <strong><font color="red">We do not describe the details of U-ResNet in this notebook</font></strong> (well, <strong>only briefly at the <a href="#uresnet_brief">last section</a></strong>). That should be documented in U-ResNet repository, and I might make a separate blog post for that. For now, just think of it as a generic semantic segmentation algorithm that can be trained for track/shower separation today.</p>
 <p>Apology for a long preface! Let's pull the code first.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In [2]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span>%%bash
-<span class="k">if</span> <span class="o">[</span> ! -d <span class="s2">&quot;u-resnet&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<span class="k">if</span> <span class="o">[</span> ! -d <span class="s2">"u-resnet"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     git clone https://github.com/DeepLearnPhysics/u-resnet
 <span class="k">fi</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Cloning into &#39;u-resnet&#39;...
+<pre>Cloning into 'u-resnet'...
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's add u-resnet python library to system path, and we are ready to import.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In [3]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># u-resnet directory</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;u-resnet/lib&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s1">'u-resnet/lib'</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">ssnet_trainval</span> <span class="kn">as</span> <span class="nn">api</span>
 <span class="n">t</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">ssnet_trainval</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Software preparation is done. We will use <code>ssnet_trainval</code> python class. It's an interface to run training and/or inference (i.e. analysis) of U-ResNet. It needs a configuration file to pass parameters, which we cover in the next part.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="config"></a></p>
-<h2 id="IO-Configuration">IO Configuration<a class="anchor-link" href="#IO-Configuration">&#182;</a></h2><p>Here we go over 3 kinds of configurations.</p>
+<h2 id="IO-Configuration">IO Configuration<a class="anchor-link" href="#IO-Configuration">¶</a></h2><p>Here we go over 3 kinds of configurations.</p>
 <ol>
 <li><code>larcv_threadio</code> python API to read larcv data for training</li>
 <li><code>larcv_threadio</code> python API to read larcv data for testing during training (optional)</li>
 <li>U-ResNet configuration to run training (U-ResNet specific)</li>
 </ol>
 <p>Disregard of the network choice, first two should be useful. The last one is U-ResNet specific, so it won't apply if you have your own network (or your own implementation of U-ResNet).</p>
-<h3>Configuring input: <span style="color:blue"> training &lt;/style&gt;</h3>
+<h3>Configuring input: <span style="color:blue"> training </style></span></h3>
 <p>This is <code>larcv_threadio</code> configuration and you can look at <a href="http://deeplearnphysics.org/Blog/tutorials/tutorial-04.html">this quick start</a> to get the big picture. The only difference from <a href="http://deeplearnphysics.org/Blog/tutorials/tutorial-05.html">image classification example</a> is that, this time, <em>label</em> data is also an image! So we use the same <em>BatchFillerImage2D</em> to read data out of larcv file. We will use <strong>practice_train_2k.root</strong> provided in <a href="http://deeplearnphysics.org/DataChallenge/#TutorialSegmentation">public data</a>.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In [4]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">io_config</span> <span class="o">=</span> \
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">MainIO: {</span>
 <span class="sd">  Verbosity:    3</span>
 <span class="sd">  EnableFilter: false</span>
 <span class="sd">  RandomAccess: 2</span>
 <span class="sd">  RandomSeed:   123</span>
-<span class="sd">  InputFiles:   [&quot;/stage/drinkingkazu/public_data/segment2d/without_weights/practice_train_2k.root&quot;]</span>
-<span class="sd">  ProcessType:  [&quot;BatchFillerImage2D&quot;,&quot;BatchFillerImage2D&quot;]</span>
-<span class="sd">  ProcessName:  [&quot;main_data&quot;,&quot;main_label&quot;]</span>
+<span class="sd">  InputFiles:   ["/stage/drinkingkazu/public_data/segment2d/without_weights/practice_train_2k.root"]</span>
+<span class="sd">  ProcessType:  ["BatchFillerImage2D","BatchFillerImage2D"]</span>
+<span class="sd">  ProcessName:  ["main_data","main_label"]</span>
 <span class="sd">  NumThreads: 4</span>
 <span class="sd">  NumBatchStorage: 4</span>
 
 <span class="sd">  ProcessList: {</span>
 <span class="sd">    main_data: {</span>
 <span class="sd">      Verbosity: 3</span>
-<span class="sd">      ImageProducer: &quot;data&quot;</span>
+<span class="sd">      ImageProducer: "data"</span>
 <span class="sd">      Channels: [0]</span>
 <span class="sd">    }</span>
 <span class="sd">    main_label: {</span>
 <span class="sd">      Verbosity: 3</span>
-<span class="sd">      ImageProducer: &quot;segment&quot;</span>
+<span class="sd">      ImageProducer: "segment"</span>
 <span class="sd">      Channels: [0]</span>
 <span class="sd">    }</span>
 <span class="sd">  }</span>
 <span class="sd">}      </span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span> <span class="nn">tempfile</span>
-<span class="n">train_io_config</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">train_io_config</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s1">'w'</span><span class="p">)</span>
 <span class="n">train_io_config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">io_config</span><span class="p">)</span>
 <span class="n">train_io_config</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We use a handy python <code>tempfile</code> to create a named file that only exists during its lifetime (and hence only in this process).</p>
 <p>You might have noticed other slight differences. First, the most-outer-block is named "MainIO" as opposed to "ThreadProcessor" back in the <a href="http://deeplearnphysics.org/Blog/tutorials/tutorial-05.html">image classification example</a>. This is purely conventional: <code>u-resnet</code> code identifies the training image supplier with a keyword <code>MainIO</code>. Also you see two BatchFillerImage2D instances are named as <code>main_data</code> and <code>main_label</code>. This is to distinguish with other BatchFillerImage2D instances that we will run for fetching test data samples, that comes next!</p>
-<h3>Configuring input: <span style="color:blue"> testing &lt;/style&gt;</h3>
+<h3>Configuring input: <span style="color:blue"> testing </style></span></h3>
 <p>Wait, <strong>what is testing?</strong> During training, to watch out for over-fitting, we will continuously monitor the network's performance on the given task on a statistically separate data set. For this, we use <strong>practice_test_2k.root</strong> provided in <a href="http://deeplearnphysics.org/DataChallenge/#TutorialSegmentation">public_data</a>.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In [5]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">io_config</span> <span class="o">=</span> \
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">TestIO: {</span>
 <span class="sd">  Verbosity:    3</span>
 <span class="sd">  EnableFilter: false</span>
 <span class="sd">  RandomAccess: 2</span>
 <span class="sd">  RandomSeed:   123</span>
-<span class="sd">  InputFiles:   [&quot;/stage/drinkingkazu/public_data/segment2d/without_weights/practice_test_2k.root&quot;]</span>
-<span class="sd">  ProcessType:  [&quot;BatchFillerImage2D&quot;,&quot;BatchFillerImage2D&quot;]</span>
-<span class="sd">  ProcessName:  [&quot;test_data&quot;,&quot;test_label&quot;]</span>
+<span class="sd">  InputFiles:   ["/stage/drinkingkazu/public_data/segment2d/without_weights/practice_test_2k.root"]</span>
+<span class="sd">  ProcessType:  ["BatchFillerImage2D","BatchFillerImage2D"]</span>
+<span class="sd">  ProcessName:  ["test_data","test_label"]</span>
 <span class="sd">  NumThreads: 2</span>
 <span class="sd">  NumBatchStorage: 2</span>
 
 <span class="sd">  ProcessList: {</span>
 <span class="sd">    test_data: {</span>
 <span class="sd">      Verbosity: 3</span>
-<span class="sd">      ImageProducer: &quot;data&quot;</span>
+<span class="sd">      ImageProducer: "data"</span>
 <span class="sd">      Channels: [0]</span>
 <span class="sd">    }</span>
 <span class="sd">    test_label: {</span>
 <span class="sd">      Verbosity: 3</span>
-<span class="sd">      ImageProducer: &quot;segment&quot;</span>
+<span class="sd">      ImageProducer: "segment"</span>
 <span class="sd">      Channels: [0]</span>
 <span class="sd">    }</span>
 <span class="sd">  }</span>
 <span class="sd">}</span>
 
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span> <span class="nn">tempfile</span>
-<span class="n">test_io_config</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">test_io_config</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s1">'w'</span><span class="p">)</span>
 <span class="n">test_io_config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">io_config</span><span class="p">)</span>
 <span class="n">test_io_config</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The configuration is very similar to training sample, except we will rename the most-outer-block to <code>TestIO</code>, again u-resnet specific convention. Also, to distinguish from BatchFillerImage2D instances in <code>MainIO</code>, we name them as <code>test_data</code> and <code>test_label</code>. But the rest is pretty much the same.</p>
 <p><a name="config_uresnet"></a></p>
-<h3 id="U-ResNet-configuration">U-ResNet configuration<a class="anchor-link" href="#U-ResNet-configuration">&#182;</a></h3><p>This is a U-ResNet specific configuration file.</p>
-
+<h3 id="U-ResNet-configuration">U-ResNet configuration<a class="anchor-link" href="#U-ResNet-configuration">¶</a></h3><p>This is a U-ResNet specific configuration file.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">train_config</span> <span class="o">=</span> \
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">NUM_CLASS          3</span>
 <span class="sd">BASE_NUM_FILTERS   16</span>
-<span class="sd">MAIN_INPUT_CONFIG  &#39;{:s}&#39;</span>
-<span class="sd">TEST_INPUT_CONFIG  &#39;{:s}&#39;</span>
-<span class="sd">LOGDIR             &#39;ssnet_train_log&#39;</span>
-<span class="sd">SAVE_FILE          &#39;ssnet_checkpoint/uresnet&#39;</span>
-<span class="sd">LOAD_FILE          &#39;&#39;</span>
+<span class="sd">MAIN_INPUT_CONFIG  '{:s}'</span>
+<span class="sd">TEST_INPUT_CONFIG  '{:s}'</span>
+<span class="sd">LOGDIR             'ssnet_train_log'</span>
+<span class="sd">SAVE_FILE          'ssnet_checkpoint/uresnet'</span>
+<span class="sd">LOAD_FILE          ''</span>
 <span class="sd">AVOID_LOAD_PARAMS  []</span>
 <span class="sd">ITERATIONS         8000</span>
 <span class="sd">MINIBATCH_SIZE     20</span>
@@ -1593,27 +1377,26 @@ env: CUDA_VISIBLE_DEVICES=2
 <span class="sd">CHECKPOINT_STEPS   100</span>
 <span class="sd">CHECKPOINT_NMAX    20</span>
 <span class="sd">CHECKPOINT_NHOUR   0.4</span>
-<span class="sd">KEYWORD_DATA       &#39;main_data&#39;</span>
-<span class="sd">KEYWORD_LABEL      &#39;main_label&#39;</span>
-<span class="sd">KEYWORD_WEIGHT     &#39;&#39;</span>
-<span class="sd">KEYWORD_TEST_DATA  &#39;test_data&#39;</span>
-<span class="sd">KEYWORD_TEST_LABEL &#39;test_label&#39;</span>
-<span class="sd">KEYWORD_TEST_WEIGHT &#39;&#39;</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">KEYWORD_DATA       'main_data'</span>
+<span class="sd">KEYWORD_LABEL      'main_label'</span>
+<span class="sd">KEYWORD_WEIGHT     ''</span>
+<span class="sd">KEYWORD_TEST_DATA  'test_data'</span>
+<span class="sd">KEYWORD_TEST_LABEL 'test_label'</span>
+<span class="sd">KEYWORD_TEST_WEIGHT ''</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span> <span class="nn">tempfile</span>
-<span class="n">ssnet_config</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">ssnet_config</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s1">'w'</span><span class="p">)</span>
 <span class="n">ssnet_config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">train_config</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">train_io_config</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">test_io_config</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
 <span class="n">ssnet_config</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's go over parameters, in case you want to use/customize <code>u-resnet</code> code for yourself. Otherwise <a href="#train">skip to the training</a>.</p>
 <ul>
@@ -1627,7 +1410,7 @@ env: CUDA_VISIBLE_DEVICES=2
 <li><code>AVOID_LOAD_PARAMS</code> ... a list of parameters which values won't be loaded from the weights provided by <code>LOAD_FILE</code>.</li>
 <li><code>ITERATIONS</code> ... number of iterations to automatically run the training or inferencing</li>
 <li><code>MINIBATCH_SIZE</code> ... number of data counts to be fed into the processors (GPU/CPU) at once.</li>
-<li><code>NUM_MINIBATCHES</code> ... if &gt;1, gradient is accummulated over number of mibi-batches defined by this parameter.</li>
+<li><code>NUM_MINIBATCHES</code> ... if >1, gradient is accummulated over number of mibi-batches defined by this parameter.</li>
 <li><code>DEBUG</code> ... more verbose output from u-resnet if True</li>
 <li><code>TF_RANDOM_SEED</code> ... random number seed for tensorflow</li>
 <li><code>USE_WEIGHTS</code> ... if enabled, pixel-wise loss weighting factor will be applied (requires <code>KEYWORD_WEIGHT</code></li>
@@ -1644,41 +1427,33 @@ env: CUDA_VISIBLE_DEVICES=2
 <li><code>KEYWORD_TEST_WEIGHT</code> ... BatchFillerImage2D's instance name to fetch weight data for testing.</li>
 </ul>
 <p><strong>Phew, that was long!</strong> In short, we will use a batch size of 20 images, and run for 8000 iterations. Since our input file hods 2000 images, this is about 80 epochs. For a tutorial purpose, this should be enough (I'm speaking from experience, don't look for justification in this text!).</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="train"></a></p>
-<h2 id="Training-the-net">Training the net<a class="anchor-link" href="#Training-the-net">&#182;</a></h2><p>We first override the default configuration with the custom one defined above. Then initialize the u-resnet APIs.</p>
-
+<h2 id="Training-the-net">Training the net<a class="anchor-link" href="#Training-the-net">¶</a></h2><p>We first override the default configuration with the custom one defined above. Then initialize the u-resnet APIs.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In [7]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">override_config</span><span class="p">(</span><span class="n">ssnet_config</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 <span class="n">t</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>KEYWORD_LABEL....... main_label
 LEARNING_RATE....... -1
@@ -1714,62 +1489,51 @@ KEYWORD_TEST_LABEL.. test_label
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Next, actually all you have to do is to execute <code>t.batch_process()</code> and it will run 8000 training iterations. Then we can watch how loss and accuracy changes (= get bored and go watch movie instead). But that is a bit boring. So I propose to play with one image from the <strong>test_10k.root</strong> during training.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">ENTRY</span><span class="o">=</span><span class="mi">2</span>
 <span class="k">def</span> <span class="nf">get_entry</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
     <span class="c1"># image</span>
-    <span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s2">&quot;image2d_data_tree&quot;</span><span class="p">)</span>
-    <span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">&#39;test_10k.root&#39;</span><span class="p">)</span>
+    <span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s2">"image2d_data_tree"</span><span class="p">)</span>
+    <span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">'test_10k.root'</span><span class="p">)</span>
     <span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
     <span class="n">cpp_image2d</span> <span class="o">=</span> <span class="n">chain_image2d</span><span class="o">.</span><span class="n">image2d_data_branch</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">front</span><span class="p">()</span>
     <span class="c1"># label</span>
-    <span class="n">chain_label2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s2">&quot;image2d_segment_tree&quot;</span><span class="p">)</span>
-    <span class="n">chain_label2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">&#39;test_10k.root&#39;</span><span class="p">)</span>
+    <span class="n">chain_label2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s2">"image2d_segment_tree"</span><span class="p">)</span>
+    <span class="n">chain_label2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">'test_10k.root'</span><span class="p">)</span>
     <span class="n">chain_label2d</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
     <span class="n">cpp_label2d</span> <span class="o">=</span> <span class="n">chain_label2d</span><span class="o">.</span><span class="n">image2d_segment_branch</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">front</span><span class="p">()</span>    
     <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">larcv</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">cpp_image2d</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">larcv</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">cpp_label2d</span><span class="p">)))</span>
 
 <span class="n">image2d</span><span class="p">,</span> <span class="n">label2d</span> <span class="o">=</span> <span class="n">get_entry</span><span class="p">(</span><span class="n">ENTRY</span><span class="p">)</span>
-<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-<span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-<span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">label2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">3.1</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">label2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">3.1</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'label'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA6MAAAHKCAYAAAD2Ap2nAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzt3Xl8VOXd///3mQTZEnYIGJFYCEsUWVRU1K+KLGoVXAC5
@@ -2072,30 +1836,27 @@ gsdr79695iWXXGIOHDjQHDdunFldXe1wpO7wb//2b2afPn3ME044wezbt6/5wgsvmPv27Wv2WD36
 YoS5atWqFv9OOX7HNXf8+PzZi7Y5crTN0aFtjh1tc+xom+NjR9tsmGaYoZAAAAAAAEgiBjACAAAA
 ANiOZBQAAAAAYDuSUQAAAACA7UhGAQAAAAC2IxkFAAAAANiOZBQAAAAAYDuSUQAAAACA7UhGAQAA
 AAC2+/8BqWlCghvUhkAAAAAASUVORK5CYII=
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>On the left, you see the input data image. On the right is the <em>label</em>, an answer that our algorithm is supposed to generate. This is the same image frequently reffered to when we <a href="http://deeplearnphysics.org/Blog/2018-01-01-BrowsingSegmentationData_v0.1.0.html">browsed the file contents</a>, the event with 2 protons and 2 gamma rays. During the network training, we will periodically run the network to analyze this event image.</p>
 <p>In order to add this small task, we write a simple training loop below by ourselves instead of using a prepared <code>batch_process</code> function (of u-resnet). We will analyze the above image at certain steps defined in <code>image_dump_steps</code> below.</p>
 <p>If you want to jump to the results of the training, <a href="#train_result">click here</a>.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In [ ]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">input_shape</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">image2d</span><span class="o">.</span><span class="n">size</span><span class="p">]</span>
 <span class="n">image_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image2d</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span>
 
@@ -2104,53 +1865,40 @@ AAC2+/8BqWlCghvUhkAAAAAASUVORK5CYII=
                                    <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">200</span><span class="p">),</span> 
                                    <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">20000</span><span class="p">,</span><span class="mi">500</span><span class="p">)))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 
-<span class="k">while</span> <span class="n">t</span><span class="o">.</span><span class="n">current_iteration</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">t</span><span class="o">.</span><span class="n">iterations</span><span class="p">():</span>
+<span class="k">while</span> <span class="n">t</span><span class="o">.</span><span class="n">current_iteration</span><span class="p">()</span> <span class="o"><</span> <span class="n">t</span><span class="o">.</span><span class="n">iterations</span><span class="p">():</span>
     <span class="n">t</span><span class="o">.</span><span class="n">train_step</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">current_iteration</span><span class="p">()</span> <span class="ow">in</span> <span class="n">image_dump_steps</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Image dump @ iteration {:d}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">current_iteration</span><span class="p">()))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">'Image dump @ iteration {:d}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">current_iteration</span><span class="p">()))</span>
         
         <span class="n">softmax</span><span class="p">,</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">ana</span><span class="p">(</span><span class="n">input_data</span> <span class="o">=</span> <span class="n">image_data</span><span class="p">)</span>
-        <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
         <span class="c1"># image</span>
-        <span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-        <span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'image'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
         
-        <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">softmax</span><span class="p">[</span><span class="mi">0</span><span class="p">,:,:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-        <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;background score&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">softmax</span><span class="p">[</span><span class="mi">0</span><span class="p">,:,:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'background score'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
         
-        <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">softmax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">3.1</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
-        <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;classification&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;iteration_{:04d}.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">current_iteration</span><span class="p">()))</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">softmax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">3.1</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'classification'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'iteration_{:04d}.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">current_iteration</span><span class="p">()))</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Image dump @ iteration 20
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzsnXmYFNXV/7+3qnqb7pmejRlgQIZFFjcQjQqKIoKCxmgS
@@ -4360,29 +4108,18 @@ M9bpRz/6UbZ58+Zs27Zt2YsvvtjD5L0xXb0eeuihbMeOHdnOnTuz/fv3Z2fPnm3fvt/rlWVZ9rvf
 /S6r1+vtf5N33nln9sILL8z677Hf6zZTzTzWiqe/zk2PnR/9NT89Nj89Nj89tnf02LnpsfOjx+an
 x+ajv+Z3I/prLcum+YgvAAAAAACWhA/mAgAAAAAokEVYAAAAAIACWYQFAAAAACiQRVgAAAAAgAJZ
 hAUAAAAAKJBFWAAAAACAAlmEBQAAAAAokEVYAAAAAIAC/T8ap/4HMUJUUAAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Image dump @ iteration 40
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzsnXmcHFXVv5+q6mW6p2efTLaBTBaysJiwyKZICAkkIIIK
@@ -6469,29 +6206,18 @@ PvqaX+F9/b9PD/uqXq+X6vV6WlhYSPv7+2UtY2JdXl6mVquVlpeXU6PRyGb08PCQ1tbWUr1eT+vr
 aWx+GlsejR1NY8ejsflpbD76mt9P9PWPlN55xBcAAAAAAN/Cg7kAAAAAAArkEhYAAAAAoEAuYQEA
 AAAACuQSFgAAAACgQC5hAQAAAAAK5BIWAAAAAKBALmEBAAAAAArkEhYAAAAAoEB/Aq1K9YKTECus
 AAAAAElFTkSuQmCC
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Image dump @ iteration 60
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzsnXmcFNXVv5+qXmZ69o2BYZFhB0VBUBSjEREUNEZN1ESj
@@ -8318,29 +8044,18 @@ j39MMHkyGtXrySeftEdHR+1t27bZ+/fvtycnJ93Hd3u9bNu2//znP9u5XM59Tz7wwAP2G2+80fL9
 AAAAAIgEN+YCAAAAAAAAgBgxCQsAAAAAAAAAMWISFgAAAAAAAABixCQsAAAAAAAAAMSISVgAAAAA
 AAAAiBGTsAAAAAAAAAAQIyZhAQAAAAAAACBGTMICAAAAAAAAQIz+H/SAzPhBxuaMAAAAAElFTkSu
 QmCC
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Image dump @ iteration 80
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xd8VFX+//HXnRTSISGEEpABQrUA4oKiLhgBQcUKFlZd
@@ -9020,30 +8735,19 @@ pH5t3Lgx6ezsTLq6upJ169YlAwMDtdtP934lSZJ8/fXXyT333FP7mVyxYkWyd+/eMX8ep3vfRuuZ
 cy178nV8MrY+8jU9GZuejE1PxuZHxo5PxtZHxqYnY9ORr+lNRb5WkmSEj/gCAAAAAGBS+GAuAAAA
 AIAMGcICAAAAAGTIEBYAAAAAIEOGsAAAAAAAGTKEBQAAAADIkCEsAAAAAECGDGEBAAAAADJkCAsA
 AAAAkKH/B+LoYA20rr1iAAAAAElFTkSuQmCC
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-100
 Image dump @ iteration 100
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xd4FVX+x/H33BTSISF0kBsI0kQQFBULRUDQxbIidkVQ
@@ -9712,16 +9416,11 @@ KK0zZ86kAwMD6eDgYLpu3bpaj37++ef02WefTfv6+tLNmzenly9fLrjS4r3wwgtpZ2dn+sADD6Td
 sc2RsdnJ2Gzka3YLka9taVrnK74AAAAAAJgXvpgLAAAAACBHhrAAAAAAADkyhAUAAAAAyJEhLAAA
 AABAjgxhAQAAAAByZAgLAAAAAJAjQ1gAAAAAgBwZwgIAAAAA5OifTLBl7dKgcscAAAAASUVORK5C
 YII=
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>@ iteration 200
 Train set: loss=1716.585449   acc. all=0.991888   acc. nonzero=0.098823   
@@ -9731,14 +9430,8 @@ Image dump @ iteration 200
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl4U1X6B/DvvU1K0w1aSoGWJYWyClJAQVEEymLRAVEB
@@ -10486,30 +10179,19 @@ ed/73pcvf/nL9cdcZ1ObaMxca+XSXxujxzZOf22eHts8PbZ5euz802Mbo8c2To9tnh7bHP21eaX3
 +fO40MdtsjFzrZVPf52eHtsY/bV5emzz9Njm6bHV0WOnp8c2Ro9tnh7bHP21efPRX7uKYoKP+AIA
 AAAAYE74YC4AAAAAgBIJYQEAAAAASiSEBQAAAAAokRAWAAAAAKBEQlgAAAAAgBIJYQEAAAAASiSE
 BQAAAAAokRAWAAAAAKBE/x/WUTZy0epI1QAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-300
 Image dump @ iteration 300
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl4U1X6B/DvvU1K952yFCSFsoOURVAUgbIIKoIj4K4s
@@ -11248,16 +10930,11 @@ vfrqq9n58+cnXafnnnsuW7NmTbZ+/frs4MGDBU5ejInW68knn8x6enqyjRs3Ztu3b88GBgYq2zf7
 emVZln3wwQfZggULKr+T99xzT/buu+9O+fvY7Os22Zo51tKTr9OTsdWRr/nJ2PxkbH4ytjgydnoy
 tjoyNj8Zm498zW8+8rWUZRN8xBcAAAAAAHPCB3MBAAAAACSkhAUAAAAASEgJCwAAAACQkBIWAAAA
 ACAhJSwAAAAAQEJKWAAAAACAhJSwAAAAAAAJKWEBAAAAABL6fyjlw3i5FtQIAAAAAElFTkSuQmCC
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>@ iteration 400
 Train set: loss=1704.628906   acc. all=0.990824   acc. nonzero=0.116905   
@@ -11267,14 +10944,8 @@ Image dump @ iteration 400
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl4U1X6B/DvvU1K0w26UJYipFB2kQIKiiClLIIOigqM
@@ -11990,16 +11661,11 @@ vn17dvHixUH39OGHH2bz58/PFi5cmB04cKDAyYsx0L42bNiQtba2ZkuWLMnWrFmT9fT0VO4/2feV
 ZVn29ddfZ1OmTKn8TC5dujTbt2/fkD+Pk31vg+3MuZaefB2ejK2OfM1PxuYnY/OTscWRscOTsdWR
 sfnJ2Hzka35jka+lLBvgLb4AAAAAABgV3pgLAAAAACAhJSwAAAAAQEJKWAAAAACAhJSwAAAAAAAJ
 KWEBAAAAABJSwgIAAAAAJKSEBQAAAABISAkLAAAAAJDQ/wOMDE+zLKPLSwAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-500
 @ iteration 600
@@ -12010,14 +11676,8 @@ Image dump @ iteration 600
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl4U1X+P/D3vU1K05UutEBRUig7SAEFQREsi0VFUQEV
@@ -12722,16 +12382,11 @@ Dxc4eTFG29fWrVuztra2rL29Pdu4cWM2MDBQOX627yvLsuzbb7/N5syZU/mdXLNmTXbw4MFxfx9n
 +97G2plzLT35OjEZWx35mp+MzU/G5idjiyNjJyZjqyNj85Ox+cjX/KYiX0tZNspHfAEAAAAA8ED4
 YC4AAAAAgISUsAAAAAAACSlhAQAAAAASUsICAAAAACSkhAUAAAAASEgJCwAAAACQkBIWAAAAACAh
 JSwAAAAAQEL/D37+4bOA+5rVAAAAAElFTkSuQmCC
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-700
 @ iteration 800
@@ -12742,14 +12397,8 @@ Image dump @ iteration 800
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xd4VFX6B/DvvTMTMmmQQigJMoHQQQIoCoiEUARdBRVQ
@@ -13444,16 +13093,11 @@ etK2bdvStWvXKp60ei+++GLq7OxMDzzwQFq1alX69NNP09WrV6fd07vvvpvWrl2b1q9fn44dO1bh
 c63lJ18bk7HNka/lydjyZGx5MrY6MrYxGdscGVuejC1HvpY3F/nallKdt/gCAAAAAGBWeGMuAAAA
 AICMlLAAAAAAABkpYQEAAAAAMlLCAgAAAABkpIQFAAAAAMhICQsAAAAAkJESFgAAAAAgIyUsAAAA
 AEBG/w+G9V3JmRCTgQAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-900
 @ iteration 1000
@@ -13464,14 +13108,8 @@ Image dump @ iteration 1000
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8E2X+B/DPTNLS9IIelKMIKZQbpICioAiUQ1BRVMAL
@@ -14138,16 +13776,11 @@ xd4vY4x58OCBWbJkSeI9WVdXZ27fvj3r+3Gx9y1Vz1hr7pGv6ZGx4ZCv9shYe2SsPTLWHzI2PTI2
 HDLWHhlrh3y1txD5mmVMklt8AQAAAAAAAADmBTfmAgAAAAAAAACHGMICAAAAAAAAgEMMYQEAAAAA
 AADAIYawAAAAAAAAAOAQQ1gAAAAAAAAAcIghLAAAAAAAAAA4xBAWAAAAAAAAABxiCAsAAAAAAAAA
 Dv0fu8hMthLHoukAAAAASUVORK5CYII=
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-1100
 @ iteration 1200
@@ -14164,14 +13797,8 @@ Image dump @ iteration 1500
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8E2X+B/DPTJLSm7aUchQlhXIqUkBBUATKIagoKqCi
@@ -14804,16 +14431,11 @@ bretUqnY4uKilUqleEZPT0+2srJixWLRVldX7eXlJeWVpm99fd0KhYKNj4/bzMyMHR4e2vPzc985
 Bz6Poz63fjNjr/lHX4ejscnQV3c01h2NdUdj00Njh6OxydBYdzTWDX119xN9zZn1eMUXAAAAAAAA
 AOBb8GIuAAAAAAAAAPCIS1gAAAAAAAAA8IhLWAAAAAAAAADwiEtYAAAAAAAAAPCIS1gAAAAAAAAA
 8IhLWAAAAAAAAADwiEtYAAAAAAAAAPCIS1gAAAAAAAAA8Og3pdKVtRBbFH8AAAAASUVORK5CYII=
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>@ iteration 1600
 Train set: loss=605.487183   acc. all=0.996844   acc. nonzero=0.603448   
@@ -14833,14 +14455,8 @@ Image dump @ iteration 2000
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8E3X+P/DXTNLS0oO2lAItSgrlFKSAoqAIlsOiIqiA
@@ -15497,16 +15113,11 @@ JpOWSqWsu7vb8vm89/6tPi8zs5cvX9q2bdu8z2R7e7sNDw+X/Dxu9bltNDP2WvDoa3k01h/66o7G
 uqOx7mhseGhseTTWHxrrjsa6oa/uKtHXGrMij/gCAAAAAAAAAPwRPJgLAAAAAAAAAALEISwAAAAA
 AAAABIhDWAAAAAAAAAAIEIewAAAAAAAAABAgDmEBAAAAAAAAIEAcwgIAAAAAAABAgDiEBQAAAAAA
 AIAAcQgLAAAAAAAAAAH6C7TubjM8l8noAAAAAElFTkSuQmCC
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-2100
 @ iteration 2200
@@ -15523,14 +15134,8 @@ Image dump @ iteration 2500
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8E2X+B/DPTNLSUlpoKeUoSgrlBingoqAsUA5BRVAB
@@ -16106,16 +15711,11 @@ OOigg4pTTjml2Lx5c82R1u9Nb3pTse+++xa77rprsf/++xdXXHFF8dBDD015ni655JLiwAMPLA45
 Oaa49tprd/r/2Ovnbapz5rFWPfl1enLszMivsyfHzp4cO3tybH3k2OnJsTMjx86eHDs78uvsLUZ+
 bRTFJFN8AQAAAACwIEzMBQAAAABQIUVYAAAAAIAKKcICAAAAAFRIERYAAAAAoEKKsAAAAAAAFVKE
 BQAAAACokCIsAAAAAECFFGEBAAAAACr0/wM4iOLDwu++BwAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>@ iteration 2600
 Train set: loss=389.280029   acc. all=0.997963   acc. nonzero=0.813510   
@@ -16135,14 +15735,8 @@ Image dump @ iteration 3000
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8E2X+B/DPTNLSUlraUspRlBTKrVLARUERKIegIqiA
@@ -16717,16 +16311,11 @@ HXdcceaZZxabN2+e3H7Qj1dRFMU3vvGNYq+99pr8m3zxi19cXHvttXv8exz047a7Y+a1Vj35dWZy
 7OzIr3Mnx86dHDt3cmx95NiZybGzI8fOnRw7N/Lr3C1Gfm0UxTRTfAEAAAAA0BEm5gIAAAAAqJAi
 LAAAAABAhRRhAQAAAAAqpAgLAAAAAFAhRVgAAAAAgAopwgIAAAAAVEgRFgAAAACgQoqwAAAAAAAV
 +v8BSH3q+IGRbccAAAAASUVORK5CYII=
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-3100
 @ iteration 3200
@@ -16743,14 +16332,8 @@ Image dump @ iteration 3500
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl4U1X6B/DvuUlLS2lpSylLUVL2RaWAoqAMUHYdFBVQ
@@ -17298,16 +16881,11 @@ Y6bj9ba3va046aSTilNOOaU4//zzi+3bt09u3+/HqyiK4ktf+lKxYsWKyffki1/84uKmm27a7/ux
 34/bbMfMa6168uvc5Nj5kV/bJ8e2T45tnxxbHzl2bnLs/Mix7ZNj2yO/tm858mujKGZY4gsAAAAA
 gCVhYS4AAAAAgAopwgIAAAAAVEgRFgAAAACgQoqwAAAAAAAVUoQFAAAAAKiQIiwAAAAAQIUUYQEA
 AAAAKqQICwAAAABQof8faZXLL5s3gn0AAAAASUVORK5CYII=
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>@ iteration 3600
 Train set: loss=337.157562   acc. all=0.998215   acc. nonzero=0.838107   
@@ -17327,14 +16905,8 @@ Image dump @ iteration 4000
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8U1XaB/DfuUlLSxfaUspSlBTK6kIBRUERLIugo+II
@@ -17874,16 +17446,11 @@ o4vjjjuuuPnmm2uMvB6z7a+3ve1txUknnVSccsopxfnnn1/s2LFj6v79vr+Koii+8Y1vFCtWrJh6
 T5522mnFjTfeeMD3Y7/vt7n2mdda9eTX+cmxCyO/tk6ObZ0c2zo5tj5y7Pzk2IWRY1snx7ZGfm3d
 cuTXRlHMMsUXAAAAAABtYWIuAAAAAIAKKcICAAAAAFRIERYAAAAAoEKKsAAAAAAAFVKEBQAAAACo
 kCIsAAAAAECFFGEBAAAAACqkCAsAAAAAUKH/H+IdoRyGwN44AAAAAElFTkSuQmCC
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-4100
 @ iteration 4200
@@ -17900,14 +17467,8 @@ Image dump @ iteration 4500
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8E2X+B/DPTNLSUlraUspRhBTKrVJAUVAWLFdRUVwB
@@ -18447,16 +18008,11 @@ Tipuv/32CiOvxnT76z3veU9x2mmnFWeccUZx8cUXF1u3bp24fr/vr6Ioiu9973vFokWLJv4mzzrr
 rOLWW2894N9jv++3/e0zz7Xyya8zk2NnR35tnRzbOjm2dXJsdeTYmcmxsyPHtk6ObY382rqFyK+1
 ophmiS8AAAAAANrCwlwAAAAAACVShAUAAAAAKJEiLAAAAABAiRRhAQAAAABKpAgLAAAAAFAiRVgA
 AAAAgBIpwgIAAAAAlEgRFgAAAACgRP8/NtSk3v67eUwAAAAASUVORK5CYII=
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>@ iteration 4600
 Train set: loss=250.857834   acc. all=0.998696   acc. nonzero=0.899529   
@@ -18476,14 +18032,8 @@ Image dump @ iteration 5000
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8E3X+P/DXZ5qWltLSllKOoqTcoMilKCiC5RB0UVwB
@@ -19006,16 +18556,11 @@ fPWa17ymOvHEE6tbbrmlevrpp2fdT1/60peqk08+uTrttNOqe+65p2DkZcy0v6688srqrLPOqs45
 fuTX9smx7ZNj2yfHliPHzk2OnR85tn1ybHvk1/YtRX5tVNUMl/gCAAAAAKAjXJgLAAAAAKBGirAA
 AAAAADVShAUAAAAAqJEiLAAAAABAjRRhAQAAAABqpAgLAAAAAFAjRVgAAAAAgBopwgIAAAAA1Oj/
 B2cY0FfMV7FqAAAAAElFTkSuQmCC
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-5100
 @ iteration 5200
@@ -19032,14 +18577,8 @@ Image dump @ iteration 5500
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8VNX5P/DPuZmEhJCQhBCWoEwg7CIBFAWlYFgELYIV
@@ -19556,16 +19095,11 @@ zz77bPXOd76z2rRpU3XVVVdVhw4dKhxpeb/2a79WrVu3rnrVq15VnX322dXtt99ePffcc7OO0+c+
 tmzZ5HvyTW96U3XPPfec8v3Y7+M225g51uonv85Njp0f+bV1cmzr5NjWybHlyLFzk2PnR45tnRzb
 Gvm1dUuRXxtVNcMSXwAAAAAAtIWFuQAAAAAAaqQICwAAAABQI0VYAAAAAIAaKcICAAAAANRIERYA
 AAAAoEaKsAAAAAAANVKEBQAAAACokSIsAAAAAECN/n9ONMWsy4niigAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>@ iteration 5600
 Train set: loss=112.448235   acc. all=0.999382   acc. nonzero=0.931766   
@@ -19585,14 +19119,8 @@ Image dump @ iteration 6000
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8E2X+B/DPTNLSUlraUspRlBTKLVJAUVAWLIegi+AK
@@ -20098,16 +19626,11 @@ ezJWnsd443XHHXcUK1asKFauXFncdtttxdGjR0ce3+7jVRRF8b3vfa+YNWvWyHvy+uuvL3bt2nXB
 92O7j9v5xsy+lp7+OjE9dnL018bpsY3TYxunx+ajx05Mj50cPbZxemxj9NfGzUR/rRXFOKf4AgAA
 AACgKZyYCwAAAAAgISEsAAAAAEBCQlgAAAAAgISEsAAAAAAACQlhAQAAAAASEsICAAAAACQkhAUA
 AAAASEgICwAAAACQ0P8HYQKIkiJ0uW0AAAAASUVORK5CYII=
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-6100
 @ iteration 6200
@@ -20124,14 +19647,8 @@ Image dump @ iteration 6500
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl4FFXWBvD3VjohISSQEMISlA6EVZEAioIyQAAFHRUV
@@ -20643,16 +20160,11 @@ HyxWrlxZvOUtbyl27dqVK4zSevLJJ4u1a9cW69atK6688sqRffTss88W73nPe4qVK1cWN9xwQ3Hy
 RPvMsZae/Do1OXZ65NfmybHNk2ObJ8fmI8dOTY6dHjm2eXJsc+TX5s1Ffq0VxTiX+AIAAAAAoCVc
 mAsAAAAAICFFWAAAAACAhBRhAQAAAAASUoQFAAAAAEhIERYAAAAAICFFWAAAAACAhBRhAQAAAAAS
 UoQFAAAAAEjo/wM2mrpEHk2VTQAAAABJRU5ErkJggg==
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>@ iteration 6600
 Train set: loss=132.184723   acc. all=0.999305   acc. nonzero=0.922289   
@@ -20672,14 +20184,8 @@ Image dump @ iteration 7000
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8VOXZ//HvmSwkhABh35Rhk0WtoBYFtSCLgtatglqr
@@ -21177,16 +20683,11 @@ xbp164rbb7+9OHny5Njz2328iqIovv/97xfz5s0b+51873vfW+zbt2/K38d2H7fJxsyxlp7+Oj09
 dmb019rpsbXTY2unx+ajx05Pj50ZPbZ2emxt9NfaNaK/Vopigkt8AQAAAABQFy7MBQAAAACQkBAW
 AAAAACAhISwAAAAAQEJCWAAAAACAhISwAAAAAAAJCWEBAAAAABISwgIAAAAAJCSEBQAAAABI6P8D
 qh08BupnfTQAAAAASUVORK5CYII=
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>saved @ ssnet_checkpoint/uresnet-7100
 @ iteration 7200
@@ -21203,14 +20704,8 @@ Image dump @ iteration 7500
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABWEAAAG+CAYAAADyTsavAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8VOXZ//HvmSwkhABhCasSNlnUiktRUAsiKGjdKqi1
@@ -21706,16 +21201,11 @@ ccMNNxQ33nhjcejQoYyV5zHReN1zzz3F2rVri/Xr1xd33XVXcfr06bHnd/p4FUVRfO973yvmzZs3
 9jv5oQ99qDhw4MCUv4+dPm6TjZljLT39dXp67Mzor/XTY+unx9ZPj81Hj52eHjszemz99Nj66K/1
 a0Z/rRTFBJf4AgAAAACgIVyYCwAAAAAgISEsAAAAAEBCQlgAAAAAgISEsAAAAAAACQlhAQAAAAAS
 EsICAAAAACQkhAUAAAAASEgICwAAAACQ0P8HxaMmID23xioAAAAASUVORK5CYII=
-">
+" />
 </div>
-
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>@ iteration 7600
 Train set: loss=94.409027   acc. all=0.999462   acc. nonzero=0.935092   
@@ -21725,24 +21215,23 @@ saved @ ssnet_checkpoint/uresnet-7700
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="train_result"></a></p>
-<h2 id="Training-Results">Training Results<a class="anchor-link" href="#Training-Results">&#182;</a></h2><p><strong>Phew that was long!</strong> Lots of dumped image/text. It took nearly 2 hours using an old generation (maxwell) <a href="https://www.inet.se/files/pdf/5411391_0.pdf">Titan X</a> GPU on my box. If you jumped here from much earlier part of this note book, I made a gif animation of the dumped "test images" for us to see the network's learning progress visually.</p>
-<p><img src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/animated.gif" alt="Animated"></p>
-<h3 id="A-few-clarifications">A few clarifications<a class="anchor-link" href="#A-few-clarifications">&#182;</a></h3><ul>
+<h2 id="Training-Results">Training Results<a class="anchor-link" href="#Training-Results">¶</a></h2><p><strong>Phew that was long!</strong> Lots of dumped image/text. It took nearly 2 hours using an old generation (maxwell) <a href="https://www.inet.se/files/pdf/5411391_0.pdf">Titan X</a> GPU on my box. If you jumped here from much earlier part of this note book, I made a gif animation of the dumped "test images" for us to see the network's learning progress visually.</p>
+<p><img alt="Animated" src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/animated.gif" /></p>
+<h3 id="A-few-clarifications">A few clarifications<a class="anchor-link" href="#A-few-clarifications">¶</a></h3><ul>
 <li><strong><font color="red">How is "loss" defined?</font></strong><ul>
 <li>In one image, u-resnet calculates the softmax (multinominal regression) loss for 3 category classification. Then the loss is added for all pixels in the image, and averaged over all images in one batch. So it is essentially an average of all-pixel-softmax-sum. If you expected loss value to be smaller (like <em>o</em>(1)), the reason why is because this is a linear sum of <em>many</em> softmax loss (i.e. all pixels in an image).</li>
 </ul>
 </li>
 <li><strong><font color="red">What is "acc. all"?</font></strong><ul>
-<li>It is a fraction of pixels that the network classified correctly. The network's prediction is a simple <em>argmax</em> of the softmax score per pixel. Then the accuracy is computed per image by counting number of correctly classified pixels divided by total pixel count in an image. Finally we average the accuracy over the images in the batch. We expect this to be <em>very high</em> because the majority of pixels are backgrounds in LArTPC images. By simply guessing all pixels are backgrounds, you can actually get &gt;99% accuracy!</li>
+<li>It is a fraction of pixels that the network classified correctly. The network's prediction is a simple <em>argmax</em> of the softmax score per pixel. Then the accuracy is computed per image by counting number of correctly classified pixels divided by total pixel count in an image. Finally we average the accuracy over the images in the batch. We expect this to be <em>very high</em> because the majority of pixels are backgrounds in LArTPC images. By simply guessing all pixels are backgrounds, you can actually get >99% accuracy!</li>
 </ul>
 </li>
 <li><strong><font color="red">What is "acc. nonzero"?</font></strong><ul>
@@ -21750,11 +21239,11 @@ saved @ ssnet_checkpoint/uresnet-7700
 </ul>
 </li>
 </ul>
-<h3 id="Visualizing-logs">Visualizing logs<a class="anchor-link" href="#Visualizing-logs">&#182;</a></h3><p>Below you find the tensorboard visualization of all three parameters during the training. Data points are stored every 20 iterations (see <a href="#config_uresnet">u-resnet configuration</a> section).
-<img src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/tb_accuracy_all.png" alt="TensorBoard All Pixel Accuracy">
-<img src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/tb_accuracy_nonzero.png" alt="TensorBoard Nonzero Pixel Accuracy">
-<img src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/tb_loss.png" alt="TensorBoard All Pixel Loss"></p>
-<h3 id="A-few-observations:">A few observations:<a class="anchor-link" href="#A-few-observations:">&#182;</a></h3><ul>
+<h3 id="Visualizing-logs">Visualizing logs<a class="anchor-link" href="#Visualizing-logs">¶</a></h3><p>Below you find the tensorboard visualization of all three parameters during the training. Data points are stored every 20 iterations (see <a href="#config_uresnet">u-resnet configuration</a> section).
+<img alt="TensorBoard All Pixel Accuracy" src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/tb_accuracy_all.png" />
+<img alt="TensorBoard Nonzero Pixel Accuracy" src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/tb_accuracy_nonzero.png" />
+<img alt="TensorBoard All Pixel Loss" src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/tb_loss.png" /></p>
+<h3 id="A-few-observations:">A few observations:<a class="anchor-link" href="#A-few-observations:">¶</a></h3><ul>
 <li><strong><font color="blue">Learning the backgrounds</font></strong><ul>
 <li>U-ResNet quickly learned about the most abandoned category, the <em>background</em> pixels.</li>
 <li>The network first learned 0-pixels being background. We can see the "background score" of the sample image is becoming dark-red quickly. This means the network has become very confident on those 0-pixels being backgrounds.</li>
@@ -21767,39 +21256,36 @@ saved @ ssnet_checkpoint/uresnet-7700
 </ul>
 </li>
 </ul>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="uresnet_brief"></a></p>
-<h2 id="Extra:-a-bit-more-about-U-ResNet">Extra: a bit more about U-ResNet<a class="anchor-link" href="#Extra:-a-bit-more-about-U-ResNet">&#182;</a></h2><p>I add a few abstract/qualitative descriptions about U-ResNet. This network design is not from us (MicroBooNE). All we did is to combine two novel network designs: <a href="https://arxiv.org/abs/1505.04597">U-Net</a> to attack the semantic segmentation task, and <a href="https://arxiv.org/abs/1512.03385">ResNet</a> to improve the internal convolution layers. You can find tensorboard graph for the u-resnet below.</p>
-
+<h2 id="Extra:-a-bit-more-about-U-ResNet">Extra: a bit more about U-ResNet<a class="anchor-link" href="#Extra:-a-bit-more-about-U-ResNet">¶</a></h2><p>I add a few abstract/qualitative descriptions about U-ResNet. This network design is not from us (MicroBooNE). All we did is to combine two novel network designs: <a href="https://arxiv.org/abs/1505.04597">U-Net</a> to attack the semantic segmentation task, and <a href="https://arxiv.org/abs/1512.03385">ResNet</a> to improve the internal convolution layers. You can find tensorboard graph for the u-resnet below.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/uresnet_graph.png" alt="U-ResNet Graph"></p>
-
+<p><img alt="U-ResNet Graph" src="imgs/2018-01-05-TrainingSegmentationData_v0.1.0/uresnet_graph.png" /></p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Why-U-Net?">Why U-Net?<a class="anchor-link" href="#Why-U-Net?">&#182;</a></h3><p>A typical convolutional neural network design for image classification involves down-sampling of an image to expand the receptive field of a neuron at deeper layers, hoping for it to learn a large (abstract) fetures. A typical semantic segmentation network contains the same design but with an additional portion which performs convolution-transpose to expand the contracted feature map size back to the size of the original input.</p>
+<h3 id="Why-U-Net?">Why U-Net?<a class="anchor-link" href="#Why-U-Net?">¶</a></h3><p>A typical convolutional neural network design for image classification involves down-sampling of an image to expand the receptive field of a neuron at deeper layers, hoping for it to learn a large (abstract) fetures. A typical semantic segmentation network contains the same design but with an additional portion which performs convolution-transpose to expand the contracted feature map size back to the size of the original input.</p>
 <p>A problem in this scheme is the fact that down sampling would lose spatial resolution. In order to overcome this issue, U-Net added an information flow-path between the convolution and convolution-transpose layers by simply concatenating the feature maps. By doing this, neurons at deeper layers can always recover the best possible spatial resolution information.</p>
 <p>We used <strong>ResNet</strong> in the place of a standard convolution operations of the original U-Net for the exact reason ResNet was invented for: it is suited to train deep nets and it learns well. Both ResNet and U-Net follows a similar design pattern by adding more paaths for information to flow, and neurons to learn the perturbations.</p>
-
 </div>
 </div>
 </div>
- 
-
 
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var mathjaxscript = document.createElement('script');

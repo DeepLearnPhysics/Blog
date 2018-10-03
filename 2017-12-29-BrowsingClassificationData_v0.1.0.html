@@ -89,7 +89,7 @@
   <header>
     <h1 id="2017-12-29-BrowsingClassificationData_v0.1.0">Browsing Classification Data Set (v0.1.0)</h1>
     <p>
-          Posted on Fri 29 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/public-data.html">public data</a>
+          Posted on ven. 29 décembre 2017 in <a href="http://deeplearnphysics.org/Blog/category/public-data.html">public data</a>
 
             by
 
@@ -105,124 +105,9 @@
 * IPython notebook
 *
 */
-/* CSS font colors for translated ANSI escape sequences */
-/* The color values are a mix of
-   http://www.xcolors.net/dl/baskerville-ivorylight and
-   http://www.xcolors.net/dl/euphrasia */
-.ansi-black-fg {
-  color: #3E424D;
-}
-.ansi-black-bg {
-  background-color: #3E424D;
-}
-.ansi-black-intense-fg {
-  color: #282C36;
-}
-.ansi-black-intense-bg {
-  background-color: #282C36;
-}
-.ansi-red-fg {
-  color: #E75C58;
-}
-.ansi-red-bg {
-  background-color: #E75C58;
-}
-.ansi-red-intense-fg {
-  color: #B22B31;
-}
-.ansi-red-intense-bg {
-  background-color: #B22B31;
-}
-.ansi-green-fg {
-  color: #00A250;
-}
-.ansi-green-bg {
-  background-color: #00A250;
-}
-.ansi-green-intense-fg {
-  color: #007427;
-}
-.ansi-green-intense-bg {
-  background-color: #007427;
-}
-.ansi-yellow-fg {
-  color: #DDB62B;
-}
-.ansi-yellow-bg {
-  background-color: #DDB62B;
-}
-.ansi-yellow-intense-fg {
-  color: #B27D12;
-}
-.ansi-yellow-intense-bg {
-  background-color: #B27D12;
-}
-.ansi-blue-fg {
-  color: #208FFB;
-}
-.ansi-blue-bg {
-  background-color: #208FFB;
-}
-.ansi-blue-intense-fg {
-  color: #0065CA;
-}
-.ansi-blue-intense-bg {
-  background-color: #0065CA;
-}
-.ansi-magenta-fg {
-  color: #D160C4;
-}
-.ansi-magenta-bg {
-  background-color: #D160C4;
-}
-.ansi-magenta-intense-fg {
-  color: #A03196;
-}
-.ansi-magenta-intense-bg {
-  background-color: #A03196;
-}
-.ansi-cyan-fg {
-  color: #60C6C8;
-}
-.ansi-cyan-bg {
-  background-color: #60C6C8;
-}
-.ansi-cyan-intense-fg {
-  color: #258F8F;
-}
-.ansi-cyan-intense-bg {
-  background-color: #258F8F;
-}
-.ansi-white-fg {
-  color: #C5C1B4;
-}
-.ansi-white-bg {
-  background-color: #C5C1B4;
-}
-.ansi-white-intense-fg {
-  color: #A1A6B2;
-}
-.ansi-white-intense-bg {
-  background-color: #A1A6B2;
-}
-.ansi-default-inverse-fg {
-  color: #FFFFFF;
-}
-.ansi-default-inverse-bg {
-  background-color: #000000;
-}
-.ansi-bold {
-  font-weight: bold;
-}
-.ansi-underline {
-  text-decoration: underline;
-}
-/* The following styles are deprecated an will be removed in a future version */
+/* CSS font colors for translated ANSI colors. */
 .ansibold {
   font-weight: bold;
-}
-.ansi-inverse {
-  outline: 0.5px dotted;
 }
 /* use dark versions for foreground, to improve visibility */
 .ansiblack {
@@ -301,20 +186,12 @@ div.cell {
   /* This acts as a spacer between cells, that is outside the border */
   margin: 0px;
   outline: none;
-  position: relative;
-  overflow: visible;
-}
-div.cell:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: transparent;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
 }
 div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
   border-left-color: #E3F2FD;
   border-left-width: 1px;
   padding-left: 5px;
@@ -327,39 +204,27 @@ div.cell.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected,
-div.cell.selected.jupyter-soft-selected {
+div.cell.selected {
   border-color: #ababab;
-}
-div.cell.selected:before,
-div.cell.selected.jupyter-soft-selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #42A5F5;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
 }
 @media print {
-  div.cell.selected,
-  div.cell.selected.jupyter-soft-selected {
+  div.cell.selected {
     border-color: transparent;
   }
 }
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
 .edit_mode div.cell.selected {
   border-color: #66BB6A;
-}
-.edit_mode div.cell.selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
 }
 @media print {
   .edit_mode div.cell.selected {
@@ -555,9 +420,7 @@ div.input_area > div.highlight > pre {
 .CodeMirror-lines {
   /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
   /* we have set a different line-height and want this to scale with that. */
-  /* Note that this should set vertical padding only, since CodeMirror assumes
-       that horizontal padding will be set on CodeMirror pre */
-  padding: 0.4em 0;
+  padding: 0.4em;
 }
 .CodeMirror-linenumber {
   padding: 0 8px 0 4px;
@@ -567,24 +430,11 @@ div.input_area > div.highlight > pre {
   border-top-left-radius: 2px;
 }
 .CodeMirror pre {
-  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
-    use .CodeMirror-lines for vertical */
-  padding: 0 0.4em;
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
   border: 0;
   border-radius: 0;
-}
-.CodeMirror-cursor {
-  border-left: 1.4px solid black;
-}
-@media screen and (min-width: 2138px) and (max-width: 4319px) {
-  .CodeMirror-cursor {
-    border-left: 2px solid black;
-  }
-}
-@media screen and (min-width: 4320px) {
-  .CodeMirror-cursor {
-    border-left: 4px solid black;
-  }
 }
 /*
 
@@ -832,9 +682,6 @@ div.output_area img.unconfined,
 div.output_area svg.unconfined {
   max-width: none;
 }
-div.output_area .mglyph > img {
-  max-width: none;
-}
 /* This is needed to protect the pre formating from global settings such
    as that of bootstrap */
 .output {
@@ -873,7 +720,7 @@ div.output_area .mglyph > img {
 }
 div.output_area pre {
   margin: 0;
-  padding: 1px 0 1px 0;
+  padding: 0;
   border: 0;
   vertical-align: baseline;
   color: black;
@@ -995,10 +842,6 @@ div.output_unrecognized a:hover {
 .rendered_html h6:first-child {
   margin-top: 1em;
 }
-.rendered_html ul:not(.list-inline),
-.rendered_html ol:not(.list-inline) {
-  padding-left: 2em;
-}
 
 
 
@@ -1015,24 +858,16 @@ div.output_unrecognized a:hover {
 }
 
 
-
-
-
 .rendered_html pre,
-
 
 
 
 .rendered_html tr,
 .rendered_html th,
 
+.rendered_html td,
 
-.rendered_html tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-.rendered_html tbody tr:hover {
-  background: rgba(66, 165, 245, 0.2);
-}
+
 .rendered_html * + table {
   margin-top: 1em;
 }
@@ -1048,11 +883,6 @@ div.output_unrecognized a:hover {
 
 .rendered_html img.unconfined,
 
-
-.rendered_html * + .alert {
-  margin-top: 1em;
-}
-[dir="rtl"] 
 div.text_cell {
   /* Old browsers */
   display: -webkit-box;
@@ -1103,15 +933,8 @@ h6:hover .anchor-link {
   display: none;
 }
 .text_cell.rendered 
-.text_cell.rendered .rendered_html tr,
-.text_cell.rendered .rendered_html th,
-.text_cell.rendered 
 .text_cell.unrendered .text_cell_render {
   display: none;
-}
-.text_cell .dropzone .input_area {
-  border: 2px dashed #bababa;
-  margin: -1px;
 }
 .cm-header-1,
 .cm-header-2,
@@ -1250,7 +1073,8 @@ h6:hover .anchor-link {
 .ansi-bold { font-weight: bold; }
 </style>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Our first <a href="http://deeplearnphysics.org/DataChallenge/#ChallengeClassification">public data set</a> is available! We are very excited for this 1st step to have public data set with <a href="http://deeplearnphysics.org/Blog/tutorial_summary.html">training tutorials</a>. This notebook is an announcement + browsing of the file contents. This may be a useful guide before jumping into the tutorial. Since this notebook is a bit lengthy, here's an outline of what's covered.</p>
 <ol>
@@ -1262,15 +1086,14 @@ h6:hover .anchor-link {
 <li><a href="#filter_effect">Image filtering effect</a> (data analysis)</li>
 </ol>
 <p>Before anything, make sure you have necessary software stacks (<code>larcv</code>, python packages) and can execute these imports.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In [2]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">ROOT</span>
 <span class="kn">from</span> <span class="nn">ROOT</span> <span class="kn">import</span> <span class="n">TChain</span>
@@ -1279,17 +1102,16 @@ h6:hover .anchor-link {
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="overview"></a></p>
-<h2 id="Conditions-to-make-the-samples">Conditions to make the samples<a class="anchor-link" href="#Conditions-to-make-the-samples">&#182;</a></h2><p>Here's the big picture:</p>
+<h2 id="Conditions-to-make-the-samples">Conditions to make the samples<a class="anchor-link" href="#Conditions-to-make-the-samples">¶</a></h2><p>Here's the big picture:</p>
 <ul>
 <li>All files (train, test, and tutorial files) contain single-particle events.<ul>
 <li>This means each 2D image contain only 1 particle.</li>
@@ -1315,40 +1137,32 @@ h6:hover .anchor-link {
 <li>Events that contain any 2D projection <strong>image with less than 10 non-zero pixels are filtered out.</strong>
   *This is to remove empty and almost empty images from the set.</li>
 </ul>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="file_contents"></a></p>
-<h2 id="Exploring-the-contents">Exploring the contents<a class="anchor-link" href="#Exploring-the-contents">&#182;</a></h2><p>I think the file description is best done with the data. So let's explore them in this notebook. This also serves as an example of how to browse through <code>larcv</code> data products! We use this <a href="http://deeplearnphysics.org/DataChallenge/#ChallengeClassification">test file</a> which I already downloaded in this directory. Let's check what data products are in the file. But <strong>before going further</strong>, please go over <a href="http://deeplearnphysics.org/Blog/tutorials/tutorial-02.html">this tutorial</a> if you have not done so!</p>
-
+<h2 id="Exploring-the-contents">Exploring the contents<a class="anchor-link" href="#Exploring-the-contents">¶</a></h2><p>I think the file description is best done with the data. So let's explore them in this notebook. This also serves as an example of how to browse through <code>larcv</code> data products! We use this <a href="http://deeplearnphysics.org/DataChallenge/#ChallengeClassification">test file</a> which I already downloaded in this directory. Let's check what data products are in the file. But <strong>before going further</strong>, please go over <a href="http://deeplearnphysics.org/Blog/tutorials/tutorial-02.html">this tutorial</a> if you have not done so!</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In [3]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ROOT</span><span class="o">.</span><span class="n">TFile</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">&#39;test_40k.root&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">ROOT</span><span class="o">.</span><span class="n">TFile</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">'test_40k.root'</span><span class="p">)</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>TFile**		test_40k.root	
  TFile*		test_40k.root	
@@ -1357,54 +1171,52 @@ h6:hover .anchor-link {
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As described in the linked tutorial, TTree names tell us what they are: we got <code>image2d</code> and <code>particle</code> data products with "data" and "mctruth" instance labels. <code>image2d</code> is, as its name suggests, 2D image.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="image_dump"></a></p>
-<h2 id="Closer-look:-image">Closer look: image<a class="anchor-link" href="#Closer-look:-image">&#182;</a></h2><p>Let's take a peek of it using <a href="https://root.cern.ch/root/html526/TChain.html">TChain</a>, the same technique introduced in the linked tutorial.</p>
-
+<h2 id="Closer-look:-image">Closer look: image<a class="anchor-link" href="#Closer-look:-image">¶</a></h2><p>Let's take a peek of it using <a href="https://root.cern.ch/root/html526/TChain.html">TChain</a>, the same technique introduced in the linked tutorial.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In [4]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">larcv</span> <span class="kn">import</span> <span class="n">larcv</span>
 
 <span class="c1"># Create TChain, count # of entries</span>
-<span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">&#39;image2d_data_tree&#39;</span><span class="p">)</span>
-<span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">&#39;test_40k.root&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">(),</span><span class="s1">&#39;entries found!&#39;</span><span class="p">)</span>
+<span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">'image2d_data_tree'</span><span class="p">)</span>
+<span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">'test_40k.root'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">(),</span><span class="s1">'entries found!'</span><span class="p">)</span>
 
 <span class="c1"># Get a specific event (first entry)</span>
 <span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">cpp_object</span> <span class="o">=</span> <span class="n">chain_image2d</span><span class="o">.</span><span class="n">image2d_data_branch</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Object type:&#39;</span><span class="p">,</span><span class="n">cpp_object</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Object type:'</span><span class="p">,</span><span class="n">cpp_object</span><span class="p">)</span>
 
-<span class="c1"># Get std::vector&lt;larcv::Image2D&gt;</span>
+<span class="c1"># Get std::vector<larcv::image2d></span>
 <span class="n">image2d_array</span> <span class="o">=</span> <span class="n">cpp_object</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span>
 <span class="c1"># Dump images</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">image2d_array</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">image2d_array</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">image2d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">image2d_array</span><span class="p">):</span>
     <span class="n">image2d_numpy</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">image2d</span><span class="p">)</span>
-    <span class="n">axes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d_numpy</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d_numpy</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">'jet'</span><span class="p">)</span>
     <span class="c1"># Find bounds for non-zero pixels + padding of 5 pixels</span>
-    <span class="n">nz_pixels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">image2d_numpy</span><span class="o">&gt;</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">nz_pixels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">image2d_numpy</span><span class="o">></span><span class="mf">0.0</span><span class="p">)</span>
     <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
     <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
     <span class="c1"># Adjust for allowed image range</span>
@@ -1415,34 +1227,21 @@ h6:hover .anchor-link {
     <span class="n">axes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>40000 entries found!
-Object type: &lt;ROOT.larcv::EventImage2D object at 0x7fbb38918600&gt;
+Object type: <root.larcv::eventimage2d object at 0x7fbb38918600>
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArAAAAD7CAYAAACSRKcwAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzt3X90VPW97//nDoxX1wUqtDLBDHY4hhwSCCGKwPXILXxh
@@ -1679,63 +1478,53 @@ ERERZ4lqAWuMMU8++aTJyMgwEyZMMIsXLzatra3mT3/6k5k1a5YZO3as8fl85qOPPgr6/G9961tm
 mWnTppl33nkn5Gyvv/66sSzLZGVlBV6rgwcPhv1+dNfeyy+/HPb7Eay9/rwfIiIi4jyWMQk8n6aI
 iIiIJJyoT2QgIiIiIhJJKmBFREREJK6ogBURERGRuKICVkRERETiigpYEREREYkrKmBFREREJK6o
 gBURERGRuKICVkRERETiyv8BwhOVfvGmkGUAAAAASUVORK5CYII=
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Looks like this is an electron EM-shower. Why electron and not gamma ray? That's because, to my eyes, this looks like low dE/dX at the beginning of the shower trunk. But to check if I am right or not, we have to access simulation information (coming up next)!</p>
 <p><a name="event_fraction"></a></p>
-<h2 id="Closer-look:-particle-(label)">Closer look: particle (label)<a class="anchor-link" href="#Closer-look:-particle-(label)">&#182;</a></h2><p>We can look at <code>particle</code> information in the file, which you will use to generate a <em>label</em> for image classification training, to check if the image we saw was electron or not.</p>
-
+<h2 id="Closer-look:-particle-(label)">Closer look: particle (label)<a class="anchor-link" href="#Closer-look:-particle-(label)">¶</a></h2><p>We can look at <code>particle</code> information in the file, which you will use to generate a <em>label</em> for image classification training, to check if the image we saw was electron or not.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In [5]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Create TChain, count # of entries</span>
-<span class="n">chain_particle</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">&#39;particle_mctruth_tree&#39;</span><span class="p">)</span>
-<span class="n">chain_particle</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">&#39;test_40k.root&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">(),</span><span class="s1">&#39;entries found!&#39;</span><span class="p">)</span>
+<span class="n">chain_particle</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">'particle_mctruth_tree'</span><span class="p">)</span>
+<span class="n">chain_particle</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">'test_40k.root'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">(),</span><span class="s1">'entries found!'</span><span class="p">)</span>
 
 <span class="c1"># Get a specific event (first entry)</span>
 <span class="n">chain_particle</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">cpp_object</span> <span class="o">=</span> <span class="n">chain_particle</span><span class="o">.</span><span class="n">particle_mctruth_branch</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Object type: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cpp_object</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Object type: {}</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cpp_object</span><span class="p">)))</span>
 
 <span class="c1"># Dump particle information</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Checking particle information for 1st entry...&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Checking particle information for 1st entry...'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">particle</span> <span class="ow">in</span> <span class="n">cpp_object</span><span class="o">.</span><span class="n">as_vector</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;PDG Code: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">()))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Initial energy: {:.3} GeV&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">energy_init</span><span class="p">()))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">'PDG Code: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">pdg_code</span><span class="p">()))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">'Initial energy: {:.3} GeV'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">energy_init</span><span class="p">()))</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>40000 entries found!
-Object type: &lt;ROOT.larcv::EventParticle object at 0x7fbb379dc180&gt;
+Object type: <root.larcv::eventparticle object at 0x7fbb379dc180>
 
 Checking particle information for 1st entry...
 PDG Code: 11
@@ -1743,33 +1532,31 @@ Initial energy: 0.138 GeV
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a href="http://pdg.lbl.gov/2007/reviews/montecarlorpp.pdf">PDG code</a> 11 corrsponds to electron! So I guessed it right :)</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="kinematics"></a></p>
-<h2 id="Closer-look:-kinematics">Closer look: kinematics<a class="anchor-link" href="#Closer-look:-kinematics">&#182;</a></h2><p>Next, let's look at the fraction of each particle type and their energy distributions for fun. We first make <code>pandas.DataFrame</code> with numpy arrrays for simple analysis and plotting.</p>
-
+<h2 id="Closer-look:-kinematics">Closer look: kinematics<a class="anchor-link" href="#Closer-look:-kinematics">¶</a></h2><p>Next, let's look at the fraction of each particle type and their energy distributions for fun. We first make <code>pandas.DataFrame</code> with numpy arrrays for simple analysis and plotting.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">pdg_array</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">chain_particle</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">()],</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 <span class="n">energy_array</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">chain_particle</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">()],</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 <span class="n">momentum_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">chain_particle</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">()],</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
@@ -1786,164 +1573,135 @@ Initial energy: 0.138 GeV
     <span class="n">energy_array</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>   <span class="o">=</span> <span class="n">kinetic_energy</span>
     <span class="n">momentum_array</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">momentum</span>
     
-    <span class="c1">#if momentum &gt; 800:</span>
+    <span class="c1">#if momentum > 800:</span>
     <span class="c1">#    print(pdg,kinetic_energy,momentum)</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;pdg&#39;</span> <span class="p">:</span> <span class="n">pdg_array</span><span class="p">,</span> <span class="s1">&#39;energy&#39;</span> <span class="p">:</span> <span class="n">energy_array</span><span class="p">,</span> <span class="s1">&#39;momentum&#39;</span> <span class="p">:</span> <span class="n">momentum_array</span><span class="p">})</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">'pdg'</span> <span class="p">:</span> <span class="n">pdg_array</span><span class="p">,</span> <span class="s1">'energy'</span> <span class="p">:</span> <span class="n">energy_array</span><span class="p">,</span> <span class="s1">'momentum'</span> <span class="p">:</span> <span class="n">momentum_array</span><span class="p">})</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>List of particles and their event counts:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In [7]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">pdg_list</span><span class="p">,</span> <span class="n">pdg_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">pdg</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">return_counts</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;PDGs found: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_list</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;PDG counts: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_counts</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'PDGs found: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_list</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'PDG counts: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_counts</span><span class="p">))</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>PDGs found: [  11   13   22  211 2212]
 PDG counts: [8000 8000 8000 8000 8000]
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>... as expected, we have equal partition of 5 particle types. Check the range of momentum per particle type:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In [8]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">PDG2NAME</span> <span class="o">=</span> <span class="p">{</span><span class="mi">11</span>   <span class="p">:</span> <span class="s1">&#39;electron&#39;</span><span class="p">,</span>
-            <span class="mi">22</span>   <span class="p">:</span> <span class="s1">&#39;gamma&#39;</span><span class="p">,</span>
-            <span class="mi">13</span>   <span class="p">:</span> <span class="s1">&#39;muon&#39;</span><span class="p">,</span>
-            <span class="mi">211</span>  <span class="p">:</span> <span class="s1">&#39;pion&#39;</span><span class="p">,</span>
-            <span class="mi">2212</span> <span class="p">:</span> <span class="s1">&#39;proton&#39;</span><span class="p">}</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">PDG2NAME</span> <span class="o">=</span> <span class="p">{</span><span class="mi">11</span>   <span class="p">:</span> <span class="s1">'electron'</span><span class="p">,</span>
+            <span class="mi">22</span>   <span class="p">:</span> <span class="s1">'gamma'</span><span class="p">,</span>
+            <span class="mi">13</span>   <span class="p">:</span> <span class="s1">'muon'</span><span class="p">,</span>
+            <span class="mi">211</span>  <span class="p">:</span> <span class="s1">'pion'</span><span class="p">,</span>
+            <span class="mi">2212</span> <span class="p">:</span> <span class="s1">'proton'</span><span class="p">}</span>
 <span class="k">for</span> <span class="n">pdg</span> <span class="ow">in</span> <span class="n">pdg_list</span><span class="p">:</span>
-    <span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pdg=={}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">))</span>
+    <span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'pdg=={}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">))</span>
     <span class="n">min_value</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
     <span class="n">max_value</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;{:10s} momentum range: {:.3g} =&gt; {:.3g} MeV/c&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">PDG2NAME</span><span class="p">[</span><span class="n">pdg</span><span class="p">],</span> <span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">'{:10s} momentum range: {:.3g} => {:.3g} MeV/c'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">PDG2NAME</span><span class="p">[</span><span class="n">pdg</span><span class="p">],</span> <span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span><span class="p">))</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>electron   momentum range: 35.6 =&gt; 800 MeV/c
-muon       momentum range: 90 =&gt; 800 MeV/c
-gamma      momentum range: 35.1 =&gt; 800 MeV/c
-pion       momentum range: 105 =&gt; 800 MeV/c
-proton     momentum range: 276 =&gt; 800 MeV/c
+<pre>electron   momentum range: 35.6 => 800 MeV/c
+muon       momentum range: 90 => 800 MeV/c
+gamma      momentum range: 35.1 => 800 MeV/c
+pion       momentum range: 105 => 800 MeV/c
+proton     momentum range: 276 => 800 MeV/c
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This is also as expected from the prescription. Next is more interesting: plot energy distributions of gamma ray and muon</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In [9]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 
 <span class="n">pdg_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span><span class="mi">22</span><span class="p">]</span>
-<span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pdg in {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_list</span><span class="p">))</span>
+<span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'pdg in {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_list</span><span class="p">))</span>
 <span class="n">min_value</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 <span class="n">max_value</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">pdg</span> <span class="ow">in</span> <span class="n">pdg_list</span><span class="p">:</span>
-    <span class="n">pdg_df</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pdg == {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">))</span>
+    <span class="n">pdg_df</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'pdg == {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">))</span>
     <span class="n">values</span> <span class="o">=</span> <span class="n">pdg_df</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">values</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="n">min_value</span><span class="p">,</span><span class="n">max_value</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;PDG {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="n">min_value</span><span class="p">,</span><span class="n">max_value</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">'PDG {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Initial Kinetic Energy [MeV]&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of entries&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Initial Kinetic Energy [MeV]'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Number of entries'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
 <span class="n">leg</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">leg_frame</span><span class="o">=</span><span class="n">leg</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span>
-<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">'white'</span><span class="p">)</span>
     
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAv0AAAIFCAYAAABBB0JgAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl8lOW5//HvEEPCEhM4KCgIQdk8llVLC0oMUJVFBQ1I
@@ -2515,17 +2273,15 @@ oPCaD0dHRxDRC13EzRgrHS/vYYwxxiogNzcXy5Ytw86dO3Hu3Dk8f/4cTk5OyM/Ph76+PgIDA/Hh
 hx/itddew9OnTzF06FDs3bsXjRs3xrx589C5c2ddHwJjrBbjST9jjDHGGGM1XPX9uyBjjDHGGGOs
 QnjSzxhjjDHGWA3Hk37GGGOMMcZqOJ70M8YYY4wxVsPxpJ8xxhhjjLEajif9jDHGGGOM1XD/D3pH
 T3A6EGEUAAAAAElFTkSuQmCC
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We see two features here:</p>
 <ul>
@@ -2534,53 +2290,43 @@ T3A6EGEUAAAAAElFTkSuQmCC
 </ul>
 <p>The first point is due to the fact that particles are generated <strong>uniformly in momentum space</strong> and not in kinetic energy. The non-negligible muon mass (105.6 MeV) in the generated momentum range causes its kinetic energy to be non-uniform. On the other hand, gamma ray has 0 mass (no please don't ask "what if photons are massive..." question). That means momentum = energy, and hence you see a <em>uniform kinetic energy</em> distribution ranging up to 800 MeV.</p>
 <p>Let's actually plot the momentum distribution.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In [10]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 
 <span class="n">pdg_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span><span class="mi">22</span><span class="p">]</span>
-<span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pdg in {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_list</span><span class="p">))</span>
+<span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'pdg in {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_list</span><span class="p">))</span>
 <span class="n">min_value</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 <span class="n">max_value</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">pdg</span> <span class="ow">in</span> <span class="n">pdg_list</span><span class="p">:</span>
-    <span class="n">pdg_df</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pdg == {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">))</span>
+    <span class="n">pdg_df</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'pdg == {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">))</span>
     <span class="n">values</span> <span class="o">=</span> <span class="n">pdg_df</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">values</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="n">min_value</span><span class="p">,</span><span class="n">max_value</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;PDG {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="n">min_value</span><span class="p">,</span><span class="n">max_value</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">'PDG {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Initial Momentum [MeV/c]&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of entries&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Initial Momentum [MeV/c]'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Number of entries'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
 <span class="n">leg</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">leg_frame</span><span class="o">=</span><span class="n">leg</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span>
-<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">'white'</span><span class="p">)</span>
     
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAv0AAAIFCAYAAABBB0JgAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xl41OW5//HPEEPYQgIHBUUgyGotq1YLCgZwAVxQw1YF
@@ -3116,66 +2862,54 @@ eHp6KlrwA1UvK8ZeJ3xNLcYYY6yMrKysYGdnByEEDh48KN3LQAiBf//733rvCVDZ7dixA9nZ2cWe
 wFtWy5cvx+rVqwH8fa8HInqpG/IxxsqOp/cwxhhjTDJo0CDs2rULN27cgK2traGHwxhTCBf9jDHG
 GGOMVXGv798fGWOMMcYYY6XCRT9jjDHGGGNVHBf9jDHGGGOMVXFc9DPGGGOMMVbFcdHPGGOMMcZY
 FcdFP2OMMcYYY1Xc/wNo+IBo/jHPzgAAAABJRU5ErkJggg==
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Which looks <em>almost</em> perfect, except there's a drop in the 1st bin for muon. This is a binning effect. Remember the momentum range of muon is set to 90 to 800 MeV/c. If we are to add this condition in our analysis so that we remove the binning effect, we can see a uniform momentum distribution.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In [11]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 
 <span class="n">pdg_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span><span class="mi">22</span><span class="p">]</span>
-<span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pdg in {} and momentum &gt; 90&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_list</span><span class="p">))</span>
+<span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'pdg in {} and momentum > 90'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_list</span><span class="p">))</span>
 <span class="n">min_value</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 <span class="n">max_value</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">pdg</span> <span class="ow">in</span> <span class="n">pdg_list</span><span class="p">:</span>
-    <span class="n">pdg_df</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pdg == {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">))</span>
+    <span class="n">pdg_df</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'pdg == {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">))</span>
     <span class="n">values</span> <span class="o">=</span> <span class="n">pdg_df</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">values</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="n">min_value</span><span class="p">,</span><span class="n">max_value</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;PDG {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="n">min_value</span><span class="p">,</span><span class="n">max_value</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">'PDG {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Initial Momentum [MeV/c]&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of entries&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Initial Momentum [MeV/c]'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Number of entries'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
 <span class="n">leg</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">leg_frame</span><span class="o">=</span><span class="n">leg</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span>
-<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">'white'</span><span class="p">)</span>
     
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAv0AAAIFCAYAAABBB0JgAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3XtYlGX+P/D3MCkEIuhqsCqCiqdvioh9zRMGkuVx1UXT
@@ -3792,68 +3526,56 @@ uHbtml5f3rKTyHQUISz02edEREQvyJQpU9QnAYeEhGDZsmUmHpFcoaGh+Oqrr3Du3Dl4eXlJ2+/5
 OxRFwYEDB9RnGSiKgh9//LHAZwK87LZt24Z79+7l+wXe4lq8eDGWL18O4K9nPQghnuuBfERUfJze
 Q0RERKqePXtix44duHz5MsqXL2/q4RCRJCz6iYiIiIgsnPn++yMRERERERUJi34iIiIiIgvHop+I
 iIiIyMKx6CciIiIisnAs+omIiIiILByLfiIiIiIiC/f/qQWvCKoKDu4AAAAASUVORK5CYII=
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a name="filter_effect"></a></p>
-<h2 id="Closer-look:-image-filtering-effect">Closer look: image filtering effect<a class="anchor-link" href="#Closer-look:-image-filtering-effect">&#182;</a></h2><p>Recall one of the sample preparation procedures: "<em>filtering of events for which any 2D image contains less than 10 non-zero pixels</em>". This was intended to remove (almost) empty images. But it's important to note this condition <strong>filters out a short particle trajectory</strong> which typically means a low energy particle. So this filter biases a particle's energy!</p>
+<h2 id="Closer-look:-image-filtering-effect">Closer look: image filtering effect<a class="anchor-link" href="#Closer-look:-image-filtering-effect">¶</a></h2><p>Recall one of the sample preparation procedures: "<em>filtering of events for which any 2D image contains less than 10 non-zero pixels</em>". This was intended to remove (almost) empty images. But it's important to note this condition <strong>filters out a short particle trajectory</strong> which typically means a low energy particle. So this filter biases a particle's energy!</p>
 <p>How significant is this effect? How far a particle travels depends on its type because of <a href="http://pdg.lbl.gov/2014/reviews/rpp2014-rev-passage-particles-matter.pdf">different stopping power</a>. In our energy range, the most severly (and actually only) affected is proton. Let's compare proton and gamma ray momentum distribution.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In [12]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 
 <span class="n">pdg_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2212</span><span class="p">,</span><span class="mi">22</span><span class="p">]</span>
-<span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pdg in {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_list</span><span class="p">))</span>
+<span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'pdg in {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg_list</span><span class="p">))</span>
 <span class="n">min_value</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 <span class="n">max_value</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">pdg</span> <span class="ow">in</span> <span class="n">pdg_list</span><span class="p">:</span>
-    <span class="n">pdg_df</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pdg == {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">))</span>
+    <span class="n">pdg_df</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'pdg == {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">))</span>
     <span class="n">values</span> <span class="o">=</span> <span class="n">pdg_df</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">values</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="n">min_value</span><span class="p">,</span><span class="n">max_value</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;PDG {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="n">min_value</span><span class="p">,</span><span class="n">max_value</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">'PDG {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pdg</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Initial Momentum [MeV/c]&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Number of entries&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">&#39;Georgia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span><span class="n">which</span><span class="o">=</span><span class="s1">'both'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Initial Momentum [MeV/c]'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Number of entries'</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">fontweight</span><span class="o">=</span><span class="s1">'bold'</span><span class="p">,</span><span class="n">fontname</span><span class="o">=</span><span class="s1">'Georgia'</span><span class="p">)</span>
 <span class="n">leg</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">leg_frame</span><span class="o">=</span><span class="n">leg</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span>
-<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+<span class="n">leg_frame</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">'white'</span><span class="p">)</span>
     
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAv0AAAIFCAYAAABBB0JgAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzs3Xt4jGf+P/D35NBEJM2h1FmGhrJVIZQV24igJM7iEHXI
@@ -4488,114 +4210,95 @@ RVHK5OnHRGQc23uIiIhKwdbOnWVnZ2Pz5s1o166d1IIfsL2siKwJ76lFRERkIg8PD/j4+EBRFBw4
 cEB9loGiKNi7d2+hzwQo77788kvcvXu3wAt4TbV8+XKsWLECwD/PehBClOqBfERkOrb3EBERkapv
 37746quvcOXKFVStWtXSwyEiSVj0ExERERHZOOv9+yMRERERERULi34iIiIiIhvHop+IiIiIyMax
 6CciIiIisnEs+omIiIiIbByLfiIiIiIiG/f/AQ5dFsY01whDAAAAAElFTkSuQmCC
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>From earlier analysis in this notebook, we already know that the momentum range of protons in this sample is 276 to 800 MeV/c. In this plot, we can clearly see that proton events are not uniformly distributed over its momentum range.</p>
 <p>So how much protons are affected by "10 pixels filter"? To figure this out, we have to know what 10 pixels correspond to the real world's distance scale. This information is stored in 2D image <em>meta</em> data.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In [13]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">image2d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">image2d_array</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="n">image2d</span><span class="o">.</span><span class="n">meta</span><span class="p">()</span><span class="o">.</span><span class="n">dump</span><span class="p">())</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>ProjectionID 0 (rows,cols) = (256,256) ... Distance Unit: 1 ... Left Bottom =&gt; Right Top     (0,0) =&gt; (128,128)
+<pre>ProjectionID 0 (rows,cols) = (256,256) ... Distance Unit: 1 ... Left Bottom => Right Top     (0,0) => (128,128)
 
-ProjectionID 1 (rows,cols) = (256,256) ... Distance Unit: 1 ... Left Bottom =&gt; Right Top     (0,0) =&gt; (128,128)
+ProjectionID 1 (rows,cols) = (256,256) ... Distance Unit: 1 ... Left Bottom => Right Top     (0,0) => (128,128)
 
-ProjectionID 2 (rows,cols) = (256,256) ... Distance Unit: 1 ... Left Bottom =&gt; Right Top     (0,0) =&gt; (128,128)
+ProjectionID 2 (rows,cols) = (256,256) ... Distance Unit: 1 ... Left Bottom => Right Top     (0,0) => (128,128)
 
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>"Distance Unit: 1" means it is in cm scale (<code>larcv::DistanceUnit_t::kUnitCM</code>). So each 2D image spans 128cm x 128cm space with 256 x 256 pixels, meaning each pixel corresponds to 0.5 cm in vertical and horizontal size. This means a proton must travel at least 5 cm in all 2D projections, or
 $$ x^2+y^2 \geq 25 \text{cm,}$$
 $$ y^2+z^2 \geq 25 \text{cm,}$$
 $$ z^2+x^2 \geq 25 \text{cm.}$$</p>
-<p>Summing them over we find $\sqrt{x^2+y^2+z^2}\geq\sqrt{75/2}\approx6.12$ cm as the minimum distance required for a proton to travel. So what proton energy does this trajectory size corresponds to? Here's a plot I made from <a href="https://www.nist.gov/pml/stopping-power-range-tables-electrons-protons-and-helium-ions">NIST</a> that shows the proton trajectory size in liquid Argon medium versus its kinetic energy. <img src="imgs/proton_dist.png"> ... from which we can tell $\approx6$ cm corresponds to $\approx80$ MeV. Given the proton mass (938.28 MeV), this corresponds to $\approx419$ MeV/c momentum. <strong>Indeed we see a sharp drop</strong> around that momentum value in the plot above.</p>
-
+<p>Summing them over we find $\sqrt{x^2+y^2+z^2}\geq\sqrt{75/2}\approx6.12$ cm as the minimum distance required for a proton to travel. So what proton energy does this trajectory size corresponds to? Here's a plot I made from <a href="https://www.nist.gov/pml/stopping-power-range-tables-electrons-protons-and-helium-ions">NIST</a> that shows the proton trajectory size in liquid Argon medium versus its kinetic energy. <img src="imgs/proton_dist.png" /> ... from which we can tell $\approx6$ cm corresponds to $\approx80$ MeV. Given the proton mass (938.28 MeV), this corresponds to $\approx419$ MeV/c momentum. <strong>Indeed we see a sharp drop</strong> around that momentum value in the plot above.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="What-is-affecting-the-higher-momentum-range?">What is affecting the higher momentum range?<a class="anchor-link" href="#What-is-affecting-the-higher-momentum-range?">&#182;</a></h3><p>Note "$\geq$" sign in the equation we derived above: 6.12 cm is the bare minimum requirement. The actual requirement depends on the initial momentum direction because the projected 2D distances depends on that angle and the projection angles. For instance, a proton with momentum higher than $\approx419$ MeV/c may travel $\approx7.1$ cm from point A $(x,y,z) = (0,0,0)$ [cm] to point B $(4.5,4.5,0)$ [cm]. This satisfies the minimum trajectory length requirement. But it fails to satisfy both $y^2+z^2\geq25$ cm and $z^2+x^2\geq25$, so it won't pass the filter.</p>
+<h3 id="What-is-affecting-the-higher-momentum-range?">What is affecting the higher momentum range?<a class="anchor-link" href="#What-is-affecting-the-higher-momentum-range?">¶</a></h3><p>Note "$\geq$" sign in the equation we derived above: 6.12 cm is the bare minimum requirement. The actual requirement depends on the initial momentum direction because the projected 2D distances depends on that angle and the projection angles. For instance, a proton with momentum higher than $\approx419$ MeV/c may travel $\approx7.1$ cm from point A $(x,y,z) = (0,0,0)$ [cm] to point B $(4.5,4.5,0)$ [cm]. This satisfies the minimum trajectory length requirement. But it fails to satisfy both $y^2+z^2\geq25$ cm and $z^2+x^2\geq25$, so it won't pass the filter.</p>
 <p>In addition, the projection angle also affects projected trajectory size per pixel. 0.5 cm/pixel is the shortest possible case. If a trajectory runs along a diagonal direction of a projected 2D pixel, a requirement of 10 pixels mean 7.1 cm instead of 5 cm, increase of 20% in the required trajectory size.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Why-are-there-entries-in-the-lower-momentum-range?">Why are there entries in the lower momentum range?<a class="anchor-link" href="#Why-are-there-entries-in-the-lower-momentum-range?">&#182;</a></h3><p>There could be more than one reason. But one thing we definitely expect is a production of other particle types through a proton-nucleus interaction. Recall the filter requires "10 non-zero pixels on each 2D projection planes" but does not specify the particle type. A proton with 70 MeV kinetic energy may be below the threshold to travel long enough, but may produce gamma rays or other particles that can travel longer with lower energy.</p>
+<h3 id="Why-are-there-entries-in-the-lower-momentum-range?">Why are there entries in the lower momentum range?<a class="anchor-link" href="#Why-are-there-entries-in-the-lower-momentum-range?">¶</a></h3><p>There could be more than one reason. But one thing we definitely expect is a production of other particle types through a proton-nucleus interaction. Recall the filter requires "10 non-zero pixels on each 2D projection planes" but does not specify the particle type. A proton with 70 MeV kinetic energy may be below the threshold to travel long enough, but may produce gamma rays or other particles that can travel longer with lower energy.</p>
 <p>So why don't we take a look at them? Let's pick an event with a proton energy below 50 MeV and list them.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In [14]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pdg==2212 and energy &lt; 50&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Found {} entries&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sub_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">sub_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">'pdg==2212 and energy < 50'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Found {} entries'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sub_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="n">sub_df</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Found 31 entries
           energy    momentum   pdg
@@ -4633,41 +4336,39 @@ $$ z^2+x^2 \geq 25 \text{cm.}$$</p>
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's take a look at just 1st projection of the first entry (32020)</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In [15]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Create TChain, count # of entries</span>
-<span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">&#39;image2d_data_tree&#39;</span><span class="p">)</span>
-<span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">&#39;test_40k.root&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">(),</span><span class="s1">&#39;entries found!&#39;</span><span class="p">)</span>
+<span class="n">chain_image2d</span> <span class="o">=</span> <span class="n">ROOT</span><span class="o">.</span><span class="n">TChain</span><span class="p">(</span><span class="s1">'image2d_data_tree'</span><span class="p">)</span>
+<span class="n">chain_image2d</span><span class="o">.</span><span class="n">AddFile</span><span class="p">(</span><span class="s1">'test_40k.root'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntries</span><span class="p">(),</span><span class="s1">'entries found!'</span><span class="p">)</span>
 
 <span class="c1"># Get a specific event (first entry)</span>
 <span class="n">chain_image2d</span><span class="o">.</span><span class="n">GetEntry</span><span class="p">(</span><span class="mi">32020</span><span class="p">)</span>
 <span class="n">cpp_object</span> <span class="o">=</span> <span class="n">chain_image2d</span><span class="o">.</span><span class="n">image2d_data_branch</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Object type:&#39;</span><span class="p">,</span><span class="n">cpp_object</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Object type:'</span><span class="p">,</span><span class="n">cpp_object</span><span class="p">)</span>
 
 <span class="n">image2d</span> <span class="o">=</span> <span class="n">cpp_object</span><span class="o">.</span><span class="n">as_vector</span><span class="p">()</span><span class="o">.</span><span class="n">front</span><span class="p">()</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">'w'</span><span class="p">)</span>
 <span class="n">image2d_numpy</span> <span class="o">=</span> <span class="n">larcv</span><span class="o">.</span><span class="n">as_ndarray</span><span class="p">(</span><span class="n">image2d</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d_numpy</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">image2d_numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image2d_numpy</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">image2d_numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">)</span>
 <span class="c1"># Find bounds for non-zero pixels + padding of 5 pixels</span>
-<span class="n">nz_pixels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">image2d_numpy</span><span class="o">&gt;</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">nz_pixels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">image2d_numpy</span><span class="o">></span><span class="mf">0.0</span><span class="p">)</span>
 <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">nz_pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
 <span class="c1"># Adjust for allowed image range</span>
@@ -4678,34 +4379,21 @@ $$ z^2+x^2 \geq 25 \text{cm.}$$</p>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>40000 entries found!
-Object type: &lt;ROOT.larcv::EventImage2D object at 0x7fbb36c3a720&gt;
+Object type: <root.larcv::eventimage2d object at 0x7fbb36c3a720>
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbsAAAK5CAYAAAAmSYCIAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAFqxJREFUeJzt3V+IXHf9//H3ZJMiCNIqzTRmWhPyt2nSNFpzIfTGuBVK
@@ -4811,33 +4499,28 @@ c/fddzd33nln88ADDzTnzp0zV2P42te+1qxYsaJZuXJl87nPfa45f/68ufqvRx55pJk3b14zZ86c
 ptPpNLt27Rp3brZv394sWrSoWbZsWTM4ODiFI++90XP1ne98p1m8eHFz2223NXfddVdz1113NY8/
 /nj3+eZqXnPDDTd0/7u62MKFC7tvUGma6TFXraZxsUoAsrmCCgDxxA6AeGIHQDyxAyCe2AEQT+wA
 iCd2AMT7f2gWWqO5uq1YAAAAAElFTkSuQmCC
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>These scattered charge depositions are likely by compton scatterings from gamma rays and definitely not from a single proton trajectory (which would have been continuous).</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Ending-remark">Ending remark<a class="anchor-link" href="#Ending-remark">&#182;</a></h2><p>I hope this notebook covered good enough to make you feel more familiar with the public data contents we provided for a single-particle image classification. You might find some of the sample generation configuration not suitable for your physics research. Feel free to <a href="contact@deeplearnphysics.org">contact us</a> if you want samples generated under a different condition. Enabling your research goal is an important goal for our group!</p>
-
+<h2 id="Ending-remark">Ending remark<a class="anchor-link" href="#Ending-remark">¶</a></h2><p>I hope this notebook covered good enough to make you feel more familiar with the public data contents we provided for a single-particle image classification. You might find some of the sample generation configuration not suitable for your physics research. Feel free to <a href="contact@deeplearnphysics.org">contact us</a> if you want samples generated under a different condition. Enabling your research goal is an important goal for our group!</p>
 </div>
 </div>
 </div>
- 
-
 
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var mathjaxscript = document.createElement('script');

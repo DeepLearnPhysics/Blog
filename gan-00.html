@@ -91,7 +91,7 @@
   <header>
     <h1 id="gan-00">Generative Adversarial Networks: The Basics</h1>
     <p>
-          Posted on Tue 19 December 2017 in <a href="http://deeplearnphysics.org/Blog/category/generative-adversarial-network.html">Generative Adversarial Network</a>
+          Posted on mar. 19 décembre 2017 in <a href="http://deeplearnphysics.org/Blog/category/generative-adversarial-network.html">Generative Adversarial Network</a>
 
             by
 
@@ -107,124 +107,9 @@
 * IPython notebook
 *
 */
-/* CSS font colors for translated ANSI escape sequences */
-/* The color values are a mix of
-   http://www.xcolors.net/dl/baskerville-ivorylight and
-   http://www.xcolors.net/dl/euphrasia */
-.ansi-black-fg {
-  color: #3E424D;
-}
-.ansi-black-bg {
-  background-color: #3E424D;
-}
-.ansi-black-intense-fg {
-  color: #282C36;
-}
-.ansi-black-intense-bg {
-  background-color: #282C36;
-}
-.ansi-red-fg {
-  color: #E75C58;
-}
-.ansi-red-bg {
-  background-color: #E75C58;
-}
-.ansi-red-intense-fg {
-  color: #B22B31;
-}
-.ansi-red-intense-bg {
-  background-color: #B22B31;
-}
-.ansi-green-fg {
-  color: #00A250;
-}
-.ansi-green-bg {
-  background-color: #00A250;
-}
-.ansi-green-intense-fg {
-  color: #007427;
-}
-.ansi-green-intense-bg {
-  background-color: #007427;
-}
-.ansi-yellow-fg {
-  color: #DDB62B;
-}
-.ansi-yellow-bg {
-  background-color: #DDB62B;
-}
-.ansi-yellow-intense-fg {
-  color: #B27D12;
-}
-.ansi-yellow-intense-bg {
-  background-color: #B27D12;
-}
-.ansi-blue-fg {
-  color: #208FFB;
-}
-.ansi-blue-bg {
-  background-color: #208FFB;
-}
-.ansi-blue-intense-fg {
-  color: #0065CA;
-}
-.ansi-blue-intense-bg {
-  background-color: #0065CA;
-}
-.ansi-magenta-fg {
-  color: #D160C4;
-}
-.ansi-magenta-bg {
-  background-color: #D160C4;
-}
-.ansi-magenta-intense-fg {
-  color: #A03196;
-}
-.ansi-magenta-intense-bg {
-  background-color: #A03196;
-}
-.ansi-cyan-fg {
-  color: #60C6C8;
-}
-.ansi-cyan-bg {
-  background-color: #60C6C8;
-}
-.ansi-cyan-intense-fg {
-  color: #258F8F;
-}
-.ansi-cyan-intense-bg {
-  background-color: #258F8F;
-}
-.ansi-white-fg {
-  color: #C5C1B4;
-}
-.ansi-white-bg {
-  background-color: #C5C1B4;
-}
-.ansi-white-intense-fg {
-  color: #A1A6B2;
-}
-.ansi-white-intense-bg {
-  background-color: #A1A6B2;
-}
-.ansi-default-inverse-fg {
-  color: #FFFFFF;
-}
-.ansi-default-inverse-bg {
-  background-color: #000000;
-}
-.ansi-bold {
-  font-weight: bold;
-}
-.ansi-underline {
-  text-decoration: underline;
-}
-/* The following styles are deprecated an will be removed in a future version */
+/* CSS font colors for translated ANSI colors. */
 .ansibold {
   font-weight: bold;
-}
-.ansi-inverse {
-  outline: 0.5px dotted;
 }
 /* use dark versions for foreground, to improve visibility */
 .ansiblack {
@@ -303,20 +188,12 @@ div.cell {
   /* This acts as a spacer between cells, that is outside the border */
   margin: 0px;
   outline: none;
-  position: relative;
-  overflow: visible;
-}
-div.cell:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: transparent;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
 }
 div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
   border-left-color: #E3F2FD;
   border-left-width: 1px;
   padding-left: 5px;
@@ -329,39 +206,27 @@ div.cell.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected,
-div.cell.selected.jupyter-soft-selected {
+div.cell.selected {
   border-color: #ababab;
-}
-div.cell.selected:before,
-div.cell.selected.jupyter-soft-selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #42A5F5;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
 }
 @media print {
-  div.cell.selected,
-  div.cell.selected.jupyter-soft-selected {
+  div.cell.selected {
     border-color: transparent;
   }
 }
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
 .edit_mode div.cell.selected {
   border-color: #66BB6A;
-}
-.edit_mode div.cell.selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
 }
 @media print {
   .edit_mode div.cell.selected {
@@ -557,9 +422,7 @@ div.input_area > div.highlight > pre {
 .CodeMirror-lines {
   /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
   /* we have set a different line-height and want this to scale with that. */
-  /* Note that this should set vertical padding only, since CodeMirror assumes
-       that horizontal padding will be set on CodeMirror pre */
-  padding: 0.4em 0;
+  padding: 0.4em;
 }
 .CodeMirror-linenumber {
   padding: 0 8px 0 4px;
@@ -569,24 +432,11 @@ div.input_area > div.highlight > pre {
   border-top-left-radius: 2px;
 }
 .CodeMirror pre {
-  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
-    use .CodeMirror-lines for vertical */
-  padding: 0 0.4em;
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
   border: 0;
   border-radius: 0;
-}
-.CodeMirror-cursor {
-  border-left: 1.4px solid black;
-}
-@media screen and (min-width: 2138px) and (max-width: 4319px) {
-  .CodeMirror-cursor {
-    border-left: 2px solid black;
-  }
-}
-@media screen and (min-width: 4320px) {
-  .CodeMirror-cursor {
-    border-left: 4px solid black;
-  }
 }
 /*
 
@@ -834,9 +684,6 @@ div.output_area img.unconfined,
 div.output_area svg.unconfined {
   max-width: none;
 }
-div.output_area .mglyph > img {
-  max-width: none;
-}
 /* This is needed to protect the pre formating from global settings such
    as that of bootstrap */
 .output {
@@ -875,7 +722,7 @@ div.output_area .mglyph > img {
 }
 div.output_area pre {
   margin: 0;
-  padding: 1px 0 1px 0;
+  padding: 0;
   border: 0;
   vertical-align: baseline;
   color: black;
@@ -997,10 +844,6 @@ div.output_unrecognized a:hover {
 .rendered_html h6:first-child {
   margin-top: 1em;
 }
-.rendered_html ul:not(.list-inline),
-.rendered_html ol:not(.list-inline) {
-  padding-left: 2em;
-}
 
 
 
@@ -1017,24 +860,16 @@ div.output_unrecognized a:hover {
 }
 
 
-
-
-
 .rendered_html pre,
-
 
 
 
 .rendered_html tr,
 .rendered_html th,
 
+.rendered_html td,
 
-.rendered_html tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-.rendered_html tbody tr:hover {
-  background: rgba(66, 165, 245, 0.2);
-}
+
 .rendered_html * + table {
   margin-top: 1em;
 }
@@ -1050,11 +885,6 @@ div.output_unrecognized a:hover {
 
 .rendered_html img.unconfined,
 
-
-.rendered_html * + .alert {
-  margin-top: 1em;
-}
-[dir="rtl"] 
 div.text_cell {
   /* Old browsers */
   display: -webkit-box;
@@ -1105,15 +935,8 @@ h6:hover .anchor-link {
   display: none;
 }
 .text_cell.rendered 
-.text_cell.rendered .rendered_html tr,
-.text_cell.rendered .rendered_html th,
-.text_cell.rendered 
 .text_cell.unrendered .text_cell_render {
   display: none;
-}
-.text_cell .dropzone .input_area {
-  border: 2px dashed #bababa;
-  margin: -1px;
 }
 .cm-header-1,
 .cm-header-2,
@@ -1252,38 +1075,40 @@ h6:hover .anchor-link {
 .ansi-bold { font-weight: bold; }
 </style>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In particle physics, we think adversarial networks are particularly interesting tools to explore discrepancies between our simulation and real detector data.  In principle, the physics tools used for simulation of particle interaction data are quite good, but they are never perfect.  Additionally, they are always imperfect in difficult to model ways.  Many experiments spend a lot of time studying the differences between the output of their simulation and their real detector data, and a deep network that can learn these differences is really useful for making progress.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In this tutorial, I'll cover some basics of generative adversarial networks with very simple feed-forward neural networks (not even convolutional) as a demonstration of the basic techniques of GANs.  You can read the original paper on GANs here: <a href="https://arxiv.org/abs/1406.2661">https://arxiv.org/abs/1406.2661</a>.  The basic idea is you train two networks to compete with each other.  The first (called the discriminator) makes a decision on whether or not the images it's looking at are real or fake.  The second (called the generator) tries to generate fake images from random noise to fool the discriminator.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In the years since the original paper came out, GANs have grown increasinly more sophisticated and impressive, especially with the advent of the Deep Convolutional Generative Adversarial Network (DCGAN, original paper: <a href="https://arxiv.org/abs/1511.06434">https://arxiv.org/abs/1511.06434</a>).  For this tutorial, we're going to eschew all of the recent advances to make a GAN that can generate artificial digits based on the mnist data set.  By stripping the networks down to their basics, it's easier to focus on the core aspects of the loss function and outputs, and to avoid the complications of training on GPUs, etc.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="MNIST-data-set">MNIST data set<a class="anchor-link" href="#MNIST-data-set">&#182;</a></h2>
+<h2 id="MNIST-data-set">MNIST data set<a class="anchor-link" href="#MNIST-data-set">¶</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The mnist data set is one of the most famous collections of labeled images that exists.  You can read all about it at the original website (<a href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a>), but it has a few nice advantages that make it ideal for learning:</p>
 <ul>
@@ -1292,122 +1117,96 @@ h6:hover .anchor-link {
 <li>The data has been preprocessed to center images of digits and make them easier to use</li>
 </ul>
 <p>Basically, you can focus on the fundamentals with this data set, which is why we'll use it here.  Some examples of loading it with tensorflow (more here: <a href="https://www.tensorflow.org/get_started/mnist/beginners">https://www.tensorflow.org/get_started/mnist/beginners</a>)</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In [1]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">env</span> CUDA_DEVICE_ORDER=PCI_BUS_ID
 <span class="o">%</span><span class="k">env</span> CUDA_VISIBLE_DEVICES=0
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">tensorflow.examples.tutorials.mnist</span> <span class="kn">import</span> <span class="n">input_data</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>env: CUDA_DEVICE_ORDER=PCI_BUS_ID
 env: CUDA_VISIBLE_DEVICES=0
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>With tensorflow, you can specify which device to use.  The next cell will tell you what's available, and you can select from there.  By default, I select "/gpu:0" but you can change this below</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In [2]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.python.client</span> <span class="kn">import</span> <span class="n">device_lib</span>
 <span class="k">print</span> <span class="n">device_lib</span><span class="o">.</span><span class="n">list_local_devices</span><span class="p">()</span>
-<span class="n">default_device</span> <span class="o">=</span> <span class="s2">&quot;/gpu:0&quot;</span>
+<span class="n">default_device</span> <span class="o">=</span> <span class="s2">"/gpu:0"</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[name: &#34;/cpu:0&#34;
-device_type: &#34;CPU&#34;
+<pre>[name: "/cpu:0"
+device_type: "CPU"
 memory_limit: 268435456
 locality {
 }
 incarnation: 12913643054506099390
-, name: &#34;/gpu:0&#34;
-device_type: &#34;GPU&#34;
+, name: "/gpu:0"
+device_type: "GPU"
 memory_limit: 11946606592
 locality {
   bus_id: 1
 }
 incarnation: 3262391229968045033
-physical_device_desc: &#34;device: 0, name: TITAN X (Pascal), pci bus id: 0000:01:00.0&#34;
+physical_device_desc: "device: 0, name: TITAN X (Pascal), pci bus id: 0000:01:00.0"
 ]
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In [3]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">mnist</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s2">&quot;MNIST_data&quot;</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">mnist</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s2">"MNIST_data"</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Extracting MNIST_data/train-images-idx3-ubyte.gz
 Extracting MNIST_data/train-labels-idx1-ubyte.gz
@@ -1416,177 +1215,138 @@ Extracting MNIST_data/t10k-labels-idx1-ubyte.gz
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In [4]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">mnist_images</span><span class="p">,</span> <span class="n">mnist_labels</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Here, we've loaded the mnist data from the tensorflow helper class, and asked for the next batch of images and labels.  Let's view those to see what the data looks like before delving into the network:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In [5]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span> <span class="s2">&quot;mnist_images.shape: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mnist_images</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="k">print</span> <span class="s2">&quot;mnist_labels.shape: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mnist_labels</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span> <span class="s2">"mnist_images.shape: {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mnist_images</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">"mnist_labels.shape: {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mnist_labels</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>mnist_images.shape: (5, 784)
 mnist_labels.shape: (5,)
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As expected, variables are arrays with the outermost dimension equal to 5.  The images, though, comes unpacked as a 1D array per image instead of a 2D array.  We can reshape this to what we're more familar with, since we know mnist images are 28x28:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">mnist_images</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mnist_images</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">))</span> <span class="c1"># -1 can be used as a placeholder for batch size here</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In [7]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span> <span class="s2">&quot;mnist_images.shape: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mnist_images</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span> <span class="s2">"mnist_images.shape: {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mnist_images</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>mnist_images.shape: (5, 28, 28)
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Matplotlib gives a good interface for viewing these images in a notebook (or even in general, in python):</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In [8]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In [9]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mnist_images</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Greys&quot;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
-<span class="k">print</span> <span class="s2">&quot;This image is labeled as {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mnist_labels</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mnist_images</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"Greys"</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">"none"</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">"This image is labeled as {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mnist_labels</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>This image is labeled as 8
 </pre>
 </div>
 </div>
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAksAAAJKCAYAAAA84QGnAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAFrtJREFUeJzt3X+M5HV9x/HXnAuiHEoQchCCLCYFoSFCUCmBhrGlBv85
@@ -1692,303 +1452,287 @@ vLg9VvT+Mc5YuivJn2RwGO/QJH+TZNsY17PavTrJEcPrhyd5e156civLb1uSS4fXL82LD0qMx3Gz
 rv917B/LpZPB0zr3Jvn0rNvtH+Mx3/awf4zQOzI4k/7+JB8b81pWu5MyOGlvRwYvB7U9lteNSR5J
 8nQG5/K9J4NXJn4nXho9Dvtvj8uS/EsGb62xM4N/mJ0jszzOS/J8Bo9Ns1+Wbv8Yj7m2xzti/wAA
 AAAAAAAAAAAAAAAAAAAAAAAAYKX5fwR6c8uum06uAAAAAElFTkSuQmCC
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Drawn like this, you can see each individual pixel clearly.  It's not a high resolution image, but you can clearly tell what the digit is!</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Building-a-model-for-a-GAN">Building a model for a GAN<a class="anchor-link" href="#Building-a-model-for-a-GAN">&#182;</a></h2>
+<h2 id="Building-a-model-for-a-GAN">Building a model for a GAN<a class="anchor-link" href="#Building-a-model-for-a-GAN">¶</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We'll start to put together a network for the GAN, first by defining some useful constants that we'll need to call on multiple times:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In [10]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">BASE_LEARNING_RATE</span> <span class="o">=</span> <span class="mf">0.0002</span>
 <span class="n">BATCH_SIZE</span><span class="o">=</span><span class="mi">50</span>
 <span class="n">RANDOM_INPUT_DIMENSIONALITY</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">MAX_EPOCH</span><span class="o">=</span><span class="mi">100</span>
 <span class="n">INCLUDE_NOISE</span><span class="o">=</span><span class="bp">True</span>
-<span class="n">LOGDIR</span><span class="o">=</span><span class="s2">&quot;./mnist_gan_logs/lr_{}_include_noise_{}_batchsize_{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">BASE_LEARNING_RATE</span><span class="p">,</span> <span class="n">INCLUDE_NOISE</span><span class="p">,</span> <span class="n">BATCH_SIZE</span><span class="p">)</span>
+<span class="n">LOGDIR</span><span class="o">=</span><span class="s2">"./mnist_gan_logs/lr_{}_include_noise_{}_batchsize_{}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">BASE_LEARNING_RATE</span><span class="p">,</span> <span class="n">INCLUDE_NOISE</span><span class="p">,</span> <span class="n">BATCH_SIZE</span><span class="p">)</span>
 <span class="n">RESTORE</span><span class="o">=</span><span class="bp">False</span>
 <span class="n">TRAINING</span><span class="o">=</span><span class="bp">True</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Additionally, let's make sure we have the same graph by defining it:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In [11]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">reset_default_graph</span><span class="p">()</span>
 
 <span class="n">g</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Set up the placeholders for the input variables.  We'll need to input both real images and random noise, so make a placeholder for both.  Additionally, based on this blog post (<a href="http://www.inference.vc/instance-noise-a-trick-for-stabilising-gan-training/">http://www.inference.vc/instance-noise-a-trick-for-stabilising-gan-training/</a>) I add random gaussian noise to the real and fake images as they are fed to the discriminator to help stabalize training.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In [12]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">default_device</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">g</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
         <span class="c1"># Input noise to the generator:</span>
-        <span class="n">noise_tensor</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">RANDOM_INPUT_DIMENSIONALITY</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;noise&quot;</span><span class="p">)</span>
+        <span class="n">noise_tensor</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">RANDOM_INPUT_DIMENSIONALITY</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">"noise"</span><span class="p">)</span>
 <span class="c1">#         fake_input   = tf.reshape(noise_tensor, (tf.shape(noise_tensor)[0], 10,10, 1))</span>
 
         <span class="c1"># Placeholder for the discriminator input:</span>
-        <span class="n">real_flat</span>  <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">784</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+        <span class="n">real_flat</span>  <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">784</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">'x'</span><span class="p">)</span>
 
         <span class="c1"># We augment the input to the discriminator with gaussian noise</span>
-        <span class="c1"># This makes it harder for the discriminator to do it&#39;s job, preventing</span>
-        <span class="c1"># it from always &quot;winning&quot; the GAN min/max contest</span>
-        <span class="n">real_noise</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;real_noise&quot;</span><span class="p">)</span>
-        <span class="n">fake_noise</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fake_noise&quot;</span><span class="p">)</span>
+        <span class="c1"># This makes it harder for the discriminator to do it's job, preventing</span>
+        <span class="c1"># it from always "winning" the GAN min/max contest</span>
+        <span class="n">real_noise</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">"real_noise"</span><span class="p">)</span>
+        <span class="n">fake_noise</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">"fake_noise"</span><span class="p">)</span>
 
         <span class="n">real_images</span> <span class="o">=</span> <span class="n">real_flat</span> <span class="o">+</span> <span class="n">real_noise</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Notice how the input tensors (noise_tensor, real_images) are shaped in the 'flattened' way: (N/2, 100) for noise, (N/2, 784) for real images.  This lets me input the mnist images directly to tensorflow, as well as the noise.  They are then reshaped to be like tensorflow images (Batch, H, W, Filters).</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Image-Discriminator:">Image Discriminator:<a class="anchor-link" href="#Image-Discriminator:">&#182;</a></h3>
+<h3 id="Image-Discriminator:">Image Discriminator:<a class="anchor-link" href="#Image-Discriminator:">¶</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Make a function to build the discriminator, using fully connected networks.  Note that a convolutional layer with the stride equal to the image size <em>is</em> a fully connected layer.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In [13]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">build_discriminator</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">reuse</span><span class="p">,</span> <span class="n">is_training</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
     <span class="c1"># Use scoping to keep the variables nicely organized in the graph.</span>
-    <span class="c1"># Scoping is good practice always, but it&#39;s *essential* here as we&#39;ll see later on</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;mnist_discriminator&quot;</span><span class="p">,</span> <span class="n">reuse</span><span class="o">=</span><span class="n">reuse</span><span class="p">):</span>
+    <span class="c1"># Scoping is good practice always, but it's *essential* here as we'll see later on</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">"mnist_discriminator"</span><span class="p">,</span> <span class="n">reuse</span><span class="o">=</span><span class="n">reuse</span><span class="p">):</span>
 
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fc1&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"fc1"</span><span class="p">)</span>
         
         <span class="c1"># Apply a non linearity:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">reg</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;leaky_relu_1&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">reg</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"leaky_relu_1"</span><span class="p">)</span>
         
         <span class="c1"># Apply a dropout layer:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">rate</span><span class="o">=</span><span class="n">dropout_rate</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="n">is_training</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;dropout1&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">rate</span><span class="o">=</span><span class="n">dropout_rate</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="n">is_training</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"dropout1"</span><span class="p">)</span>
 
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fc2&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"fc2"</span><span class="p">)</span>
         
         <span class="c1"># Apply a non linearity:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">reg</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;leaky_relu_2&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">reg</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"leaky_relu_2"</span><span class="p">)</span>
         
         <span class="c1"># Apply a dropout layer:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">rate</span><span class="o">=</span><span class="n">dropout_rate</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="n">is_training</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;dropout2&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">rate</span><span class="o">=</span><span class="n">dropout_rate</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="n">is_training</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"dropout2"</span><span class="p">)</span>
         
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fc4&quot;</span><span class="p">)</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"fc4"</span><span class="p">)</span> 
     
-        <span class="c1"># Since we want to predict &quot;real&quot; or &quot;fake&quot;, an output of 0 or 1 is desired.  sigmoid is perfect for this:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;discriminator_sigmoid&quot;</span><span class="p">)</span>
+        <span class="c1"># Since we want to predict "real" or "fake", an output of 0 or 1 is desired.  sigmoid is perfect for this:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"discriminator_sigmoid"</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">x</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In [14]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">default_device</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">g</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
         <span class="n">real_image_logits</span> <span class="o">=</span> <span class="n">build_discriminator</span><span class="p">(</span><span class="n">real_images</span><span class="p">,</span> <span class="n">reuse</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">is_training</span><span class="o">=</span><span class="n">TRAINING</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we can define a function to generate random images from noise:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In [15]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">build_generator</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
     <span class="c1"># Again, scoping is essential here:</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;mnist_generator&quot;</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fc1&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">"mnist_generator"</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"fc1"</span><span class="p">)</span>
         
         <span class="c1"># Apply a non linearity:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">reg</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;leaky_relu_1&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">reg</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"leaky_relu_1"</span><span class="p">)</span>
         
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fc2&quot;</span><span class="p">)</span>
-        
-        <span class="c1"># Apply a non linearity:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">reg</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;leaky_relu_2&quot;</span><span class="p">)</span>
-        
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fc3&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"fc2"</span><span class="p">)</span>
         
         <span class="c1"># Apply a non linearity:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">reg</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;leaky_relu_3&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">reg</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"leaky_relu_2"</span><span class="p">)</span>
         
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fc4&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"fc3"</span><span class="p">)</span>
+        
+        <span class="c1"># Apply a non linearity:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">reg</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"leaky_relu_3"</span><span class="p">)</span>
+        
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"fc4"</span><span class="p">)</span>
         
 
         <span class="c1"># Reshape to match mnist images:</span>
 <span class="c1">#         x = tf.reshape(x, (-1, 28, 28, 1))</span>
         
         <span class="c1"># The final non linearity applied here is to map the images onto the [-1,1] range.</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;generator_tanh&quot;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"generator_tanh"</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">x</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In [16]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">default_device</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">g</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
         <span class="n">fake_images</span> <span class="o">=</span> <span class="n">build_generator</span><span class="p">(</span><span class="n">noise_tensor</span><span class="p">)</span> <span class="o">+</span> <span class="n">fake_noise</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We also need to be able to run the discriminator on the fake images, so set that up too.  Since it trains on both real and fake images, set reuse=True here:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In [17]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">default_device</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">g</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
         <span class="n">fake_image_logits</span> <span class="o">=</span> <span class="n">build_discriminator</span><span class="p">(</span><span class="n">fake_images</span><span class="p">,</span> <span class="n">reuse</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">is_training</span><span class="o">=</span><span class="n">TRAINING</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Loss-functions">Loss functions<a class="anchor-link" href="#Loss-functions">&#182;</a></h3>
+<h3 id="Loss-functions">Loss functions<a class="anchor-link" href="#Loss-functions">¶</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can now define our loss functions.  Note that we have to define the loss function for the generator and discriminator seperately:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In [18]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">default_device</span><span class="p">):</span>
     <span class="c1"># Build the loss functions:</span>
     <span class="k">with</span> <span class="n">g</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
-        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;cross_entropy&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">"cross_entropy"</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
 
             <span class="c1"># Be careful with the loss functions.  The sigmoid activation is already applied as the</span>
             <span class="c1"># last step of the discriminator network above.  If you want to use something like </span>
@@ -2001,34 +1745,32 @@ AAAAAAAAAAAAAAAAAAAAAAAAYKX5fwR6c8uum06uAAAAAElFTkSuQmCC
             <span class="c1"># While d_loss_fake tries to optimize fake_logits to zero.</span>
             <span class="n">g_loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">fake_image_logits</span><span class="p">))</span>
 
-            <span class="c1"># This code is useful if you&#39;ll use tensorboard to monitor training:</span>
-<span class="c1">#             d_loss_summary = tf.summary.scalar(&quot;Discriminator_Real_Loss&quot;, d_loss_real)</span>
-<span class="c1">#             d_loss_summary = tf.summary.scalar(&quot;Discriminator_Fake_Loss&quot;, d_loss_fake)</span>
-            <span class="n">d_loss_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;Discriminator_Total_Loss&quot;</span><span class="p">,</span> <span class="n">d_loss_total</span><span class="p">)</span>
-            <span class="n">d_loss_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;Generator_Loss&quot;</span><span class="p">,</span> <span class="n">g_loss</span><span class="p">)</span>
+            <span class="c1"># This code is useful if you'll use tensorboard to monitor training:</span>
+<span class="c1">#             d_loss_summary = tf.summary.scalar("Discriminator_Real_Loss", d_loss_real)</span>
+<span class="c1">#             d_loss_summary = tf.summary.scalar("Discriminator_Fake_Loss", d_loss_fake)</span>
+            <span class="n">d_loss_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">"Discriminator_Total_Loss"</span><span class="p">,</span> <span class="n">d_loss_total</span><span class="p">)</span>
+            <span class="n">d_loss_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">"Generator_Loss"</span><span class="p">,</span> <span class="n">g_loss</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It's also useful to compute accuracy, just to see how the training is going:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In [19]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">default_device</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">g</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
-        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;accuracy&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">"accuracy"</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
             <span class="c1"># Compute the discriminator accuracy on real data, fake data, and total:</span>
             <span class="n">accuracy_real</span>  <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">real_image_logits</span><span class="p">),</span> 
                                                              <span class="n">tf</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">real_image_logits</span><span class="p">)),</span> 
@@ -2040,47 +1782,46 @@ AAAAAAAAAAAAAAAAAAAAAAAAYKX5fwR6c8uum06uAAAAAElFTkSuQmCC
             <span class="n">total_accuracy</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">accuracy_fake</span> <span class="o">+</span>  <span class="n">accuracy_real</span><span class="p">)</span>
 
             <span class="c1"># Again, useful for tensorboard:</span>
-            <span class="n">acc_real_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;Real_Accuracy&quot;</span><span class="p">,</span> <span class="n">accuracy_real</span><span class="p">)</span>
-            <span class="n">acc_real_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;Fake_Accuracy&quot;</span><span class="p">,</span> <span class="n">accuracy_fake</span><span class="p">)</span>
-            <span class="n">acc_real_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;Total_Accuracy&quot;</span><span class="p">,</span> <span class="n">total_accuracy</span><span class="p">)</span>
+            <span class="n">acc_real_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">"Real_Accuracy"</span><span class="p">,</span> <span class="n">accuracy_real</span><span class="p">)</span>
+            <span class="n">acc_real_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">"Fake_Accuracy"</span><span class="p">,</span> <span class="n">accuracy_fake</span><span class="p">)</span>
+            <span class="n">acc_real_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">"Total_Accuracy"</span><span class="p">,</span> <span class="n">total_accuracy</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Independant-Optimizers">Independant Optimizers<a class="anchor-link" href="#Independant-Optimizers">&#182;</a></h3>
+<h3 id="Independant-Optimizers">Independant Optimizers<a class="anchor-link" href="#Independant-Optimizers">¶</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To allow the generator and discriminator to compete and update seperately, we use two distinct optimizers.  This step is why it was essential earlier to have the scopes different for the generator and optimizer: we can select all variables in each scope to go to their own optimizer.  So, even though the generator loss calculation runs the discriminator, the update step for the generator <strong>only</strong> affects the variables inside the generator</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In [20]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">default_device</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">g</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
-        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;training&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">"training"</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
             <span class="c1"># Global steps are useful for restoring training:</span>
-            <span class="n">global_step</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;global_step&#39;</span><span class="p">)</span>
+            <span class="n">global_step</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'global_step'</span><span class="p">)</span>
 
             <span class="c1"># Make sure the optimizers are only operating on their own variables:</span>
 
             <span class="n">all_variables</span>      <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">()</span>
-            <span class="n">discriminator_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">all_variables</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;mnist_discriminator/&#39;</span><span class="p">)]</span>
-            <span class="n">generator_vars</span>     <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">all_variables</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;mnist_generator/&#39;</span><span class="p">)]</span>
+            <span class="n">discriminator_vars</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">all_variables</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'mnist_discriminator/'</span><span class="p">)]</span>
+            <span class="n">generator_vars</span>     <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">all_variables</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'mnist_generator/'</span><span class="p">)]</span>
 
 
             <span class="n">discriminator_optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">BASE_LEARNING_RATE</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
@@ -2088,66 +1829,64 @@ AAAAAAAAAAAAAAAAAAAAAAAAYKX5fwR6c8uum06uAAAAAElFTkSuQmCC
             <span class="n">generator_optimizer</span>     <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">BASE_LEARNING_RATE</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
                 <span class="n">g_loss</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">,</span> <span class="n">var_list</span><span class="o">=</span><span class="n">generator_vars</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Image-snapshots">Image snapshots<a class="anchor-link" href="#Image-snapshots">&#182;</a></h3>
+<h3 id="Image-snapshots">Image snapshots<a class="anchor-link" href="#Image-snapshots">¶</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It's useful to snapshot images into tensorboard to see how things are going, as well:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In [21]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">default_device</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">g</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
         <span class="c1"># Reshape images for snapshotting:</span>
         <span class="n">fake_images_reshaped</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">fake_images</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
         <span class="n">real_images_reshaped</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">real_images</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="s1">&#39;fake_images&#39;</span><span class="p">,</span> <span class="n">fake_images_reshaped</span><span class="p">,</span> <span class="n">max_outputs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="s1">&#39;real_images&#39;</span><span class="p">,</span> <span class="n">real_images_reshaped</span><span class="p">,</span> <span class="n">max_outputs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="s1">'fake_images'</span><span class="p">,</span> <span class="n">fake_images_reshaped</span><span class="p">,</span> <span class="n">max_outputs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="s1">'real_images'</span><span class="p">,</span> <span class="n">real_images_reshaped</span><span class="p">,</span> <span class="n">max_outputs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Training-the-networks">Training the networks<a class="anchor-link" href="#Training-the-networks">&#182;</a></h2>
+<h2 id="Training-the-networks">Training the networks<a class="anchor-link" href="#Training-the-networks">¶</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>There are lots of philosophys on training GANs.  Here, we'll do something simple and just alternate updates. To save the network and keep track of training variables, set up a summary writer:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In [22]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">default_device</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">g</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
         <span class="n">merged_summary</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">merge_all</span><span class="p">()</span>
@@ -2155,25 +1894,23 @@ AAAAAAAAAAAAAAAAAAAAAAAAYKX5fwR6c8uum06uAAAAAElFTkSuQmCC
         <span class="c1"># Set up a saver:</span>
         <span class="n">train_writer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">FileWriter</span><span class="p">(</span><span class="n">LOGDIR</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Before we start training in earnest, let's make some storage for images as a function of epochs, etc.  This network will also store loss and accuracy as a function of epoch so we can make some plots after training is done.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In [23]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">epochs</span>   <span class="o">=</span> <span class="p">[]</span> <span class="c1"># store the epoch corresponding to the variables below</span>
 <span class="n">gen_loss</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">dis_loss</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2182,25 +1919,23 @@ AAAAAAAAAAAAAAAAAAAAAAAAYKX5fwR6c8uum06uAAAAAElFTkSuQmCC
 <span class="n">fake_acc</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">tot_acc</span>  <span class="o">=</span> <span class="p">[]</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Set up a session for training using an interactive session:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In [24]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">default_device</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">g</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
         <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">InteractiveSession</span><span class="p">()</span>
@@ -2209,22 +1944,22 @@ AAAAAAAAAAAAAAAAAAAAAAAAYKX5fwR6c8uum06uAAAAAElFTkSuQmCC
             <span class="n">train_writer</span><span class="o">.</span><span class="n">add_graph</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
             <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span> 
-            <span class="n">latest_checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">(</span><span class="n">LOGDIR</span><span class="o">+</span><span class="s2">&quot;/checkpoints/&quot;</span><span class="p">)</span>
-            <span class="k">print</span> <span class="s2">&quot;Restoring model from {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">latest_checkpoint</span><span class="p">)</span>
+            <span class="n">latest_checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">(</span><span class="n">LOGDIR</span><span class="o">+</span><span class="s2">"/checkpoints/"</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s2">"Restoring model from {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">latest_checkpoint</span><span class="p">)</span>
             <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>
             <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">latest_checkpoint</span><span class="p">)</span>
 
 
 
-        <span class="k">print</span> <span class="s2">&quot;Begin training ...&quot;</span>
+        <span class="k">print</span> <span class="s2">"Begin training ..."</span>
         <span class="c1"># Run training loop</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">50000000</span><span class="p">):</span>
             <span class="n">step</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">global_step</span><span class="p">)</span>
 
             <span class="c1"># Receive data (this will hang if IO thread is still running = this</span>
-            <span class="c1"># will wait for thread to finish &amp; receive data)</span>
+            <span class="c1"># will wait for thread to finish & receive data)</span>
             <span class="n">epoch</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">*</span><span class="n">i</span><span class="o">*</span><span class="n">BATCH_SIZE</span><span class="p">)</span> <span class="o">/</span> <span class="mf">60000.</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">epoch</span> <span class="o">&gt;</span> <span class="n">MAX_EPOCH</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">epoch</span> <span class="o">></span> <span class="n">MAX_EPOCH</span><span class="p">):</span>
                 <span class="k">break</span>
             <span class="n">sigma</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.75</span><span class="o">*</span><span class="p">(</span><span class="mf">10.</span> <span class="o">-</span> <span class="n">epoch</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mf">0.05</span><span class="p">)</span>
             
@@ -2277,15 +2012,15 @@ AAAAAAAAAAAAAAAAAAAAAAAAYKX5fwR6c8uum06uAAAAAElFTkSuQmCC
             <span class="k">if</span> <span class="n">step</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">step</span> <span class="o">%</span> <span class="mi">500</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">saver</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
                     <span class="n">sess</span><span class="p">,</span>
-                    <span class="n">LOGDIR</span><span class="o">+</span><span class="s2">&quot;/checkpoints/save&quot;</span><span class="p">,</span>
+                    <span class="n">LOGDIR</span><span class="o">+</span><span class="s2">"/checkpoints/save"</span><span class="p">,</span>
                     <span class="n">global_step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
 
 
             <span class="c1"># train_writer.add_summary(summary, i)</span>
-            <span class="c1"># sys.stdout.write(&#39;Training in progress @ step %d\n&#39; % (step))</span>
+            <span class="c1"># sys.stdout.write('Training in progress @ step %d\n' % (step))</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">epoch</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span><span class="o">*</span><span class="n">epoch</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span> <span class="o">==</span> <span class="n">epoch</span><span class="p">:</span>
-                    <span class="k">print</span> <span class="s1">&#39;Training in progress @ epoch </span><span class="si">%g</span><span class="s1">, g_loss </span><span class="si">%g</span><span class="s1">, d_loss </span><span class="si">%g</span><span class="s1"> accuracy </span><span class="si">%g</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">g_l</span><span class="p">,</span> <span class="n">d_l</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
+                    <span class="k">print</span> <span class="s1">'Training in progress @ epoch </span><span class="si">%g</span><span class="s1">, g_loss </span><span class="si">%g</span><span class="s1">, d_loss </span><span class="si">%g</span><span class="s1"> accuracy </span><span class="si">%g</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">g_l</span><span class="p">,</span> <span class="n">d_l</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
                 <span class="n">epochs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
                 <span class="n">gen_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g_l</span><span class="p">)</span>
                 <span class="n">dis_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_l</span><span class="p">)</span>
@@ -2294,20 +2029,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAYKX5fwR6c8uum06uAAAAAElFTkSuQmCC
                 <span class="n">fake_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc_fake</span><span class="p">)</span>
                 <span class="n">tot_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Begin training ...
 Training in progress @ epoch 1, g_loss 1.01972, d_loss 1.05898 accuracy 0.72
@@ -2413,65 +2141,55 @@ Training in progress @ epoch 100, g_loss 0.723719, d_loss 1.38021 accuracy 0.54
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>[NOTE: I  cleared the output of the training to make the notebook easier to read online.  It trained for about 350 epochs, which is quite awhile.  It turned in to several hours on a GPU.]</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Plotting-training-variables">Plotting training variables<a class="anchor-link" href="#Plotting-training-variables">&#182;</a></h3>
+<h3 id="Plotting-training-variables">Plotting training variables<a class="anchor-link" href="#Plotting-training-variables">¶</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To confirm the training went well, we can look at the variables we saved:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In [25]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Plot the loss values:</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">gen_loss</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Generator Loss&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">dis_loss</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Discriminator Loss&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">gen_loss</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Generator Loss"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">dis_loss</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Discriminator Loss"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epoch&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">,</span>  <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Epoch"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Loss"</span><span class="p">,</span>  <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'best'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA74AAAIvCAYAAABTMwdTAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzsnXecVcX5/z/bF6Q3UVRENCYEUdCYWENijz2J/kKiSTTW
@@ -4336,47 +4054,35 @@ QtCdCiwnbIjVlPRvBuYBy4D7wGngPTAeWAqsB1or+H6SJEmSpH7sJ+Ff1qLHGXXSPZiWYr2BEGhv
 AJ8Im13to/je3ymEsPoM+EbYvKoVmFzQXw+sA64QQu8HQmDeA0zs0rcprrEhZ44Jca37Cz5DkiRJ
 kqQeSpSDryRJ+o+8x1eSJEmSVNMMvpIkSZKkmmbwlSSpOn7FlyRJkiRJkiRJkiRJkiRJkiRJkiRJ
 kiRJkiRJkiRJkiRJkiRJkiRJkiRJ+r9+A8R1piVtagTXAAAAAElFTkSuQmCC
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In [26]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Plot the accuracy values:</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">true_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True Accuracy&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">fake_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Fake Accuracy&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">tot_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Total Accuracy&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">true_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"True Accuracy"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">fake_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Fake Accuracy"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">tot_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Total Accuracy"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epoch&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span>  <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Epoch"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Accuracy"</span><span class="p">,</span>  <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'best'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA74AAAIvCAYAAABTMwdTAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzsnXl81NTax3/JdJO9yCLLy6IiAsIFFLxcFNm8LIoLiMpF
@@ -8856,43 +8562,41 @@ v2//PweOB14H/AT4CvBLYD/gDOCdwKfG+PkkSZIkSQ32LNko67DljLaxfWC6Nt9+CllAezvwBNlk
 Vx9neO3voWTB6iPAVrLJqz4FHDJk/w7wx8D3yYLex8kC5iuBF/Xs9/68jacMOMbKvK3rhvwfkiRJ
 kiTtYC1zga8kSSqRNb6SJEmSpKQZ+EqSJEmSkmbgK0lSPWbzL0mSJEmSJEmSJEmSJEmSJEmSJEmS
 JEmSJEmSJEmSJEmSJEmSJEmSJEmSVK7/B3N7+0zEYfT5AAAAAElFTkSuQmCC
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The loss and accuracy graphs indicate the training went pretty well,  Over time, the generator got better at tricking the discriminator (you can see the generator loss decreasing and discriminator loss increasing).  Additionally, the accuracy trended towards 50% for both real and fake data.  In badly trained examples, the average accuracy might be 50% but the individual accuracys (fake or real) are 0 or 100%, indicating the network isn't learning well.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Image-Progression">Image Progression<a class="anchor-link" href="#Image-Progression">&#182;</a></h3>
+<h3 id="Image-Progression">Image Progression<a class="anchor-link" href="#Image-Progression">¶</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can see the images progress over time.  I'll show the progression over the epochs, and we can see a large sample images below that are generated from the network as it's read back at inference time.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In [31]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">indexes</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">))[::</span><span class="mi">20</span><span class="p">]</span>
 <span class="n">image_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">28</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">indexes</span><span class="p">),</span> <span class="mi">5</span><span class="o">*</span><span class="mi">28</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">indexes</span><span class="p">):</span>
@@ -8903,26 +8607,17 @@ JEmSJEmSJEmSJEmSJEmSJEmSJEmSVK7/B3N7+0zEYfT5AAAAAElFTkSuQmCC
         <span class="n">image_array</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">28</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span> <span class="n">j</span><span class="o">*</span><span class="mi">28</span><span class="p">:(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">28</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_set</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">)</span>
       
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Greys&quot;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_array</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"Greys"</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">"none"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKIAAAR9CAYAAADV1ZzyAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzsvWlw2/d19/shdoAgCQIECIAruO+UuGujREqW5Hi3lERO
@@ -12145,47 +11840,44 @@ XHsEwHMzP/+bmWuf9Pp2WJG+H9Z7/BWAf/wE1zfi0WBltu8/LrngvP41WJF7heM5T3q9tidNbuR9
 ex2WA38DlrP7XW0LLP/uPCwT+zWsgS2HFYQ8CYQCWILIqPlprm2HpREV+nia6/8IOfjmr2Bp92+7
 nsmFaeSSC9/2fWdywXn9H8KCV+4gN37/+Qmun2tyY6EttIW20BbaQltoC22hLbSFttAW2kJbaAtt
 oS20hbbQFtpC+7vb/g+uzxvnUD8+ogAAAABJRU5ErkJggg==
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In the above, we can see the epochs progressing (downward) and the images improving from noise to recognizable digits.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As a last step, let's load this network back into memory and generate a few fake images for visualization.  As you'll see, this network does "OK" but not amazingly well.  In the next post, we'll see a deep convolutional network that does better at generating images.</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In [28]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">reset_default_graph</span><span class="p">()</span>
 <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">default_device</span><span class="p">):</span>
     <span class="n">g</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
     <span class="k">with</span> <span class="n">g</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
         <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">InteractiveSession</span><span class="p">()</span>
-        <span class="n">latest_checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">(</span><span class="n">LOGDIR</span><span class="o">+</span><span class="s2">&quot;/checkpoints/&quot;</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s2">&quot;Restoring model from {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">latest_checkpoint</span><span class="p">)</span>
+        <span class="n">latest_checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">(</span><span class="n">LOGDIR</span><span class="o">+</span><span class="s2">"/checkpoints/"</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s2">"Restoring model from {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">latest_checkpoint</span><span class="p">)</span>
         
-        <span class="n">noise_tensor</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">RANDOM_INPUT_DIMENSIONALITY</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;noise&quot;</span><span class="p">)</span>
+        <span class="n">noise_tensor</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">RANDOM_INPUT_DIMENSIONALITY</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">"noise"</span><span class="p">)</span>
 
-        <span class="n">fake_noise</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fake_noise&quot;</span><span class="p">)</span>
+        <span class="n">fake_noise</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">"fake_noise"</span><span class="p">)</span>
 
         <span class="n">fake_images</span> <span class="o">=</span> <span class="n">build_generator</span><span class="p">(</span><span class="n">noise_tensor</span><span class="p">)</span> <span class="o">+</span> <span class="n">fake_noise</span>
         
@@ -12193,7 +11885,7 @@ oS20hbbQFtpC+7vb/g+uzxvnUD8+ogAAAABJRU5ErkJggg==
         <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>
         <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">latest_checkpoint</span><span class="p">)</span>
 
-        <span class="c1"># We only need to make fake data and run it through the &#39;fake_images&#39; tensor to see the output:</span>
+        <span class="c1"># We only need to make fake data and run it through the 'fake_images' tensor to see the output:</span>
         
         <span class="n">fake_input</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="n">RANDOM_INPUT_DIMENSIONALITY</span><span class="p">))</span>
         <span class="n">fake_noise_addition</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">BATCH_SIZE</span><span class="p">,</span> <span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">))</span>
@@ -12202,57 +11894,46 @@ oS20hbbQFtpC+7vb/g+uzxvnUD8+ogAAAABJRU5ErkJggg==
                 <span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">noise_tensor</span> <span class="p">:</span> <span class="n">fake_input</span><span class="p">,</span>
                              <span class="n">fake_noise</span> <span class="p">:</span> <span class="n">fake_noise_addition</span><span class="p">})</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
+<div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Restoring model from ./mnist_gan_logs/lr_0.0002_include_noise_True_batchsize_50/checkpoints/save-240000
 INFO:tensorflow:Restoring parameters from ./mnist_gan_logs/lr_0.0002_include_noise_True_batchsize_50/checkpoints/save-240000
 </pre>
 </div>
 </div>
-
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Reshape to make it easier to draw:</p>
-
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In [29]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">generated_images</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">generated_images</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">))</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In [30]:</div>
 <div class="inner_cell">
-    <div class="input_area">
+<div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Tile together lots of digits to see how the network is doing:</span>
 <span class="n">final_image</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">280</span><span class="p">,</span> <span class="mi">280</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
@@ -12261,25 +11942,16 @@ INFO:tensorflow:Restoring parameters from ./mnist_gan_logs/lr_0.0002_include_noi
         <span class="n">final_image</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">28</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span> <span class="n">j</span><span class="o">*</span><span class="mi">28</span><span class="p">:(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">28</span><span class="p">]</span> <span class="o">=</span> <span class="n">generated_images</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
         
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">final_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Greys&quot;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">final_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"Greys"</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">"none"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-
-    </div>
 </div>
 </div>
-
+</div>
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
+<div class="prompt"></div>
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlIAAAJOCAYAAAB8y+mTAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAIABJREFUeJzsnXX4ZlXVv++fL75KSXdIp4SCSAlDjSglIB1Dl4BIKM0Q
@@ -13455,38 +13127,20 @@ PKpnGuBC4MTs9bhGOk/RWMT10QOsQZ/7/2X6UiWDzjIHfZN9An0prY7B9PT5pqL8QbVcBrwL/H/0
 +QW3YfJ9fyB918rzwOodbenUQT4e29L35fEkfR6Q66n1C8Z4VMuPgS/oW59Mrx9BXCPdYLCxWIO4
 PoIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIgCIIg
 CIIgCIJg6ub/B/HKXt4pVsR6AAAAAElFTkSuQmCC
-">
-</div>
-
-</div>
-
+" />
 </div>
 </div>
-
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Well ... It's OK.  Some of them look like real digits!  Others are less convincing.  But, this at least demonstrates the basics of generative adversarial networks.</p>
-
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
- 
-
 
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var mathjaxscript = document.createElement('script');

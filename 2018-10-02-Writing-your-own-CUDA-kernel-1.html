@@ -1,0 +1,1316 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<meta name="author" content="Laura Domine" />
+<meta name="description" content="First part of a tutorial serie to write your own CUDA kernel and use it in Tensorflow or PyTorch." />
+<meta name="keywords" content="cuda, tensorflow, pytorch">
+<meta property="og:site_name" content="DeepLearnPhysics Blog"/>
+<meta property="og:title" content="Writing your own CUDA kernel (Part 1)"/>
+<meta property="og:description" content="First part of a tutorial serie to write your own CUDA kernel and use it in Tensorflow or PyTorch."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://deeplearnphysics.org/Blog/2018-10-02-Writing-your-own-CUDA-kernel-1.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-10-02 00:00:00-05:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://deeplearnphysics.org/Blog/author/laura-domine.html">
+<meta property="article:section" content="Tutorial"/>
+<meta property="article:tag" content="cuda"/>
+<meta property="article:tag" content="tensorflow"/>
+<meta property="article:tag" content="pytorch"/>
+<meta property="og:image" content="profile.png">
+
+
+<!-- Default meta cards for twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@dlphysics">
+<meta name="twitter:creator" content="@dlphysics">
+<meta name="twitter:title" content="Writing your own CUDA kernel (Part 1)">
+<meta name="twitter:description" content="<p>First part of a tutorial serie to write your own CUDA kernel and use it in Tensorflow or PyTorch.</p>">
+<meta name="twitter:image" content="http://deeplearnphysics.org/Blog/theme/img/profile_small.png" />
+
+
+  <title>DeepLearnPhysics Blog &ndash; Writing your own CUDA kernel (Part 1)</title>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="http://deeplearnphysics.org/Blog">
+        <img src="http://deeplearnphysics.org/Blog/theme/img/profile.png" alt="Blog" title="Blog">
+      </a>
+      <h1><a href="http://deeplearnphysics.org/Blog">Blog</a></h1>
+
+<p>DeepLearnPhysics Group</p>
+
+      <ul class="social">
+        <li><a class="sc-home" href="http://deeplearnphysics.org" target="_blank"><i class="fa fa-home"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/dlphysics" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-github" href="http://github.com/DeepLearnPhysics" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+    <nav>
+
+
+      <a href="http://deeplearnphysics.org/Blog/index.html">Home</a>
+      <a href="http://deeplearnphysics.org/Blog/categories.html">Category</a>
+      <a href="http://deeplearnphysics.org/Blog/archives.html">Archives</a>
+      <a href="http://deeplearnphysics.org/Blog/tags.html">Tags</a>
+      <a href="http://deeplearnphysics.org/Blog/authors.html">Authors</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+    <h1 id="2018-10-02-Writing-your-own-CUDA-kernel-1">Writing your own CUDA kernel (Part 1)</h1>
+    <p>
+          Posted on mar. 02 octobre 2018 in <a href="http://deeplearnphysics.org/Blog/category/tutorial.html">Tutorial</a>
+
+            by
+
+              <a href="http://deeplearnphysics.org/Blog/author/laura-domine.html">Laura Domine</a>    </p>
+  </header>
+
+  <!-- script is a local library -->
+  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css">
+
+  <div>
+    <style type="text/css">/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI colors. */
+.ansibold {
+  font-weight: bold;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected {
+  border-color: #ababab;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  div.cell.selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell > div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  padding: 0.4em;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+.rendered_html pre,
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+.rendered_html td,
+
+
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell > div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+</style>
+<style type="text/css">.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>At some point you might come upon some operation that you wish it existed in Tensorflow or PyTorch, but no GPU implementation is available. In addition it might even be something that is easily parallelizable on GPU. So why not write your own CUDA kernel and integrate it in your main program? Let us start with the CUDA kernel itself since it will be the same in both implementations.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h2><p>Some vocabulary first:</p>
+<ul>
+<li><strong>Kernel</strong>: name of a function run by CUDA on the GPU. </li>
+<li><strong>Thread</strong>: CUDA will run many threads in parallel on the GPU. Each thread executes the kernel.</li>
+<li><strong>Blocks</strong>: Threads are grouped into blocks, a programming abstraction.  Currently a thread block can contain up to 1024 threads.</li>
+<li><strong>Grid</strong>: contains thread blocks.</li>
+</ul>
+<p><img alt="Threads and blocks" src="https://docs.nvidia.com/cuda/cuda-c-programming-guide/graphics/grid-of-thread-blocks.png" />
+<em>Threads and blocks illustration from <a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide">CUDA documentation</a></em></p>
+<p>When should we write a custom CUDA kernel?</p>
+<ul>
+<li>Data size: you should make sure you will launch a lot of threads and blocks in order to beat the CUDA overhead. Otherwise, you might not see a great improvement between a CPU and GPU version.</li>
+<li>Parallelizable: you should be able to pinpoint a single or double <code>for</code> loop where the iterations are independent of each other. </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The only tricky part is to figure out how to balance the load: how many threads and blocks should be launched, what portion of the data is going to be processed by each of these.</p>
+<h3 id="Use-case-description">Use case description<a class="anchor-link" href="#Use-case-description">¶</a></h3><p>We want to write a CUDA kernel to crop a single big image into several smaller crops. A sequential implementation would loop over all the crops voxels and copy the corresponding voxel from the original image. Our input is thus:</p>
+<ul>
+<li>A single big image of shape ($N$, $N$, $N$, $C$) where $N$ is the image size and $C$ the number of channels</li>
+<li>A list of crop centers coordinates in the original image ($M$, 3) where $M$ is the total number of crops.</li>
+<li>The size $D$ of a crop (we require for simplicity that all crops have the same size).</li>
+</ul>
+<p>The output should be a list of the crops and have a shape ($M$, $D$, $D$, $D$, $C$).</p>
+<h3 id="Naive-approach">Naive approach<a class="anchor-link" href="#Naive-approach">¶</a></h3><p>In our case, a first naive approach would be to assign to each thread a single voxel to copy from the input data array to the output crop array. We launch as many blocks as we have crops (i.e. $M$ blocks), and the threads inside the block will go over all the voxels inside a single crop (i.e. $D^3 \times C$ threads per block). Remember that the number of threads per block is fixed, so a single thread might have to work on several voxels, not just one.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="k">template</span> <span class="o"><</span><span class="k">typename</span> <span class="n">T</span><span class="o">></span>
+<span class="n">__global__</span> <span class="kt">void</span> <span class="n">CropCudaKernel</span><span class="p">(</span>
+  <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">image_ptr</span><span class="p">,</span>
+  <span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">crop_centers_ptr</span><span class="p">,</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">image_size</span><span class="p">,</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">channels</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="n">crop_size</span><span class="p">,</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">num_crops</span><span class="p">,</span>
+  <span class="n">T</span><span class="o">*</span> <span class="n">crops_ptr</span>
+<span class="p">)</span> <span class="p">{</span>
+</pre></div>
+<p>The keyword <code>__global__</code> signals that the function will be compiled by <code>nvcc</code> (NVIDIA compiler, a wrapper around <code>gcc</code>) and run on GPU. In our case we will need a pointer to the (flattened) big image, an array of (flattened) crop centers coordinates, as well as the image size, the number of channels, the crop size, and the total number of crops. The output result will be stored in <code>crops_ptr</code> array.</p>
+<div class="highlight"><pre><span></span><span class="k">const</span> <span class="kt">int</span> <span class="n">crop_id</span> <span class="o">=</span> <span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">center_x</span> <span class="o">=</span> <span class="n">crop_centers_ptr</span><span class="p">[</span><span class="n">crop_id</span><span class="o">*</span><span class="mi">3</span><span class="p">];</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">center_y</span> <span class="o">=</span> <span class="n">crop_centers_ptr</span><span class="p">[</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">crop_id</span><span class="p">];</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">center_z</span> <span class="o">=</span> <span class="n">crop_centers_ptr</span><span class="p">[</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">crop_id</span><span class="p">];</span>
+</pre></div>
+<p>Since the crop centers coordinates array was flattened we retrieve the current crop center coordinates with the block index <code>blockIdx.x</code> information. We specified 1 block per crop, hence the block index will correspond exactly to the crop index.</p>
+<div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">id</span> <span class="o"><</span> <span class="n">crop_size</span><span class="o">*</span><span class="n">crop_size</span><span class="o">*</span><span class="n">crop_size</span><span class="o">*</span><span class="n">channels</span><span class="p">;</span> <span class="n">id</span> <span class="o">+=</span> <span class="n">blockDim</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+</pre></div>
+<p>We have to process all the pixels of the output array. Each thread is going to loop over them with a step of size the block dimension (i.e. the total number of threads working on this crop).</p>
+<div class="highlight"><pre><span></span><span class="c1">// Coordinates inside the crop (0 <= coords < crop_size)</span>
+    <span class="kt">int</span> <span class="n">id_temp</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">id_temp</span> <span class="o">%</span> <span class="n">channels</span><span class="p">;</span>
+    <span class="n">id_temp</span> <span class="o">/=</span> <span class="n">channels</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">z</span> <span class="o">=</span> <span class="n">id_temp</span> <span class="o">%</span> <span class="n">crop_size</span><span class="p">;</span>
+    <span class="n">id_temp</span> <span class="o">/=</span> <span class="n">crop_size</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">id_temp</span> <span class="o">%</span> <span class="n">crop_size</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">id_temp</span> <span class="o">/</span> <span class="n">crop_size</span><span class="p">;</span>
+</pre></div>
+<p>We reconstruct the coordinates of the current pixel inside the crop from the loop index. Note that this and all the following conversions between index/coordinates will depend on how the array was flattened.</p>
+<div class="highlight"><pre><span></span><span class="c1">// Corresponding coordinates in original image</span>
+    <span class="kt">int</span> <span class="n">image_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">center_x</span> <span class="o">-</span> <span class="n">crop_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">image_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">center_y</span> <span class="o">-</span> <span class="n">crop_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">image_z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">+</span> <span class="p">(</span><span class="n">center_z</span> <span class="o">-</span> <span class="n">crop_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">img_idx</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="n">channels</span> <span class="o">*</span> <span class="p">(</span><span class="n">image_z</span> <span class="o">+</span> <span class="n">image_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">image_y</span> <span class="o">+</span> <span class="n">image_size</span> <span class="o">*</span> <span class="n">image_x</span> <span class="p">));</span>
+</pre></div>
+<p>We retrieve the equivalent coordinates in the original image.</p>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">((</span><span class="n">img_idx</span> <span class="o">>=</span> <span class="n">image_size</span> <span class="o">*</span> <span class="n">image_size</span> <span class="o">*</span> <span class="n">image_size</span> <span class="o">*</span> <span class="n">channels</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">img_idx</span> <span class="o"><</span> <span class="mi">0</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">crop_idx</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="n">channels</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">+</span> <span class="n">crop_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">crop_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">crop_size</span> <span class="o">*</span> <span class="n">crop_id</span><span class="p">)));</span>
+    <span class="n">crops_ptr</span><span class="p">[</span><span class="n">crop_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_ptr</span><span class="p">[</span><span class="n">img_idx</span><span class="p">];</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>Finally we proceed to copy the pixel from the original image array to the final output array.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="More-balanced-approach">More balanced approach<a class="anchor-link" href="#More-balanced-approach">¶</a></h3><p>After profiling the previous CUDA kernel we found out that it wasn't that much faster than a Numpy version running on CPU. The reason is that the number of crops (estimated around 100) was not high enough to harness the GPU power, which relies on high parallelization. A second more refined approach would be to set the number of blocks to $M \times D$: each block will process a 2D slice of a single crop, i.e. $D^2 \times C$ voxels.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="k">template</span> <span class="o"><</span><span class="k">typename</span> <span class="n">T</span><span class="o">></span>
+<span class="n">__global__</span> <span class="kt">void</span> <span class="n">CropCudaKernel2</span><span class="p">(</span>
+  <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">image_ptr</span><span class="p">,</span>
+  <span class="k">const</span> <span class="kt">int</span><span class="o">*</span> <span class="n">crop_centers_ptr</span><span class="p">,</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">image_size</span><span class="p">,</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">channels</span><span class="p">,</span>
+  <span class="kt">int</span> <span class="n">crop_size</span><span class="p">,</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">num_crops</span><span class="p">,</span>
+  <span class="n">T</span><span class="o">*</span> <span class="n">crops_ptr</span>
+<span class="p">)</span> <span class="p">{</span>
+</pre></div>
+<p>The kernel declaration does not change.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="k">const</span> <span class="kt">int</span> <span class="n">crop_id</span> <span class="o">=</span> <span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span><span class="o">/</span><span class="n">crop_size</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">center_x</span> <span class="o">=</span> <span class="n">crop_centers_ptr</span><span class="p">[</span><span class="n">crop_id</span><span class="o">*</span><span class="mi">3</span><span class="p">];</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">center_y</span> <span class="o">=</span> <span class="n">crop_centers_ptr</span><span class="p">[</span><span class="mi">1</span> <span class="o">+</span> <span class="n">crop_id</span><span class="o">*</span><span class="mi">3</span><span class="p">];</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">center_z</span> <span class="o">=</span> <span class="n">crop_centers_ptr</span><span class="p">[</span><span class="mi">2</span> <span class="o">+</span> <span class="n">crop_id</span><span class="o">*</span><span class="mi">3</span><span class="p">];</span>
+  <span class="kt">int</span> <span class="n">offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">blockIdx</span><span class="p">.</span><span class="n">x</span> <span class="o">%</span> <span class="n">crop_size</span><span class="p">)</span> <span class="o">*</span> <span class="n">crop_size</span><span class="o">*</span><span class="n">crop_size</span><span class="o">*</span><span class="n">channels</span><span class="p">;</span>
+</pre></div>
+<p>The main difference is about bookkeeping: the crop index is different now, it is not just the block index anymore. We will have to add an offset when we compute coordinates inside the crop:</p>
+<div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">id</span> <span class="o"><</span> <span class="n">crop_size</span><span class="o">*</span><span class="n">crop_size</span><span class="o">*</span><span class="n">channels</span><span class="p">;</span> <span class="n">id</span> <span class="o">+=</span> <span class="n">blockDim</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Coordinates inside the crop (0 <= coords < crop_size)</span>
+    <span class="kt">int</span> <span class="n">id_temp</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">id</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">id_temp</span> <span class="o">%</span> <span class="n">channels</span><span class="p">;</span>
+    <span class="n">id_temp</span> <span class="o">/=</span> <span class="n">channels</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">z</span> <span class="o">=</span> <span class="n">id_temp</span> <span class="o">%</span> <span class="n">crop_size</span><span class="p">;</span>
+    <span class="n">id_temp</span> <span class="o">/=</span> <span class="n">crop_size</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">id_temp</span> <span class="o">%</span> <span class="n">crop_size</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">id_temp</span> <span class="o">/</span> <span class="n">crop_size</span><span class="p">;</span>
+
+    <span class="c1">// Corresponding coordinates in original image</span>
+    <span class="kt">int</span> <span class="n">image_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">center_x</span> <span class="o">-</span> <span class="n">crop_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">image_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">center_y</span> <span class="o">-</span> <span class="n">crop_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">image_z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">+</span> <span class="p">(</span><span class="n">center_z</span> <span class="o">-</span> <span class="n">crop_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">img_idx</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="n">channels</span> <span class="o">*</span> <span class="p">(</span><span class="n">image_z</span> <span class="o">+</span> <span class="n">image_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">image_y</span> <span class="o">+</span> <span class="n">image_size</span> <span class="o">*</span> <span class="n">image_x</span> <span class="p">));</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">img_idx</span> <span class="o">>=</span> <span class="n">image_size</span> <span class="o">*</span> <span class="n">image_size</span> <span class="o">*</span> <span class="n">image_size</span> <span class="o">*</span> <span class="n">channels</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">img_idx</span> <span class="o"><</span> <span class="mi">0</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">crop_idx</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="n">channels</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">+</span> <span class="n">crop_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">crop_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">crop_size</span> <span class="o">*</span> <span class="n">crop_id</span><span class="p">)));</span>
+    <span class="n">crops_ptr</span><span class="p">[</span><span class="n">crop_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_ptr</span><span class="p">[</span><span class="n">img_idx</span><span class="p">];</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This was a short introduction to CUDA kernels. This custom one is able to crop a big image into smaller pieces. Now you probably want to compile it in order to integrate it into your main Tensorflow or PyTorch program, so continue with the next part of the tutorial.</p>
+<h2 id="References">References<a class="anchor-link" href="#References">¶</a></h2><ul>
+<li><a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/">CUDA programming guid</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="http://deeplearnphysics.org/Blog/tag/cuda.html">cuda</a>
+      <a href="http://deeplearnphysics.org/Blog/tag/tensorflow.html">tensorflow</a>
+      <a href="http://deeplearnphysics.org/Blog/tag/pytorch.html">pytorch</a>
+    </p>
+  </div>
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy; DeepLearnPhysics 2017 - This work is licensed under a <a rel="license" href="https://opensource.org/licenses/MIT">MIT License</a>
+</p>
+<p>
+</p>    </footer>
+  </main>
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " DeepLearnPhysics Blog ",
+  "url" : "http://deeplearnphysics.org/Blog",
+  "image": "profile.png",
+  "description": "description!"
+}
+</script>
+</body>
+</html>
