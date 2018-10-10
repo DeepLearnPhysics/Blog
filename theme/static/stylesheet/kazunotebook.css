@@ -8,8 +8,8 @@
 
 /* From http://nbviewer.jupyter.org/gist/HHammond/7a78d35b34d85406aa60 */
 
-/* 
-First block is for texts/code 
+/*
+First block is for texts/code
 */
 
 @import url('http://fonts.googleapis.com/css?family=Crimson+Text');
@@ -80,6 +80,7 @@ div.text_cell_render h3 {
 
 .prompt.input_prompt {
     color: rgba(0,0,0,0.5);
+    min-width: 0ex;
 }
 
 .cell.command_mode.selected {
@@ -144,8 +145,8 @@ div#notebook {
     font-weight: 200;
 }
 
-/* 
-    This is a lazy fix, we *should* fix the 
+/*
+    This is a lazy fix, we *should* fix the
     background for each Bootstrap button type
 */
 #site * .btn {
@@ -212,4 +213,3 @@ th {
 }
 
 tr:hover {background-color: gray}
-
