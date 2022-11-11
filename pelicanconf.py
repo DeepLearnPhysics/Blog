@@ -3,9 +3,9 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'DeepLearnPhysics'
-GITHUBURL = 'http://github.com/DeepLearnPhysics'
+GITHUBURL = 'https://github.com/DeepLearnPhysics'
 CONTACT = 'mailto:contact@deeplearnphysics.org'
-GROUPURL = 'http://deeplearnphysics.org'
+GROUPURL = 'https://deeplearnphysics.org'
 TWITTERURL = 'https://twitter.com/dlphysics'
 DATAURL = GROUPURL + '/DataChallenge'
 
