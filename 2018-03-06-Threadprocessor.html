@@ -3,10 +3,10 @@
 <html lang="en">
 <head>
   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/style.min.css">
+  <link rel="stylesheet" type="text/css" href="https://deeplearnphysics.org/Blog/theme/stylesheet/style.min.css">
 
-  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/pygments/github.min.css">
-  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://deeplearnphysics.org/Blog/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="https://deeplearnphysics.org/Blog/theme/font-awesome/css/font-awesome.min.css">
 
 
 
@@ -32,11 +32,11 @@
 <meta property="og:title" content="ThreadProcessor: speed"/>
 <meta property="og:description" content="Here's a report for a naive data rate profiling of ThreadProcessor, larcv's threaded data reader we often use for network training. Measured on my macbook pro early 2013 model (old!) but reproduced similar numbers on dell xps15 (9560)."/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="http://deeplearnphysics.org/Blog/2018-03-06-Threadprocessor.html"/>
+<meta property="og:url" content="https://deeplearnphysics.org/Blog/2018-03-06-Threadprocessor.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2018-03-06 00:00:00-06:00"/>
 <meta property="article:modified_time" content="2018-03-06 00:00:00-06:00"/>
-<meta property="article:author" content="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">
+<meta property="article:author" content="https://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">
 <meta property="article:section" content="larcv"/>
 <meta property="article:tag" content="larcv"/>
 <meta property="article:tag" content="thread processor"/>
@@ -49,7 +49,7 @@
 <meta name="twitter:creator" content="@dlphysics">
 <meta name="twitter:title" content="ThreadProcessor: speed">
 <meta name="twitter:description" content="<p>Here's a report for a naive data rate profiling of ThreadProcessor, larcv's threaded data reader we often use for network training. Measured on my macbook pro early 2013 model (old!) but reproduced similar numbers on dell xps15 (9560).</p>">
-<meta name="twitter:image" content="http://deeplearnphysics.org/Blog/theme/img/profile_small.png" />
+<meta name="twitter:image" content="https://deeplearnphysics.org/Blog/theme/img/profile_small.png" />
 
 
   <title>DeepLearnPhysics Blog &ndash; ThreadProcessor: speed</title>
@@ -57,17 +57,17 @@
 <body>
   <aside>
     <div>
-      <a href="http://deeplearnphysics.org/Blog">
-        <img src="http://deeplearnphysics.org/Blog/theme/img/profile.png" alt="Blog" title="Blog">
+      <a href="https://deeplearnphysics.org/Blog">
+        <img src="https://deeplearnphysics.org/Blog/theme/img/profile.png" alt="Blog" title="Blog">
       </a>
-      <h1><a href="http://deeplearnphysics.org/Blog">Blog</a></h1>
+      <h1><a href="https://deeplearnphysics.org/Blog">Blog</a></h1>
 
 <p>DeepLearnPhysics Group</p>
 
       <ul class="social">
         <li><a class="sc-home" href="http://deeplearnphysics.org" target="_blank"><i class="fa fa-home"></i></a></li>
         <li><a class="sc-twitter" href="https://twitter.com/dlphysics" target="_blank"><i class="fa fa-twitter"></i></a></li>
-        <li><a class="sc-github" href="http://github.com/DeepLearnPhysics" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/DeepLearnPhysics" target="_blank"><i class="fa fa-github"></i></a></li>
       </ul>
     </div>
 
@@ -76,11 +76,11 @@
     <nav>
 
 
-      <a href="http://deeplearnphysics.org/Blog/index.html">Home</a>
-      <a href="http://deeplearnphysics.org/Blog/categories.html">Category</a>
-      <a href="http://deeplearnphysics.org/Blog/archives.html">Archives</a>
-      <a href="http://deeplearnphysics.org/Blog/tags.html">Tags</a>
-      <a href="http://deeplearnphysics.org/Blog/authors.html">Authors</a>
+      <a href="https://deeplearnphysics.org/Blog/index.html">Home</a>
+      <a href="https://deeplearnphysics.org/Blog/categories.html">Category</a>
+      <a href="https://deeplearnphysics.org/Blog/archives.html">Archives</a>
+      <a href="https://deeplearnphysics.org/Blog/tags.html">Tags</a>
+      <a href="https://deeplearnphysics.org/Blog/authors.html">Authors</a>
 
 
     </nav>
@@ -89,15 +89,15 @@
   <header>
     <h1 id="2018-03-06-Threadprocessor">ThreadProcessor: speed</h1>
     <p>
-          Posted on mar. 06 mars 2018 in <a href="http://deeplearnphysics.org/Blog/category/larcv.html">larcv</a>
+          Posted on Tue 06 March 2018 in <a href="https://deeplearnphysics.org/Blog/category/larcv.html">larcv</a>
 
             by
 
-              <a href="http://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">Kazuhiro Terao</a>    </p>
+              <a href="https://deeplearnphysics.org/Blog/author/kazuhiro-terao.html">Kazuhiro Terao</a>    </p>
   </header>
 
   <!-- script is a local library -->
-  <link rel="stylesheet" type="text/css" href="http://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css">
+  <link rel="stylesheet" type="text/css" href="https://deeplearnphysics.org/Blog/theme/stylesheet/kazunotebook.css">
 
   <div>
     <p><code>ThreadProcessor</code> is an API to multi-thread data loading from <code>larcv</code> files for efficient training of a deep neural network. I recently added a <a href="https://github.com/DeepLearnPhysics/larcv2/wiki/ThreadProcessor"><strong>wiki page</strong></a> that describes how the internals work. There are a few notebooks in our <a href="http://deeplearnphysics.org/Blog/tutorial_summary.html#tutorial_summary"><strong>tutorial</strong></a> that can be used as a reference. <a href="http://deeplearnphysics.org/Blog/tutorials/tutorial-04.html"><strong>One</strong></a> for simple access to data contents, <a href="http://deeplearnphysics.org/Blog/tutorials/tutorial-05.html"><strong>another</strong></a> on image classification and <a href="http://deeplearnphysics.org/Blog/2018-01-05-TrainingSegmentationData_v0.1.0.html"><strong>one more</strong></a> on semantic segmentation training.</p>
@@ -107,19 +107,19 @@
 <p>Below you see different configurations I compared the results for. The tests were run on my macbook pro (16GB RAM, SSD, early 2013) as well as dell XPS15 (32GB RAM, SSD, model 9560) and show similar results (agreement on each measurement within ~10%). The actual data rate measured strongly depend on a) hardware specs and b) configurations (such as RAID mode). So take numbers as a grain of salt, and try to measure this on your system (<a href="#demo"><strong>click here</strong></a> for instructions).</p>
 <h2>Thread counts</h2>
 <p>The reason why we have multi-threaded file reader is so that we can CPU for data read while GPU is busy training a network. However, multi-threading can speed up data read speed even in CPU-only mode because our data is heavily compressed in our file = multiple threads can parallelize decoding of compressed data and file read tasks. Below, you see the comparison of an average data read speed measured every 1 second. The vertical axis shows the amount of data decoded and made available on RAM and the horizontal axis shows time elapsed since the beginning of executing the script. We can see there's almost a linear gain when we increase number of threads to 2, and then still a good fraction of increase but no longer linear when increasing to 3 threads. The increase from 3 to 4 threads is still clear but much smaller. Then finally 5 threads do not help any more.</p>
-<p><center>
+<p><center></p>
 <figure>
 <img src="imgs/2018-03-06-ThreadProcessor-Threads.png" title="Thread Counts" style="width:75%">
 </figure>
-</center></p>
+<p></center></p>
 <h2>Data access, copy vs. pointer wrapper</h2>
 <p>Here we vary two configurations: <code>RandomAccess</code> configuration parameter of <code>ThreadProcessor</code> and <code>make_copy</code> configuration parameter of <code>dataloader2</code>, a dedicated python API. For <code>RandomAccess</code>, there are 3 possible values: <code>0</code> = no random entry access from the input file(s), <code>1</code> = completely randomize the entry to access, or <code>2</code> = access the random slice of input data. Among these options, <code>0</code> is the cheapest since it follows the order of data entries in a file. <code>1</code> is the most expensive as it requires a file header to move from one entry to another. The fact that each entry size varies in our data format makes this even slower. <code>2</code> is a simple intermediate solution between them by making only the first entry of a particularly sized data slice random.</p>
 <p><code>make_copy</code> is a configuration specific to <code>dataloader2</code>, a python layer, and does not affect underlying <code>ThreadProcessor</code> C++ API. It is <code>False</code> by default in which case numpy array of loaded data is a mere pointer wrapper on underlying C array that is owned by <code>ThreadProcessor</code>. When set to <code>True</code>, <code>dataloader2</code> prepares a dedicated <code>numpy</code> array buffer to hold loaded data from C++ API and runs an explicit data copy. Although it can be expensive due to copying, it can be useful sometimes when you want to massage <code>numpy</code> data without affecting underlying C++ data handling.</p>
-<p><center>
+<p><center></p>
 <figure>
 <img src="imgs/2018-03-06-ThreadProcessor-AccessMethods.png" title="Access Methods" style="width:75%">
 </figure>
-</center></p>
+<p></center></p>
 <p>The plot above shows the data-read speed in MB/s (mega-byte-per-second) measured as a function of elapsed time in seconds. The legends show configuration of two parameters. We can clearly see that the biggest slow down is caused by setting <code>RandomAccess=1</code>, almost 8 times slower than the two optimal configurations (red and purple). Comparing green (Copy+Random Slice) vs. purple (Wrap+Random Slice), we can see how data copy can affect the speed performance by almost a factor of 2. Finally, from the comparison of red (Wrap+No Random) and purple (Wrap+Random Slice), we see there is virtually no slow down by allowing slicing point to be randomly set. Therefore we see that <code>RandomAccess=2</code> and <code>make_copy=False</code> (latter is default) seems like a good point to sit.</p>
 <p><a name="demo"></a></p>
 <h2>Do It Yourself</h2>
@@ -129,8 +129,8 @@
 
   <div class="tag-cloud">
     <p>
-      <a href="http://deeplearnphysics.org/Blog/tag/larcv.html">larcv</a>
-      <a href="http://deeplearnphysics.org/Blog/tag/thread-processor.html">thread processor</a>
+      <a href="https://deeplearnphysics.org/Blog/tag/larcv.html">larcv</a>
+      <a href="https://deeplearnphysics.org/Blog/tag/thread-processor.html">thread processor</a>
     </p>
   </div>
 
@@ -155,7 +155,7 @@
   "@context" : "http://schema.org",
   "@type" : "Blog",
   "name": " DeepLearnPhysics Blog ",
-  "url" : "http://deeplearnphysics.org/Blog",
+  "url" : "https://deeplearnphysics.org/Blog",
   "image": "profile.png",
   "description": "description!"
 }
